@@ -1,0 +1,34 @@
+<div class="status-list">
+    <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
+        {{ IssueStatusDisplay[status] }}
+        <span class="lowercase text-13">{{ issuesCount }}</span>
+    </div>
+    <div class="h-full pl-2"
+        cdkDropList
+        [cdkDropListData]="issues"
+        [id]="status"
+        (cdkDropListDropped)="drop($event)">
+        <issue-card *ngFor="let issue of issues"
+            [issue]="issue"
+            cdkDrag
+            [cdkDragData]="issue">
+        </issue-card>
+
+        <ng-container *ngIf="!checkAddTask">
+            <j-button className="btn-add-task" (click)="addTask()">
+                <mat-icon>add</mat-icon>
+                <span style="position: absolute; margin-top: 5px"> Add another Task </span>
+            </j-button>
+        </ng-container>
+
+        <ng-container *ngIf="checkAddTask">
+            <div class="issue">
+                <mat-form-field>
+                    <textarea matInput rows="2" placeholder="Enter a title for this task..." formControlName="titleTask"></textarea>
+                </mat-form-field>
+                <!-- <textarea placeholder="Enter a title for this task..." formControlName="titleTask"></textarea> -->
+            </div>
+        </ng-container>
+
+    </div>
+</div>
