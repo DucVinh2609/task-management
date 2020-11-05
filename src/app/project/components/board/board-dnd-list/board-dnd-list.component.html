@@ -17,16 +17,22 @@
         <ng-container *ngIf="!checkAddTask">
             <j-button className="btn-add-task" (click)="addTask()">
                 <mat-icon>add</mat-icon>
-                <span style="position: absolute; margin-top: 5px"> Add another Task </span>
+                <span style="position: absolute; margin-top: 5px;"> Add another Task </span>
             </j-button>
         </ng-container>
 
         <ng-container *ngIf="checkAddTask">
             <div class="issue">
                 <mat-form-field>
-                    <textarea matInput rows="2" placeholder="Enter a title for this task..." formControlName="titleTask"></textarea>
+                    <textarea matInput rows="2" placeholder="Enter a title for this task..."></textarea>
                 </mat-form-field>
                 <!-- <textarea placeholder="Enter a title for this task..." formControlName="titleTask"></textarea> -->
+            </div>
+            <div style="padding-top: 3px;">
+                <j-button [className]="'btn-primary'" class="mr-2" (click)="addTasks()">
+                    Add Task
+                </j-button>
+                <mat-icon style="cursor: pointer; position: absolute; margin-top: 5px;" (click)="cancelAddTask()">close</mat-icon>
             </div>
         </ng-container>
 

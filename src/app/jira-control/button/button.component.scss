@@ -132,6 +132,33 @@ $jira-bg: rgb(222, 235, 255);
   }
 }
 
+.btn-add-tasks {
+  background: #F4F5F7;
+  outline: none;
+  width: 30%;
+  justify-content: left;
+  @apply text-textDark;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @apply bg-backgroundLight;
+    }
+    &:active {
+      @apply bg-backgroundLightPrimary;
+      color: $primary;
+    }
+    &.is-active {
+      background-color: $jira-bg;
+      @apply text-textDark;
+    }
+  }
+}
+
 .with-padding {
   @apply pl-2;
 }

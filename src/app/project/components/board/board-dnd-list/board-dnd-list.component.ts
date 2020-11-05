@@ -94,4 +94,12 @@ export class BoardDndListComponent implements OnInit {
   addTask() {
     this.checkAddTask = true;
   }
+
+  addTasks() {
+    console.log("Add Task");
+  }
+
+  cancelAddTask() {
+    this.checkAddTask = false;
+  }
 }
