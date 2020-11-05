@@ -16,8 +16,13 @@ export class BoardDndComponent implements OnInit {
     IssueStatus.IN_PROGRESS,
     IssueStatus.DONE
   ];
+  checkAddDndList: boolean = false;
 
   constructor(public projectQuery: ProjectQuery, public authQuery: AuthQuery) {}
 
   ngOnInit(): void {}
+
+  addDndList() {
+    this.checkAddDndList = true;
+  }
 }

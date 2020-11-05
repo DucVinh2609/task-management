@@ -4,3 +4,8 @@
   min-height: 400px;
   min-width: 200px;  
 }
+
+.add-dnd-list {
+  width: calc(100% / 4 - 8px);
+  min-width: 200px;
+}

@@ -7,4 +7,22 @@
       [currentUserId]="authQuery.userId$ | async"
       [issues$]="projectQuery.issueByStatusSorted$(status)">
     </div>
+
+    <div class="add-dnd-list">
+      <ng-container *ngIf="!checkAddDndList">
+        <j-button className="btn-add-task" (click)="addDndList()">
+            <mat-icon>add</mat-icon>
+            <span style="vertical-align: super;"> Add another List Task </span>
+        </j-button>
+      </ng-container>
+
+      <ng-container *ngIf="checkAddDndList">
+        <div class="issue">
+          <mat-form-field>
+              <textarea matInput rows="2" placeholder="Enter a title for this task..." formControlName="titleTask"></textarea>
+          </mat-form-field>
+          <!-- <textarea placeholder="Enter a title for this task..." formControlName="titleTask"></textarea> -->
+        </div>
+    </ng-container>
+    </div>
 </div>
