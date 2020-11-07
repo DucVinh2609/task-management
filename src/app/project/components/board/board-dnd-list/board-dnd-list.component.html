@@ -1,6 +1,6 @@
 <div class="status-list">
     <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
-        {{ IssueStatusDisplay[status] }}
+        {{ issueStatus }}
         <span class="lowercase text-13">{{ issuesCount }}</span>
     </div>
     <div class="h-full pl-2"
@@ -24,15 +24,14 @@
         <ng-container *ngIf="checkAddTask">
             <div class="issue">
                 <mat-form-field>
-                    <textarea matInput rows="2" placeholder="Enter a title for this task..."></textarea>
+                    <textarea matInput rows="1" [(ngModel)]="titleTask"></textarea>
                 </mat-form-field>
-                <!-- <textarea placeholder="Enter a title for this task..." formControlName="titleTask"></textarea> -->
             </div>
-            <div style="padding-top: 3px;">
+            <div style="padding-top: 5px;">
                 <j-button [className]="'btn-primary'" class="mr-2" (click)="addTasks()">
                     Add Task
                 </j-button>
-                <mat-icon style="cursor: pointer; position: absolute; margin-top: 5px;" (click)="cancelAddTask()">close</mat-icon>
+                <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddTask()">close</mat-icon>
             </div>
         </ng-container>
 

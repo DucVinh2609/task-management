@@ -35,11 +35,12 @@ export const IssuePriorityColors = {
   [IssuePriority.LOW]: '#2D8738',
   [IssuePriority.LOWEST]: '#57A55A'
 };
+
 export interface JIssue {
   id: string;
   title: string;
   type: IssueType;
-  status: IssueStatus;
+  status: string;
   priority: IssuePriority;
   listPosition: number;
   description: string;
@@ -52,4 +53,10 @@ export interface JIssue {
   userIds: string[];
   comments: JComment[];
   projectId: string;
+}
+
+export interface JIssueStatus {
+  id: number;
+  position: number;
+  status: string;
 }

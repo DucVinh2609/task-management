@@ -6,6 +6,9 @@
       "@trungk18/*": ["src/app/*"],
       "@trungk18/interface/*": ["src/app/interface/*"]
     },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

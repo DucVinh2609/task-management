@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { IssueStatus } from '@trungk18/interface/issue';
+import { JIssueStatus } from '@trungk18/interface/issue';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import dummy from 'src/assets/data/project.json';
+
 @UntilDestroy()
 @Component({
   selector: 'board-dnd',
@@ -10,19 +12,33 @@ import { AuthQuery } from '@trungk18/project/auth/auth.query';
   styleUrls: ['./board-dnd.component.scss']
 })
 export class BoardDndComponent implements OnInit {
-  issueStatuses: IssueStatus[] = [
-    IssueStatus.BACKLOG,
-    IssueStatus.SELECTED,
-    IssueStatus.IN_PROGRESS,
-    IssueStatus.DONE
-  ];
+  issueStatuses: JIssueStatus[] = dummy.status.sort((a, b) => (a.position > b.position) ? 1 : -1);
   checkAddDndList: boolean = false;
+  titleListTask: string = '';
 
   constructor(public projectQuery: ProjectQuery, public authQuery: AuthQuery) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(dummy);
+  }
 
   addDndList() {
     this.checkAddDndList = true;
+  }
+
+  addListTask() {
+    let newListTask: JIssueStatus = {
+      "id": 5,
+      "position": 4,
+      "status": this.titleListTask
+    }
+    this.issueStatuses.push(newListTask);
+    this.checkAddDndList = false;
+    this.titleListTask = '';
+  }
+
+  cancelAddListTask() {
+    this.checkAddDndList = false;
+    this.titleListTask = '';
   }
 }

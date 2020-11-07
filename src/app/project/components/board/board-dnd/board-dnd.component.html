@@ -5,7 +5,7 @@
       *ngFor="let status of issueStatuses"
       [status]="status"
       [currentUserId]="authQuery.userId$ | async"
-      [issues$]="projectQuery.issueByStatusSorted$(status)">
+      [issues$]="projectQuery.issueByStatusSorted$(status.status)">
     </div>
 
     <div class="add-dnd-list">
@@ -19,10 +19,15 @@
       <ng-container *ngIf="checkAddDndList">
         <div class="issue">
           <mat-form-field>
-              <textarea matInput rows="2" placeholder="Enter a title for this task..." formControlName="titleTask"></textarea>
+            <textarea matInput rows="1" [(ngModel)]="titleListTask"></textarea>
           </mat-form-field>
-          <!-- <textarea placeholder="Enter a title for this task..." formControlName="titleTask"></textarea> -->
         </div>
-    </ng-container>
+        <div style="padding-top: 5px;">
+          <j-button [className]="'btn-primary'" class="mr-2" (click)="addListTask()">
+            Add List Task
+          </j-button>
+          <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddListTask()">close</mat-icon>
+        </div>
+      </ng-container>
     </div>
 </div>
