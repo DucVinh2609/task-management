@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleAnalyticsService } from '@trungk18/core/services/google-analytics.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'board',
@@ -7,9 +8,13 @@ import { GoogleAnalyticsService } from '@trungk18/core/services/google-analytics
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  breadcrumbs: string[] = ['Projects', 'DNTN', 'Kanban Board'];
+  breadcrumbs: string[] = [];
 
-  constructor(private _googleAnalytics: GoogleAnalyticsService) {}
+  constructor(private _googleAnalytics: GoogleAnalyticsService,
+    private activatedRoute: ActivatedRoute) {
+      let nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+      this.breadcrumbs = ['Projects', nameProject]
+  }
 
   ngOnInit(): void {}
 

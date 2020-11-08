@@ -33,22 +33,18 @@
 
                 <div class="text-15 pt-px">{{ link.name }}</div>
             </a>
-            <div *ngIf="!link.url"
-                 class="link not-allowed">
-
-                <svg-icon class="mr-4"
-                          [name]="link.icon"
-                          [size]="24">
-                </svg-icon>
-
-                <div class="text-15 pt-px">{{ link.name }}</div>
-                <div class="not-implemented">
-                    Not implemented
-                </div>
-            </div>
-
             <div *ngIf="idx === 1"
-                 class="divider"></div>
+                 class="divider">
+            </div>
+        </div>
+        <div>
+            <a routerLinkActive="active"
+               tag="a"
+               class="link allowed"
+               (click)="openCreateProjectModal()">
+                <mat-icon style="margin-right: 1rem">add_task</mat-icon>
+                <div class="text-15 pt-px">Create new Projets</div>
+            </a>
         </div>
     </div>
 </div>

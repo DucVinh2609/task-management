@@ -59,4 +59,5 @@ export interface JIssueStatus {
   id: number;
   position: number;
   status: string;
+  projectId: number;
 }

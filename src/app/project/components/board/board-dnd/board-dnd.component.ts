@@ -18,9 +18,7 @@ export class BoardDndComponent implements OnInit {
 
   constructor(public projectQuery: ProjectQuery, public authQuery: AuthQuery) {}
 
-  ngOnInit(): void {
-    console.log(dummy);
-  }
+  ngOnInit(): void {}
 
   addDndList() {
     this.checkAddDndList = true;
@@ -30,7 +28,8 @@ export class BoardDndComponent implements OnInit {
     let newListTask: JIssueStatus = {
       "id": 5,
       "position": 4,
-      "status": this.titleListTask
+      "status": this.titleListTask,
+      "projectId": 1
     }
     this.issueStatuses.push(newListTask);
     this.checkAddDndList = false;

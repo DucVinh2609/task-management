@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 import { arrayRemove, arrayUpsert, setLoading } from '@datorama/akita';
 import { JComment } from '@trungk18/interface/comment';
 import { JIssue } from '@trungk18/interface/issue';
-import { JProject } from '@trungk18/interface/project';
+import { JProject, JProjectDemo } from '@trungk18/interface/project';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ProjectStore } from './project.store';
+import dummy from 'src/assets/data/project.json'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   baseUrl: string;
+  projects: JProjectDemo[] = dummy.projects;
 
   constructor(private _http: HttpClient, private _store: ProjectStore) {
     this.baseUrl = environment.apiUrl;
@@ -43,6 +45,11 @@ export class ProjectService {
         })
       )
       .subscribe();
+  }
+
+  createProject(project: JProjectDemo) {
+    this.projects.push(project);
+    console.log(this.projects);
   }
 
   updateProject(project: Partial<JProject>) {

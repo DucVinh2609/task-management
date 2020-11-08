@@ -1,0 +1,12 @@
+<nz-select class="w-full" [formControl]="control" [nzCustomTemplate]="defaultTemplate">
+  <nz-option nzCustomContent *ngFor="let group of groups" [nzValue]="group.id">
+    <div class="flex items-center">
+      <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ group.name }}</span>
+    </div>
+  </nz-option>
+</nz-select>
+<ng-template #defaultTemplate let-selected>
+  <div class="flex items-center">
+    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ getNameGroup(selected.nzValue) }}</span>
+  </div>
+</ng-template>

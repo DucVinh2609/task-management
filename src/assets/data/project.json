@@ -10,22 +10,26 @@
     {
       "id": 1,
       "position": 0,
-      "status": "Backlog"
+      "status": "Backlog",
+      "projectId": 1
     },
     {
       "id": 2,
       "position": 1,
-      "status": "Selected"
+      "status": "Selected",
+      "projectId": 1
     },
     {
       "id": 3,
       "position": 2,
-      "status": "InProgress"
+      "status": "InProgress",
+      "projectId": 1
     },
     {
       "id": 4,
       "position": 3,
-      "status": "Done"
+      "status": "Done",
+      "projectId": 1
     }
   ],
   "users": [
@@ -223,6 +227,49 @@
       "updatedAt": "2020-06-28T16:30:00.000Z",
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "category": "Software"
+    },
+    {
+      "id": 2,
+      "category": "Marketing"
+    },
+    {
+      "id": 3,
+      "category": "Business"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "DEV",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "description": "",
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "DATN",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "description": "",
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": 101,
+      "name": "DATN",
+      "description": "ĐỒ ÁN TỐT NGHIỆP",
+      "projectCategoriesId": 1,
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z",
+      "groupId": 1
     }
   ]
 }

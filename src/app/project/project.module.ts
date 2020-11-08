@@ -35,6 +35,10 @@ import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AddProjectModalComponent } from './components/add-project-modal/add-project-modal.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CategoriesSelectComponent } from './components/add-project-modal/categories-select/categories-select.component';
+import { GroupsSelectComponent } from './components/add-project-modal/groups-select/groups-select.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,10 @@ import { MatInputModule } from '@angular/material/input';
     IssuePrioritySelectComponent,
     IssueReporterSelectComponent,
     IssueAssigneesSelectComponent,
-    ResizerComponent
+    ResizerComponent,
+    AddProjectModalComponent,
+    CategoriesSelectComponent,
+    GroupsSelectComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +82,8 @@ import { MatInputModule } from '@angular/material/input';
     ContentLoaderModule,
     QuillModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ]
 })
 export class ProjectModule {}

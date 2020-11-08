@@ -4,6 +4,8 @@ import { JProject } from '@trungk18/interface/project';
 import { SideBarLink } from '@trungk18/interface/ui-model/nav-link';
 import { SideBarLinks } from '@trungk18/project/config/sidebar';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { AddProjectModalComponent } from '@trungk18/project/components/add-project-modal/add-project-modal.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,7 +23,8 @@ export class SidebarComponent implements OnInit {
   project: JProject;
   sideBarLinks: SideBarLink[];
 
-  constructor(private _projectQuery: ProjectQuery) {
+  constructor(private _projectQuery: ProjectQuery,
+    private _modalService: NzModalService) {
     this._projectQuery.all$.pipe(untilDestroyed(this)).subscribe((project) => {
       this.project = project;
     });
@@ -29,5 +32,14 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.sideBarLinks = SideBarLinks;
+  }
+
+  openCreateProjectModal() {
+    this._modalService.create({
+      nzContent: AddProjectModalComponent,
+      nzClosable: false,
+      nzFooter: null,
+      nzWidth: 500
+    });
   }
 }
