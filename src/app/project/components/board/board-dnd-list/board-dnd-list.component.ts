@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { JIssueStatus, IssueStatusDisplay, JIssue, IssueType, IssuePriority } from '@trungk18/interface/issue';
+import { JIssueStatus, JIssue, IssueType, IssuePriority } from '@trungk18/interface/issue';
 import { FilterState } from '@trungk18/project/state/filter/filter.store';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { Observable, combineLatest, from } from 'rxjs';

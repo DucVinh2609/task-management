@@ -6,19 +6,19 @@ export enum IssueType {
   BUG = 'Bug'
 }
 
-export enum IssueStatus {
-  BACKLOG = 'Backlog',
-  SELECTED = 'Selected',
-  IN_PROGRESS = 'InProgress',
-  DONE = 'Done'
-}
+// export enum IssueStatus {
+//   BACKLOG = 'Backlog',
+//   SELECTED = 'Selected',
+//   IN_PROGRESS = 'InProgress',
+//   DONE = 'Done'
+// }
 
-export const IssueStatusDisplay = {
-  [IssueStatus.BACKLOG]: 'Backlog',
-  [IssueStatus.SELECTED]: 'Selected for Development',
-  [IssueStatus.IN_PROGRESS]: 'In progress',
-  [IssueStatus.DONE]: 'Done'
-};
+// export const IssueStatusDisplay = {
+//   [IssueStatus.BACKLOG]: 'Backlog',
+//   [IssueStatus.SELECTED]: 'Selected for Development',
+//   [IssueStatus.IN_PROGRESS]: 'In progress',
+//   [IssueStatus.DONE]: 'Done'
+// };
 
 export enum IssuePriority {
   LOWEST = 'Lowest',
