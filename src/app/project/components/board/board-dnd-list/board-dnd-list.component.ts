@@ -62,7 +62,7 @@ export class BoardDndListComponent implements OnInit {
         event.currentIndex
       );
       this.updateListPosition(newIssues);
-      newIssue.status = event.container.id;
+      newIssue.status = event.container.id['status'];
       this._projectService.updateIssue(newIssue);
     }
   }
