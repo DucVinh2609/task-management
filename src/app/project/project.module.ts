@@ -39,6 +39,7 @@ import { AddProjectModalComponent } from './components/add-project-modal/add-pro
 import { MatSelectModule } from '@angular/material/select';
 import { CategoriesSelectComponent } from './components/add-project-modal/categories-select/categories-select.component';
 import { GroupsSelectComponent } from './components/add-project-modal/groups-select/groups-select.component';
+import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GroupsSelectComponent } from './components/add-project-modal/groups-sel
     ResizerComponent,
     AddProjectModalComponent,
     CategoriesSelectComponent,
-    GroupsSelectComponent
+    GroupsSelectComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,

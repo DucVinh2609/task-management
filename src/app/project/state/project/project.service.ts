@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ProjectStore } from './project.store';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import dummy from 'src/assets/data/project.json'
 
 @Injectable({
@@ -18,8 +19,10 @@ export class ProjectService {
   baseUrl: string;
   projects: JProjectDemo[] = dummy.projects;
 
-  constructor(private _http: HttpClient, private _store: ProjectStore) {
-    this.baseUrl = environment.apiUrl;
+  constructor(private _http: HttpClient,
+    private _store: ProjectStore,
+    private router: Router,) {
+      this.baseUrl = environment.apiUrl;
   }
 
   setLoading(isLoading: boolean) {
@@ -92,5 +95,13 @@ export class ProjectService {
       ...issue,
       comments
     });
+  }
+
+  getProjectId(nameProject: string) {
+    if (this.projects.filter(p => p.name === nameProject).length !== 0) {
+      return this.projects.filter(p => p.name === nameProject)[0].id;
+    } else {
+      this.router.navigate(['/error'])
+    }
   }
 }
