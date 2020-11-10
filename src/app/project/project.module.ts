@@ -40,6 +40,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CategoriesSelectComponent } from './components/add-project-modal/categories-select/categories-select.component';
 import { GroupsSelectComponent } from './components/add-project-modal/groups-select/groups-select.component';
 import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
+import { IndexComponent } from './pages/index/index.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ErrorComponent } from '@trungk18/project/pages/common/error/error.compo
     AddProjectModalComponent,
     CategoriesSelectComponent,
     GroupsSelectComponent,
-    ErrorComponent
+    ErrorComponent,
+    IndexComponent
   ],
   imports: [
     CommonModule,
