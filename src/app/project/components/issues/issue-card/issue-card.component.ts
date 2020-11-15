@@ -7,6 +7,8 @@ import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { IssueUtil } from '@trungk18/project/utils/issue';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IssueModalComponent } from '../issue-modal/issue-modal.component';
+import { UsersService } from 'src/app/project/services/users.service';
+import { IssueTypesService } from 'src/app/project/services/issue-types.service';
 
 @Component({
   selector: 'issue-card',
@@ -16,23 +18,28 @@ import { IssueModalComponent } from '../issue-modal/issue-modal.component';
 @UntilDestroy()
 export class IssueCardComponent implements OnChanges {
   @Input() issue: JIssue;
-  assignees: JUser[];
+  assignees: JUser[] = [];
   issueTypeIcon: string;
   priorityIcon: IssuePriorityIcon;
+  issueTypesName: string = '';
 
-  constructor(private _projectQuery: ProjectQuery, private _modalService: NzModalService) {}
+  constructor(private _projectQuery: ProjectQuery,
+    private _modalService: NzModalService,
+    private issueTypesService: IssueTypesService,
+    private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this._projectQuery.users$.pipe(untilDestroyed(this)).subscribe((users) => {
-      this.assignees = this.issue.userIds.map((userId) => users.find((x) => x.id === userId));
+    this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
+    this.issue.userIds.forEach(users => {
+      this.assignees.push(this.usersService.getUsersById(users))
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
     if (issueChange?.currentValue !== issueChange.previousValue) {
-      this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.type);
-      this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.priority);
+      this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
+      this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
     }
   }
 

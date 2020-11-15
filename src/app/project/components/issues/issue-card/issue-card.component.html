@@ -16,7 +16,7 @@
                           [avatarUrl]="user.avatarUrl">
                 </j-avatar>                
                 <span [class.ml-3]="assignees?.length" class="uppercase">
-                    {{issue.type}}-{{issue.id}}
+                    {{issueTypesName}}-{{issue.id}}
                 </span>
             </div>
             <div class="flex items-center">
@@ -24,7 +24,7 @@
                           [name]="issueTypeIcon"
                           nz-tooltip
                           [nzMouseEnterDelay]="0.3"
-                          [nzTooltipTitle]="issue.type"
+                          [nzTooltipTitle]="issue.issueTypeId"
                           nzTooltipPlacement="bottom"
                           [size]="20">
                 </svg-icon>

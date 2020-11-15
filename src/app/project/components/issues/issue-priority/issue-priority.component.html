@@ -10,7 +10,7 @@
                   [size]="20"
                   [style.color]="selectedPriorityIcon.color">
         </svg-icon>
-        <span class="ml-3 priority-label">{{ selectedPriorityIcon.value }}</span>
+        <span class="ml-3 priority-label">{{ getIssuePriorities(selectedPriorityIcon.value) }}</span>
     </div>
 </j-button>
 
@@ -27,7 +27,7 @@
                               [size]="20"
                               [style.color]="option.color">
                     </svg-icon>
-                    <span class="ml-3 priority-label font-semibold uppercase text-textMedium text-13">{{ option.value }}</span>
+                    <span class="ml-3 priority-label font-semibold uppercase text-textMedium text-13">{{ getIssuePriorities(option.value) }}</span>
                 </div>
             </li>
         </ng-container>

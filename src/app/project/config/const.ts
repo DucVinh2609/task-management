@@ -1,5 +1,4 @@
 import { IssuePriorityIcon } from '@trungk18/interface/issue-priority-icon';
-import { IssuePriority, IssueType } from '@trungk18/interface/issue';
 import { IssueUtil } from '../utils/issue';
 import { IssueTypeWithIcon } from '@trungk18/interface/issue-type-icon';
 
@@ -7,16 +6,16 @@ export class ProjectConst {
   static readonly IssueId = 'issueId';
   static readonly Projects = 'Projects';
   static PrioritiesWithIcon: IssuePriorityIcon[] = [
-    IssueUtil.getIssuePriorityIcon(IssuePriority.LOWEST),
-    IssueUtil.getIssuePriorityIcon(IssuePriority.LOW),
-    IssueUtil.getIssuePriorityIcon(IssuePriority.MEDIUM),
-    IssueUtil.getIssuePriorityIcon(IssuePriority.HIGH),
-    IssueUtil.getIssuePriorityIcon(IssuePriority.HIGHEST)
+    IssueUtil.getIssuePriorityIcon(1),
+    IssueUtil.getIssuePriorityIcon(2),
+    IssueUtil.getIssuePriorityIcon(3),
+    IssueUtil.getIssuePriorityIcon(4),
+    IssueUtil.getIssuePriorityIcon(5)
   ];
 
   static IssueTypesWithIcon: IssueTypeWithIcon[] = [
-    new IssueTypeWithIcon(IssueType.BUG),
-    new IssueTypeWithIcon(IssueType.STORY),
-    new IssueTypeWithIcon(IssueType.TASK)
+    new IssueTypeWithIcon(1),
+    new IssueTypeWithIcon(2),
+    new IssueTypeWithIcon(3)
   ];
 }

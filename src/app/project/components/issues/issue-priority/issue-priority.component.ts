@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { JIssue, IssuePriority } from '@trungk18/interface/issue';
+import { JIssue } from '@trungk18/interface/issue';
 import { IssuePriorityIcon } from '@trungk18/interface/issue-priority-icon';
 import { IssueUtil } from '@trungk18/project/utils/issue';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { ProjectConst } from '@trungk18/project/config/const';
+import { IssuePrioritiesService } from '@trungk18/project/services/issue-priorities.service';
 
 @Component({
   selector: 'issue-priority',
@@ -11,7 +12,7 @@ import { ProjectConst } from '@trungk18/project/config/const';
   styleUrls: ['./issue-priority.component.scss']
 })
 export class IssuePriorityComponent implements OnInit, OnChanges {
-  selectedPriority: IssuePriority;
+  selectedPriority: number;
 
   get selectedPriorityIcon() {
     return IssueUtil.getIssuePriorityIcon(this.selectedPriority);
@@ -21,25 +22,30 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
 
   @Input() issue: JIssue;
 
-  constructor(private _projectService: ProjectService) {}
+  constructor(private _projectService: ProjectService,
+    private issuePrioritiesService: IssuePrioritiesService) {}
 
   ngOnInit() {
     this.priorities = ProjectConst.PrioritiesWithIcon;
   }
 
   ngOnChanges(): void {
-    this.selectedPriority = this.issue?.priority;
+    this.selectedPriority = this.issue?.issuePriorityId;
   }
 
-  isPrioritySelected(priority: IssuePriority) {
+  isPrioritySelected(priority) {
     return priority === this.selectedPriority;
   }
 
-  updateIssue(priority: IssuePriority) {
+  updateIssue(priority) {
     this.selectedPriority = priority;
     this._projectService.updateIssue({
       ...this.issue,
-      priority: this.selectedPriority
+      issuePriorityId: this.selectedPriority
     });
+  }
+
+  getIssuePriorities(issuePrioritiesId) {
+    return this.issuePrioritiesService.getIssuePriorities(issuePrioritiesId);
   }
 }

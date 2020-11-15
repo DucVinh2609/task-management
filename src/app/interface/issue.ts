@@ -20,39 +20,35 @@ export enum IssueType {
 //   [IssueStatus.DONE]: 'Done'
 // };
 
-export enum IssuePriority {
-  LOWEST = 'Lowest',
-  LOW = 'Low',
-  MEDIUM = 'Medium',
-  HIGH = 'High',
-  HIGHEST = 'Highest'
-}
+// export enum IssuePriority {
+//   LOWEST = 'Lowest',
+//   LOW = 'Low',
+//   MEDIUM = 'Medium',
+//   HIGH = 'High',
+//   HIGHEST = 'Highest'
+// }
 
 export const IssuePriorityColors = {
-  [IssuePriority.HIGHEST]: '#CD1317',
-  [IssuePriority.HIGH]: '#E9494A',
-  [IssuePriority.MEDIUM]: '#E97F33',
-  [IssuePriority.LOW]: '#2D8738',
-  [IssuePriority.LOWEST]: '#57A55A'
+  5: '#CD1317',
+  4: '#E9494A',
+  3: '#E97F33',
+  2: '#2D8738',
+  1: '#57A55A'
 };
 
 export interface JIssue {
   id: string;
   title: string;
-  type: IssueType;
-  status: string;
-  priority: IssuePriority;
+  issueTypeId: number;
+  issueStatusId: number;
+  issuePriorityId: number;
   listPosition: number;
   description: string;
-  estimate: number;
-  timeSpent: number;
-  timeRemaining: number;
   createdAt: string;
   updatedAt: string;
+  deadlineAt: string;
   reporterId: string;
   userIds: string[];
-  comments: JComment[];
-  projectId: string;
 }
 
 export interface JIssueStatus {
@@ -60,4 +56,14 @@ export interface JIssueStatus {
   position: number;
   status: string;
   projectId: number;
+}
+
+export interface JIssueTypes {
+  id: number;
+  type: string;
+}
+
+export interface JIssuePriorities {
+  id: number;
+  priority: string;
 }

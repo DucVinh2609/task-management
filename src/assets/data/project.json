@@ -37,196 +37,179 @@
       "id": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
       "name": "Nguyen Duc Vinh",
       "avatarUrl": "assets/img/users/nguyenducvinh.jpg",
-      "projectId": "140892"
+      "email": "ducvinhnguyen2609@gmail.com",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z"
     },
     {
       "id": "7ac265f9-b9ac-443f-a2b2-795682e579a4",
       "name": "Nguyen Duc Thanh Hai",
       "avatarUrl": "assets/img/users/nguyenducthanhhai.jpg",
-      "projectId": "140892"
+      "email": "thanhhai2312@gmail.com",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z"
     },
     {
       "id": "94502aad-c97f-43e1-a9d1-28cf3e4937a7",
       "name": "Nguyen Duc Thien",
       "avatarUrl": "assets/img/users/nguyenducthien.jpg",
-      "projectId": "140892"
+      "email": "tducthien1997@gmail.com",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z"
     },
     {
       "id": "610451aa-10c8-4d7e-9363-311357c0b0dd",
       "name": "Linh Linh",
       "avatarUrl": "assets/img/users/linhlinh.jpg",
-      "projectId": "140892"
+      "email": "linhsasukeno1@gmail.com",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z"
     }
   ],
   "issues": [
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
-      "description": "<p>I shared some of my technical decisions behind <a href='http://jira.trungk18.com' rel='noopener noreferrer' target='_blank'>jira.trungk18.com</a> on <a href='https://github.com/SingaporeJS/talk.js/issues/40' rel='noopener noreferrer' target='_blank'>Singapore talk.js August 2020</a> with a very catchy title - <strong>Behind the 900 stars repository 😂</strong> Do you like it? <br/></br/> Hopefully I can change the title to a thousand stars soon... 🤣</p><p><br></p><p>Thanks for having me!</p><p><br></p><p>See the slide deck ➡ <a href='https://slides.com/tuantrungvo/behind-the-900-star-repository-jira-clone-angular' rel='noopener noreferrer' target='_blank' style='background-color: rgb(255, 255, 255);'>https://slides.com/tuantrungvo/behind-the-900-star-repository-jira-clone-angular</a></p><p><br></p><p><img src='https://pbs.twimg.com/media/EgWe01qUcAIoNdi?format=jpg&amp;name=large' alt='Image'></p><p><br></p><p><br></p>",
+      "description": "A11",
       "id": "6527",
-      "priority": "Medium",
+      "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "status": "Backlog",
-      "title": "Behind the 900 stars - Update 08/2020",
-      "type": "Story",
+      "issueStatusId": 1,
+      "title": "A1",
+      "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
       "listPosition": 1
     },
     {
-      "type": "Story",
-      "priority": "Highest",
-      "title": "How to build Jira clone 😍? Follow these tutorials from its author",
-      "description": "<h3>I have prepared a set of tutorial for some major components of Jira clone, feel free to take a look! More to come, the tutorials will have at least 10 posts 😊😊😊</h3><p><br></p><ol><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-00-prerequisites/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Prerequisites</a></li><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-01-planning-and-set-up/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Create a new repository and set up a new Angular application with CLI</a></li><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-02-application-layout-tailwindcss-flex/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Build the application layout with flex and TailwindCSS</a></li><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-03-akita-state-management/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Setup Akita state management</a></li><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-04-editable-textbox/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Build an editable textbox</a></li><li><a href=\"https://trungk18.com/experience/angular-jira-clone-tutorial-05-interactive-drag-and-drop-board/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(3, 102, 214);\">Build an interactive drag and drop board</a></li></ol>",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "A22",
+      "id": "6528",
+      "issuePriorityId": 2,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
-      "id": "3957",
-      "status": "InProgress",
-      "createdAt": "2020-09-15T23:41:37.278Z",
-      "updatedAt": "2020-09-15T23:41:37.278Z",
+      "issueStatusId": 1,
+      "title": "A2",
+      "issueTypeId": 2,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 2
+    },
+    {
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "B11",
+      "id": "6529",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 2,
+      "title": "B1",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4"],
       "listPosition": 1
     },
     {
-      "id": "9013",
-      "title": "Set up project structure ⛏️⛏️",
-      "description": "<h3>Create front end and backend folder</h3><ul><li>npm init</li><li>CLI new application</li><li>TailwindCSS configuration&nbsp;</li><li>WIP Landing Page</li><li>Build command on the root folder</li><li>Deploy to Netlify</li><li>Configure sub domain redirect - Need to retest</li><li>Configure SVG icon definition</li><li>Add Google Analytics - IMPORTANT</li><li>Refactor to module lazy loading</li><li>Add Akita - <a href='https://datorama.github.io/akita/docs/angular/architecture/#session-feature' rel='noopener noreferrer' target='_blank' style='color: inherit;'>https://datorama.github.io/akita/docs/angular/architecture/#session-feature</a></li><li>Tweet Icon</li></ul>",
-      "type": "Task",
-      "status": "Done",
-      "priority": "Highest",
-      "listPosition": 1,
-      "createdAt": "2020-06-12T14:40:01.262Z",
-      "updatedAt": "2020-06-12T14:40:01.262Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "B22",
+      "id": "6530",
+      "issuePriorityId": 2,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4"]
+      "issueStatusId": 2,
+      "title": "B2",
+      "issueTypeId": 2,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4"],
+      "listPosition": 2
     },
     {
-      "id": "9210",
-      "title": "TailwindCSS configuration 😭😭😭",
-      "description": "<h1>No official guide to configure TailwindCSS and Angular<strong>⛏️⛏️</strong></h1><p><br></p><p>It took me few hours to try and configure with different option. Also, was confuse when PurgeCSS remove ng-zorro style...</p><p><br></p><p>I wrote one myself</p><p><br></p><p><a href='https://trungk18.com/experience/configure-tailwind-css-with-angular/' rel='noopener noreferrer' target='_blank'>https://trungk18.com/experience/configure-tailwind-css-with-angular/</a></p><p><br></p>",
-      "type": "Task",
-      "status": "Done",
-      "priority": "Medium",
-      "listPosition": 2,
-      "createdAt": "2020-06-12T14:40:01.262Z",
-      "updatedAt": "2020-06-12T14:40:01.262Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "B33",
+      "id": "6531",
+      "issuePriorityId": 4,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"]
+      "issueStatusId": 2,
+      "title": "B3",
+      "issueTypeId": 3,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 3
     },
     {
-      "id": "9361",
-      "title": "Try leaving a comment on this issue.",
-      "description": "<p>Adding comments to an issue is a useful way to record additional detail about an issue, and collaborate with team members. Comments are shown in the&nbsp;<strong>Comments</strong>&nbsp;section when you&nbsp;<a href=\"https://confluence.atlassian.com/jira064/what-is-an-issue-720416138.html\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: rgb(255, 255, 255); color: rgb(0, 82, 204);\">view an issue</a>.</p><p><br></p><ol><li>Open the&nbsp;<a href=\"https://confluence.atlassian.com/jira064/what-is-an-issue-720416138.html\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(0, 82, 204);\">issue</a>&nbsp;on which to add your comment.</li><li>Click the&nbsp;<strong>Add a comment</strong>&nbsp;button.</li><li>In the&nbsp;<strong>Comment</strong>&nbsp;text box, type your comment</li><li>Click the&nbsp;<strong>Save </strong>button or the <strong>Enter </strong>key to save the comment.</li></ol><p><br></p>",
-      "type": "Story",
-      "status": "InProgress",
-      "priority": "Lowest",
-      "listPosition": 3,
-      "createdAt": "2020-06-12T14:40:01.346Z",
-      "updatedAt": "2020-06-12T14:40:01.346Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "C11",
+      "id": "6532",
+      "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"]
+      "issueStatusId": 3,
+      "title": "C1",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 1
     },
     {
-      "id": "9451",
-      "title": "Preparing backend API with GraphQL - Update 08/2020",
-      "description": "<p>GraphQL authentication API is ready with the enormous support from <a href='https://github.com/nartc' rel='noopener noreferrer' target='_blank'>@nartc</a></p><p><br></p><p>I am using Apollo to integrate with his well-written API. I have closed the first loop <strong>Login -&gt; Received token -&gt; Fetch me -&gt; Fetch project using token.</strong></p><p><br></p><p>Hopefully I will be able to deploy Phase 2 soon to AWS or Azure. Stay tuned!</p><p><br><p>See the current working branch: <a href='https://github.com/trungk18/jira-clone-angular/tree/feature/gql' rel='noopener noreferrer' target='_blank'>https://github.com/trungk18/jira-clone-angular/tree/feature/gql</a></p><br/></p><p><img src='https://i.imgur.com/MpGReIF.gif'/></p>",
-      "type": "Story",
-      "status": "InProgress",
-      "priority": "Medium",
-      "listPosition": 1,
-      "createdAt": "2020-06-12T14:40:01.262Z",
-      "updatedAt": "2020-06-12T14:48:00.807Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "C22",
+      "id": "6533",
+      "issuePriorityId": 5,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
+      "issueStatusId": 3,
+      "title": "C2",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 2
     },
     {
-      "id": "9631",
-      "title": "Each issue has a single reporter but can have multiple assignees.",
-      "description": "<h2>Try assigning this issue to <strong><u>Spider Man</u></strong>. <span style='color: rgb(51, 51, 51);'>🤣&nbsp;🤣&nbsp;🤣</span></h2>",
-      "type": "Task",
-      "status": "Selected",
-      "priority": "Low",
-      "listPosition": 2,
-      "createdAt": "2020-06-12T14:40:01.350Z",
-      "updatedAt": "2020-06-12T14:51:09.653Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "D11",
+      "id": "6534",
+      "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"]
+      "issueStatusId": 4,
+      "title": "D1",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 1
     },
     {
-      "id": "9546",
-      "title": "Set up Akita state management",
-      "description": "<h2>I heard about Akita and would love to try this</h2><p>Akita is a state management pattern, built on top of RxJS, which takes the idea of multiple data stores from Flux and the immutable updates from Redux, along with the concept of streaming data, to create the Observable Data Stores model.</p><p></p>",
-      "type": "Story",
-      "status": "Done",
-      "priority": "High",
-      "listPosition": 1,
-      "createdAt": "2020-06-12T14:40:01.304Z",
-      "updatedAt": "2020-06-12T14:52:02.173Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "D22",
+      "id": "6535",
+      "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
+      "issueStatusId": 4,
+      "title": "D2",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 2
     },
     {
-      "id": "9548",
-      "title": "Make the CDK Drag and Drop animation smoother",
-      "description": "<h2>The drag and drop board is not working as I expected</h2><p>After finishing all the other heavy lifting parts, I will spend sometimes at the end to finalize the DnD. The current behavior is acceptable for now.</p><p><br></p><p><u>28 June 2020</u></p><p>After spending about half an hour on that, I found the bug. Basically, I applied the cdkDrag to my component issue-card. <u>Its height and width was collapsed to 0</u>. That's why the animation has no effect at all.</p><p><br></p><p>I fixed by fixing adding these CSS to the issue-card component.</p><p><br></p><pre class='ql-syntax' spellcheck='false'>:host&nbsp;{&nbsp;&nbsp;@apply&nbsp;flex&nbsp;flex-grow;&nbsp;&nbsp;margin-bottom:&nbsp;5px;}</pre>",
-      "type": "Bug",
-      "status": "Done",
-      "priority": "High",
-      "listPosition": 1,
-      "createdAt": "2020-06-12T14:40:01.304Z",
-      "updatedAt": "2020-06-12T14:52:02.173Z",
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "description": "D33",
+      "id": "6536",
+      "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
-    },
-    {
-      "id": "9584",
-      "title": "What is Angular Jira clone application?",
-      "description": "<p>There have been a handful of cool Jira-cloned apps written in React/VueJS, which makes me wonder <strong>Why not Angular</strong>? And here you go.</p><p><br></p><p>This is <u>not only</u> a simplified Jira clone built with Angular 9, but also an example of a <u>modern, real-world</u> Angular codebase.</p><p><br></p><p><strong>Tech stack</strong></p><p><br></p><p><a href='https://raw.githubusercontent.com/trungk18/jira-clone-angular/master/frontend/src/assets/img/jira-clone-tech-stack.png' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214); background-color: rgb(255, 255, 255);'><img src='https://github.com/trungk18/jira-clone-angular/raw/master/frontend/src/assets/img/jira-clone-tech-stack.png' alt='Tech logos'></a></p><p><br></p><ul><li><a href='https://cli.angular.io/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>Angular CLI</a></li><li><a href='https://datorama.github.io/akita/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>Akita</a>&nbsp;state management</li><li><a href='https://nestjs.com/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>NestJS</a></li><li>UI modules:</li><li class='ql-indent-1'><a href='https://tailwindcss.com/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>TailwindCSS</a></li><li class='ql-indent-1'>Angular CDK&nbsp;<a href='https://material.angular.io/cdk/drag-drop/overview' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>drag and drop</a></li><li class='ql-indent-1'><a href='https://ng.ant.design/docs/introduce/en' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>ng-zorro</a>&nbsp;UI component:&nbsp;<code style='background-color: rgba(27, 31, 35, 0.05);'>tooltip</code>,&nbsp;<code style='background-color: rgba(27, 31, 35, 0.05);'>modal</code>,&nbsp;<code style='background-color: rgba(27, 31, 35, 0.05);'>select</code>,&nbsp;<code style='background-color: rgba(27, 31, 35, 0.05);'>icon</code> and more.</li><li class='ql-indent-1'><a href='https://github.com/KillerCodeMonkey/ngx-quill' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>ngx-quill</a></li><li><a href='https://www.netlify.com/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>Netlify</a></li><li><a href='https://www.heroku.com/' rel='noopener noreferrer' target='_blank' style='color: rgb(3, 102, 214);'>Heroku</a></li></ul>",
-      "type": "Task",
-      "status": "Backlog",
-      "priority": "Medium",
-      "listPosition": 2,
-      "createdAt": "2020-06-12T14:40:00.000Z",
-      "updatedAt": "2020-06-12T14:51:00.000Z",
-      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"]
-    },
-    {
-      "id": "9554",
-      "title": "Who is the author of Angular Jira clone?",
-      "description": "<h3>Hi! My name is Trung.</h3><p>I’m the <u>lead front-end engineer</u> at Zyllem, where I work mostly with Angular to build client side web app. I love thinking about development and user experience. </p><br/><p>Find me around the web</p><p><br></p><ul><li>My blog: <a href='https://trungk18.com/' rel='noopener noreferrer' target='_blank'>https://trungk18.com/</a></li><li><a href='https://github.com/trungk18' rel='noopener noreferrer' target='_blank'>https://github.com/trungk18</a></li><li><a href='https://stackoverflow.com/users/3375906/trungk18' rel='noopener noreferrer' target='_blank'>https://stackoverflow.com/users/3375906/trungk18</a></li><li><a href='https://stackblitz.com/@trungk18' rel='noopener noreferrer' target='_blank'>https://stackblitz.com/@trungk18</a></li><li><a href='https://twitter.com/tuantrungvo' rel='noopener noreferrer' target='_blank'>https://twitter.com/tuantrungvo</a></li></ul><p><br></p>",
-      "type": "Task",
-      "status": "Backlog",
-      "priority": "High",
-      "listPosition": 3,
-      "createdAt": "2020-06-12T14:40:00.000Z",
-      "updatedAt": "2020-06-12T14:51:00.000Z",
-      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
-    },
-    {
-      "id": "9665",
-      "title": "Angular router not working on Netlify on refresh",
-      "description": "<p>Old question, but for those who might stumble on it on how to enable angular routing in Netlify. </p><p><br></p><p>See the full answer on <a target='_blank' href='https://stackoverflow.com/a/52312060/3375906'>stackoverflow</a>.</p><p><br></p><p>Create a file <code>_redirects</code> in your <code>src</code> folder, add the following to it:</p><p><br></p><pre class='ql-syntax' spellcheck='false'>/*  /index.html 200",
-      "type": "Bug",
-      "status": "Done",
-      "priority": "High",
-      "listPosition": 1,
-      "createdAt": "2020-06-12T14:40:00.000Z",
-      "updatedAt": "2020-06-12T14:51:00.000Z",
-      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4"]
-    },
-    {
-      "id": "9667",
-      "title": "When creating an issue, the assignee list is not working properly on searching",
-      "description": "After searching for an assignee on the list and clear the text, the option label was missing. It could be the bug on the ng-zorro select itself. If you have any idea, feel free to create a pull request. <br/> <br/><img src='https://raw.githubusercontent.com/trungk18/jira-clone-angular/master/frontend/src/assets/img/assignee-bug.gif' alt='Assignee issue' />",
-      "type": "Bug",
-      "status": "Selected",
-      "priority": "High",
-      "listPosition": 1,
-      "createdAt": "2020-06-28T15:30:00.000Z",
-      "updatedAt": "2020-06-28T16:30:00.000Z",
-      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1"]
+      "issueStatusId": 4,
+      "title": "D3",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 3
     }
   ],
   "categories": [
@@ -270,6 +253,60 @@
       "createdAt": "2020-11-08T15:30:00.000Z",
       "updateAt": "2020-11-08T15:30:00.000Z",
       "groupId": 1
+    }
+  ],
+  "issuePriority": [
+    {
+      "id": 1,
+      "priority": "Lowest"
+    },
+    {
+      "id": 2,
+      "priority": "Low"
+    },
+    {
+      "id": 3,
+      "priority": "Medium"
+    },
+    {
+      "id": 4,
+      "priority": "High"
+    },
+    {
+      "id": 5,
+      "priority": "Highest"
+    }
+  ],
+  "issueType": [
+    {
+      "id": 1,
+      "type": "Story"
+    },
+    {
+      "id": 2,
+      "type": "Task"
+    },
+    {
+      "id": 3,
+      "type": "Bug"
+    }
+  ],
+  "userProjects": [
+    {
+      "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "projectId": 101
+    },
+    {
+      "userId": "7ac265f9-b9ac-443f-a2b2-795682e579a4",
+      "projectId": 101
+    },
+    {
+      "userId": "94502aad-c97f-43e1-a9d1-28cf3e4937a7",
+      "projectId": 101
+    },
+    {
+      "userId": "610451aa-10c8-4d7e-9363-311357c0b0dd",
+      "projectId": 101
     }
   ]
 }

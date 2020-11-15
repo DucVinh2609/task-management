@@ -17,8 +17,6 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this._authService.login(new LoginPayload());
-    console.log(this.authQuery);
-    console.log(this.authQuery.__store__.getValue().token);
   }
 
   home() {

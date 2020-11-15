@@ -1,12 +1,14 @@
-import { IssuePriority, IssueType } from '@trungk18/interface/issue';
 import { IssuePriorityIcon } from '@trungk18/interface/issue-priority-icon';
+import dummy from 'src/assets/data/project.json';
 
 export class IssueUtil {
-  static getIssueTypeIcon(issueType: IssueType): string {
-    return issueType?.toLowerCase();
+  static getIssueTypeIcon(id): string {
+    // return issueType?.toLowerCase();
+    return dummy.issueType.filter(p => p.id === id)[0].type;
   }
 
-  static getIssuePriorityIcon(issuePriority: IssuePriority): IssuePriorityIcon {
+  static getIssuePriorityIcon(id): IssuePriorityIcon {
+    let issuePriority = dummy.issuePriority.filter(p => p.id === id)[0].id;
     return new IssuePriorityIcon(issuePriority);
   }
 

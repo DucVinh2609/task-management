@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { JIssueStatus, JIssue, IssueType, IssuePriority } from '@trungk18/interface/issue';
+import { JIssueStatus, JIssue } from '@trungk18/interface/issue';
 import { FilterState } from '@trungk18/project/state/filter/filter.store';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { Observable, combineLatest, from } from 'rxjs';
@@ -31,7 +31,11 @@ export class BoardDndListComponent implements OnInit {
     return this.issues.length;
   }
 
-  get issueStatus(): string {
+  get issueStatus(): number {
+    return this.status.id;
+  }
+
+  get issueStatusName(): string {
     return this.status.status;
   }
 
@@ -45,7 +49,8 @@ export class BoardDndListComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe(([issues, filter]) => {
         this.issues = this.filterIssues(issues, filter);
-      });
+      }
+    );
   }
 
   drop(event: CdkDragDrop<JIssue[]>) {
@@ -62,7 +67,7 @@ export class BoardDndListComponent implements OnInit {
         event.currentIndex
       );
       this.updateListPosition(newIssues);
-      newIssue.status = event.container.id['status'];
+      newIssue.issueStatusId = event.container.id['id'];
       this._projectService.updateIssue(newIssue);
     }
   }
@@ -89,7 +94,7 @@ export class BoardDndListComponent implements OnInit {
         ? this.currentUserId && issue.userIds.includes(this.currentUserId)
         : true;
 
-      let isIgnoreResolved = ignoreResolved ? issue.status !== 'Done' : true;
+      let isIgnoreResolved = ignoreResolved ? issue.issueStatusId !== 4 : true;
 
       return isMatchTerm && isIncludeUsers && isMyIssue && isIgnoreResolved;
     });
@@ -111,20 +116,16 @@ export class BoardDndListComponent implements OnInit {
       let issue: JIssue = {
         title: this.titleTask,
         id: IssueUtil.getRandomId(),
-        status: this.issueStatus,
+        issueStatusId: this.issueStatus,
         createdAt: now,
         updatedAt: now,
-        priority: IssuePriority.MEDIUM,
-        type: IssueType.TASK,
-        listPosition: this.issuesCount,
+        deadlineAt: null,
+        issuePriorityId: 3,
+        issueTypeId: 1,
+        listPosition: this.issuesCount + 1,
         description: '',
-        estimate: 1,
-        timeSpent: 1,
-        timeRemaining: 1,
         reporterId: this.currentUserId,
-        userIds: [],
-        comments: null,
-        projectId: ''
+        userIds: []
       };
 
       this._projectService.updateIssue(issue);

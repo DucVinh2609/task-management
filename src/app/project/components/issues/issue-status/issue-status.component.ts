@@ -17,20 +17,20 @@ export class IssueStatusComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  updateIssue(status: string) {
-    let newPosition = this._projectQuery.lastIssuePosition(status);
+  updateIssue(issueStatusId: number) {
+    let newPosition = this._projectQuery.lastIssuePosition(issueStatusId);
     this._projectService.updateIssue({
       ...this.issue,
-      status,
+      issueStatusId,
       listPosition: newPosition + 1
     });
   }
 
-  isStatusSelected(status: string) {
-    return this.issue.status === status;
+  isStatusSelected(issueStatusId: number) {
+    return this.issue.issueStatusId === issueStatusId;
   }
 
-  getIssueStatusDisplay(status: string) {
-    return this.issueStatuses.filter(s => s.status === status)[0].status
+  getIssueStatusDisplay(issueStatusId: number) {
+    return this.issueStatuses.filter(s => s.id === issueStatusId)[0].status
   }
 }

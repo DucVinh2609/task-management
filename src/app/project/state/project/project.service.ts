@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { arrayRemove, arrayUpsert, setLoading } from '@datorama/akita';
 import { JComment } from '@trungk18/interface/comment';
-import { JIssue } from '@trungk18/interface/issue';
+import { JIssue, JIssueTypes } from '@trungk18/interface/issue';
 import { JProject, JProjectDemo } from '@trungk18/interface/project';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { of } from 'rxjs';
@@ -18,6 +18,7 @@ import dummy from 'src/assets/data/project.json'
 export class ProjectService {
   baseUrl: string;
   projects: JProjectDemo[] = dummy.projects;
+  issues: JIssue[] = dummy.issues;
 
   constructor(private _http: HttpClient,
     private _store: ProjectStore,
@@ -52,7 +53,6 @@ export class ProjectService {
 
   createProject(project: JProjectDemo) {
     this.projects.push(project);
-    console.log(this.projects);
   }
 
   updateProject(project: Partial<JProject>) {
@@ -71,6 +71,11 @@ export class ProjectService {
         issues
       };
     });
+    console.log(this._store);
+  }
+
+  createIssue(issue: JIssue) {
+    this.issues.push(issue);
   }
 
   deleteIssue(issueId: string) {
@@ -90,11 +95,11 @@ export class ProjectService {
       return;
     }
 
-    let comments = arrayUpsert(issue.comments ?? [], comment.id, comment);
-    this.updateIssue({
-      ...issue,
-      comments
-    });
+    // let comments = arrayUpsert(issue.comments ?? [], comment.id, comment);
+    // this.updateIssue({
+    //   ...issue,
+    //   comments
+    // });
   }
 
   getProjectId(nameProject: string) {

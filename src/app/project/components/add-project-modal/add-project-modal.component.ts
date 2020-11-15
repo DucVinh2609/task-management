@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IssueType, JIssue, IssuePriority } from '@trungk18/interface/issue';
 import { JProjectCategories, JProjectDemo } from '@trungk18/interface/project'
 import { quillConfiguration } from '@trungk18/project/config/editor';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -64,7 +63,6 @@ export class AddProjectModalComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.issueForm.getRawValue());
     if (this.issueForm.invalid) {
       return;
     }
@@ -77,7 +75,6 @@ export class AddProjectModalComponent implements OnInit {
       description: null
     };
 
-    console.log(newProject);
     this._projectService.createProject(newProject);
     this.closeModal();
   }

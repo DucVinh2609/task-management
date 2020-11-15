@@ -16,7 +16,6 @@ export class BoardComponent implements OnInit {
     private projectService: ProjectService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
       this.breadcrumbs = ['Projects', this.nameProject]
-      console.log(projectService.getProjectId(this.nameProject));
   }
 
   ngOnInit(): void {}

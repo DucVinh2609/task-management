@@ -11,7 +11,7 @@ export class IssueResultComponent implements OnInit {
   @Input() issue: JIssue;
   
   get issueTypeIcon() {
-    return IssueUtil.getIssueTypeIcon(this.issue?.type);
+    return IssueUtil.getIssueTypeIcon(this.issue?.issueTypeId);
   }
 
   constructor() {}

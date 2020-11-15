@@ -5,7 +5,7 @@
       *ngFor="let status of issueStatuses"
       [status]="status"
       [currentUserId]="authQuery.userId$ | async"
-      [issues$]="projectQuery.issueByStatusSorted$(status.status)">
+      [issues$]="projectQuery.issueByStatusSorted$(status.id)">
     </div>
 
     <div class="add-dnd-list">

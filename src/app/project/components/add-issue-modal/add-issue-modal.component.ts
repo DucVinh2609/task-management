@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IssueType, JIssue, IssuePriority } from '@trungk18/interface/issue';
+import { IssueType, JIssue } from '@trungk18/interface/issue';
 import { quillConfiguration } from '@trungk18/project/config/editor';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
@@ -55,7 +55,7 @@ export class AddIssueModalComponent implements OnInit {
   initForm() {
     this.issueForm = this._fb.group({
       type: [IssueType.TASK],
-      priority: [IssuePriority.MEDIUM],
+      priority: 3,
       title: ['', NoWhitespaceValidator()],
       description: [''],
       reporterId: [''],
