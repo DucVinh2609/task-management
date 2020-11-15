@@ -1,0 +1,21 @@
+<div style="margin-bottom: 20px;">
+  <div class="flex">
+    <mat-icon style="margin-top: 5px;">fact_check</mat-icon>
+    <h3 style="margin-left: 10px; font-size: 16px; margin-top: 3px;">{{ title }}</h3>
+    <div class="flex-auto"></div>
+    <j-button className="btn-delete-work-list">
+      Delete
+    </j-button>
+  </div>
+  <section class="example-section">
+    <span style="position: absolute;"> {{ value }}%</span>
+    <mat-progress-bar style="margin-left: 40px;"
+                      [color]="color"
+                      [mode]="mode"
+                      [value]="value">
+    </mat-progress-bar>
+  </section>
+  <j-button style="margin-left: 40px;" className="btn-add-job">
+    Add Jobs
+  </j-button>
+</div>

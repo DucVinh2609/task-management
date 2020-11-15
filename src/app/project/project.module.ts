@@ -41,6 +41,7 @@ import { CategoriesSelectComponent } from './components/add-project-modal/catego
 import { GroupsSelectComponent } from './components/add-project-modal/groups-select/groups-select.component';
 import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
 import { IndexComponent } from './pages/index/index.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { IndexComponent } from './pages/index/index.component';
     QuillModule,
     MatIconModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressBarModule
   ]
 })
 export class ProjectModule {}

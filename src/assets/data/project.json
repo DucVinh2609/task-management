@@ -308,5 +308,12 @@
       "userId": "610451aa-10c8-4d7e-9363-311357c0b0dd",
       "projectId": 101
     }
+  ],
+  "listJobs": [
+    {
+      "id": 1,
+      "name": "List jobs 1",
+      "issueId": "6527"
+    }
   ]
 }
