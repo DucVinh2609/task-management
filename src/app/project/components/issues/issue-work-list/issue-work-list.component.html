@@ -11,7 +11,27 @@
     <span style="position: absolute;"> {{ percent }}%</span>
     <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
   </section>
-  <j-button style="margin-left: 40px;" className="btn-add-job">
-    Add Jobs
-  </j-button>
+
+  <issue-jobs *ngFor="let job of jobs" [job]="job" cdkDrag [cdkDragData]="job">
+  </issue-jobs>
+
+  <ng-container *ngIf="!checkAddJob">
+    <j-button style="margin-left: 40px;" className="btn-add-job" (click)="addJob()">
+      Add Jobs
+    </j-button>
+  </ng-container>
+  
+  <ng-container *ngIf="checkAddJob">
+    <div class="issue" style="margin-left: 40px;">
+      <mat-form-field>
+        <textarea matInput rows="2" [(ngModel)]="titleJobs"></textarea>
+      </mat-form-field>
+    </div>
+    <div style="padding-top: 5px; margin-left: 40px;">
+      <j-button [className]="'btn-primary'" class="mr-2" (click)="addJobs()">
+        Add
+      </j-button>
+      <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddJob()">close</mat-icon>
+    </div>
+  </ng-container>
 </div>

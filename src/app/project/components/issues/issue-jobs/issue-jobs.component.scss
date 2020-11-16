@@ -1,0 +1,34 @@
+$primary: #0052cc;
+$jira-bg: rgb(222, 235, 255);
+.issue-job {
+  background-color: #F4F5F7;
+  margin-bottom: 10px;
+  height: 35px;
+}
+
+.icon {
+  margin-right: 5px;
+  cursor: pointer;
+  background: #F4F5F7;
+  outline: none;
+  @apply text-textDark;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @apply bg-backgroundLight;
+    }
+    &:active {
+      @apply bg-backgroundLightPrimary;
+      color: $primary;
+    }
+    &.is-active {
+      background-color: $jira-bg;
+      @apply text-textDark;
+    }
+  }
+}
