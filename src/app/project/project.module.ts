@@ -13,6 +13,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { QuillModule } from 'ngx-quill';
 import { JiraControlModule } from '../jira-control/jira-control.module';
 import { AddIssueModalComponent } from './components/add-issue-modal/add-issue-modal.component';
@@ -73,6 +74,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ProjectRoutingModule,
     NzIconModule.forChild(NZ_JIRA_ICONS),
     NzToolTipModule,
+    NzProgressModule,
     NzModalModule,
     NzDropDownModule,
     NzSelectModule,

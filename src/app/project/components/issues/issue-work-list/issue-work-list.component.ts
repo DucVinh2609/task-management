@@ -13,10 +13,7 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 export class IssueWorkListComponent implements OnChanges {
   @Input() workList: JListJobs;
   title: string = '';
-  color: ThemePalette = 'primary';
-  mode: ProgressBarMode = 'determinate';
-  value = 50;
-  bufferValue = 75;
+  percent = 100;
 
   constructor() { }
 

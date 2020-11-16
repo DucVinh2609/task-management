@@ -8,12 +8,8 @@
     </j-button>
   </div>
   <section class="example-section">
-    <span style="position: absolute;"> {{ value }}%</span>
-    <mat-progress-bar style="margin-left: 40px;"
-                      [color]="color"
-                      [mode]="mode"
-                      [value]="value">
-    </mat-progress-bar>
+    <span style="position: absolute;"> {{ percent }}%</span>
+    <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
   </section>
   <j-button style="margin-left: 40px;" className="btn-add-job">
     Add Jobs
