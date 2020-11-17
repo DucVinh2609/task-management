@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { JIssueStatus, JIssue } from '@trungk18/interface/issue';
 import { FilterState } from '@trungk18/project/state/filter/filter.store';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
@@ -10,6 +10,7 @@ import * as dateFns from 'date-fns';
 import { IssueUtil } from '@trungk18/project/utils/issue';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: '[board-dnd-list]',
@@ -18,7 +19,7 @@ import { AuthQuery } from '@trungk18/project/auth/auth.query';
   encapsulation: ViewEncapsulation.None
 })
 @UntilDestroy()
-export class BoardDndListComponent implements OnInit {
+export class BoardDndListComponent implements OnChanges {
   @Input() status: JIssueStatus;
   @Input() currentUserId: string;
   @Input() issues$: Observable<JIssue[]>;
@@ -41,7 +42,8 @@ export class BoardDndListComponent implements OnInit {
 
   constructor(private _projectService: ProjectService,
     private _filterQuery: FilterQuery,
-    public authQuery: AuthQuery) {
+    public authQuery: AuthQuery,
+    private issuesService: IssuesService) {
     }
 
   ngOnInit(): void {
@@ -51,6 +53,10 @@ export class BoardDndListComponent implements OnInit {
         this.issues = this.filterIssues(issues, filter);
       }
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
   }
 
   drop(event: CdkDragDrop<JIssue[]>) {
@@ -68,14 +74,14 @@ export class BoardDndListComponent implements OnInit {
       );
       this.updateListPosition(newIssues);
       newIssue.issueStatusId = event.container.id['id'];
-      this._projectService.updateIssue(newIssue);
+      this.issuesService.updateIssue(newIssue);
     }
   }
 
   private updateListPosition(newList: JIssue[]) {
     newList.forEach((issue, idx) => {
       let newIssueWithNewPosition = { ...issue, listPosition: idx + 1 };
-      this._projectService.updateIssue(newIssueWithNewPosition);
+      this.issuesService.updateIssue(newIssueWithNewPosition);
     });
   }
 
@@ -128,7 +134,7 @@ export class BoardDndListComponent implements OnInit {
         userIds: []
       };
 
-      this._projectService.updateIssue(issue);
+      this.issuesService.addIssue(issue);
       this.checkAddTask = false;
       this.titleTask = '';
     }
