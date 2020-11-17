@@ -42,10 +42,11 @@
                 <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>
             </j-button>
             <br>
-            <j-button className="btn-add-work-list">
+            <!-- <j-button className="btn-add-work-list">
                 <mat-icon>access_time</mat-icon>
                 <span style="vertical-align: super; margin-left: 10px;"> Deadline </span>
-            </j-button>
+            </j-button> -->
+            <issue-deadline [issue]="issue"></issue-deadline>
             <issue-status [issue]="issue"></issue-status>
             <issue-reporter [issue]="issue"
                             [users]="projectQuery.users$ | async">

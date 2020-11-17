@@ -19,6 +19,10 @@ export class IssuesService {
     dummy.issues.push(issue)
   }
 
+  getListUsersInIssue(issueId: string) {
+    return dummy.issues.filter(j => j.id == issueId)[0].userIds;
+  }
+
   updateIssue(issue: JIssue) {
     let issueUpdate = dummy.issues.filter(i => i.id == issue.id)[0];
     let updatedAt = DateUtil.getNow();
@@ -26,6 +30,8 @@ export class IssuesService {
       issueUpdate.updatedAt = updatedAt;
       issueUpdate.issueStatusId = issue.issueStatusId;
       issueUpdate.title = issue.title;
+      issueUpdate.deadlineAt = issue.updatedAt;
     }
+    console.log(issueUpdate);
   }
 }

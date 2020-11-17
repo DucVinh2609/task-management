@@ -44,6 +44,8 @@ export class JobsService {
       job.userIds = jobs.userIds;
       job.finish = jobs.finish;
       job.deadlineAt = jobs.deadlineAt;
+      job.userIds = jobs.userIds;
     }
+    console.log(job);
   }
 }

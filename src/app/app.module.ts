@@ -12,6 +12,11 @@ import { AppComponent } from './app.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { QuillModule } from 'ngx-quill';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+
+registerLocaleData(en);
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +36,10 @@ import { QuillModule } from 'ngx-quill';
     {
       provide: NG_ENTITY_SERVICE_CONFIG,
       useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }
+    },
+    {
+      provide: NZ_I18N,
+      useValue: en_US
     }
   ],
   bootstrap: [AppComponent]

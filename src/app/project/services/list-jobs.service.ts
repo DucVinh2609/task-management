@@ -21,4 +21,8 @@ export class ListJobsService {
     }
     dummy.listJobs.push(listJobs)
   }
+
+  getIssueIdByListJobsId(listJobSId: number) {
+    return dummy.listJobs.filter(j => j.id == listJobSId)[0].issueId;
+  }
 }

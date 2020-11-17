@@ -7,9 +7,22 @@
     <mat-icon style="line-height: inherit;">access_time</mat-icon>
   </span>
   <span class="icon">
-    <mat-icon style="line-height: inherit;">group_add</mat-icon>
+    <mat-icon style="line-height: inherit;"
+              nz-dropdown
+              nzTrigger="click"
+              [nzDropdownMenu]="menu">group_add</mat-icon>
   </span>
   <span class="icon">
     <mat-icon style="line-height: inherit;">delete</mat-icon>
   </span>
 </div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul class="mt-3" nz-menu nzNoAnimation>
+    <ng-container *ngFor="let option of users">
+      <li nz-menu-item *ngIf="!isUserSelected(option)" (click)="addUserToJobs(option)">
+        <j-user [user]="option"></j-user>
+      </li>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>
