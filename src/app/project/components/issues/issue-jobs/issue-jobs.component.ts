@@ -16,6 +16,9 @@ export class IssueJobsComponent implements OnChanges {
   titleJobs: string = '';
   checked = false;
   users: JUser[] = [];
+  editMode = false;
+  date = '2019-08-18T08:38:22.329Z';
+
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
     private listJobsService: ListJobsService,
@@ -40,6 +43,11 @@ export class IssueJobsComponent implements OnChanges {
         }
       }
     }
+  }
+
+  addDeadlineToJobs(deadlineAt: Date): void {
+    this.job.deadlineAt = deadlineAt.toLocaleString();
+    this.jobsService.updateJobs(this.job);
   }
 
   isUserSelected(user: JUser): boolean {

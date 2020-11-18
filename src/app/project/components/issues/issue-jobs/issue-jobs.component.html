@@ -4,13 +4,16 @@
   <span style="margin-left: 20px; vertical-align: middle; line-height: 32px; font-size: 16px;">{{ titleJobs }}</span>
   <div class="flex-auto"></div>
   <span class="icon">
-    <mat-icon style="line-height: inherit;">access_time</mat-icon>
+    <mat-icon style="line-height: inherit;"
+              (click)="editMode=true">access_time
+    </mat-icon>
   </span>
   <span class="icon">
     <mat-icon style="line-height: inherit;"
               nz-dropdown
               nzTrigger="click"
-              [nzDropdownMenu]="menu">group_add</mat-icon>
+              [nzDropdownMenu]="menu">group_add
+    </mat-icon>
   </span>
   <span class="icon">
     <mat-icon style="line-height: inherit;">delete</mat-icon>
@@ -26,3 +29,35 @@
     </ng-container>
   </ul>
 </nz-dropdown-menu>
+<div style="display: flex; flex: 100%;">
+  <div style="display: flex; flex: 50%;">
+    <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold">
+      Assignees
+    </div>
+  
+    <j-button *ngFor="let assignee of assignees"
+              [className]="'btn-secondary mr-1-5 mb-2'">
+        <div class="flex items-center">
+            <j-user [user]="assignee"></j-user>
+            <svg-icon (click)="removeUser(assignee.id)"
+                      title="Remove user"
+                      [size]="20"
+                      [name]="'times'"
+                      class="text-textLight">
+            </svg-icon>
+        </div>
+    </j-button>
+  </div>
+  <div style="display: flex; flex: 50%;">
+
+  </div>
+</div>
+
+<nz-date-picker [nzOpen]="editMode"
+                *ngIf='editMode'
+                nzShowTime
+                (nzOnOpenChange)="editMode=false"
+                nzFormat="yyyy-MM-dd HH:mm:ss"
+                [(ngModel)]="date"
+                (ngModelChange)="addDeadlineToJobs($event)">
+</nz-date-picker>
