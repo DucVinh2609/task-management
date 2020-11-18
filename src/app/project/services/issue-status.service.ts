@@ -16,4 +16,11 @@ export class IssueStatusService {
       return this.status.status
     }
   }
+
+  getProjectIdByStatusId(statusId: number) {
+    this.status = dummy.status.filter(u => u.id == statusId)[0];
+    if (this.status) {
+      return this.status.projectId
+    }
+  }
 }

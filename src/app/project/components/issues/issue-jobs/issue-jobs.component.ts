@@ -3,7 +3,6 @@ import { JJobs } from '@trungk18/interface/job';
 import { JUser } from '@trungk18/interface/user';
 import { JobsService } from '@trungk18/project/services/jobs.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
-import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
 import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
@@ -13,60 +12,95 @@ import { UsersService } from '@trungk18/project/services/users.service';
 })
 export class IssueJobsComponent implements OnChanges {
   @Input() job: JJobs;
+  @Input() users: JUser[];
   titleJobs: string = '';
   checked = false;
-  users: JUser[] = [];
+  assignees: JUser[] = [];
   editMode = false;
   date = '2019-08-18T08:38:22.329Z';
+  checkAssignees: boolean = false;
+  checkDeadline: boolean = false;
 
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
-    private listJobsService: ListJobsService,
     private usersService: UsersService) { }
 
   ngOnInit(): void {
+    this.getData()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.getData()
+  }
+
+  getData() {
     this.titleJobs = this.job.name;
-    this.checked = this.job.finish;
-    console.log(this.job);
-    let issueId = this.listJobsService.getIssueIdByListJobsId(this.job.listJobsId);
-    if (issueId) {
-      let userIds = this.issuesService.getListUsersInIssue(issueId);
-      if (userIds) {
-        for (let u in userIds ) {
-          let user = this.usersService.getUsersById(userIds[u]);
-          if (user) {
-            this.users.push(user);
-          }
+
+    this.assignees = [];
+    let userIds = this.jobsService.getListUsersInJob(this.job.id);
+    if (userIds) {
+      for (let u in userIds ) {
+        let user = this.usersService.getUsersById(userIds[u]);
+        if (user) {
+          this.assignees.push(user);
         }
       }
     }
+
+    if (this.assignees.length != 0) {
+      this.checkAssignees = true;
+    }
+    if (this.editMode) {
+      this.checkDeadline = true;
+    }
+  }
+
+  AddDeadline() {
+    this.editMode = true;
   }
 
   addDeadlineToJobs(deadlineAt: Date): void {
-    this.job.deadlineAt = deadlineAt.toLocaleString();
-    this.jobsService.updateJobs(this.job);
+    if (deadlineAt) {
+      this.job.deadlineAt = deadlineAt.toLocaleString();
+      this.jobsService.updateJobs(this.job);
+    }
   }
 
   isUserSelected(user: JUser): boolean {
-    if (!this.job.userIds) {
-      this.job.userIds = [];
+    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
+    if (!userIdsInJobs) {
+      userIdsInJobs = [];
     }
-    return this.job.userIds.includes(user.id);
+    return userIdsInJobs.includes(user.id);
   }
 
   addUserToJobs(user: JUser) {
-    if (!this.job.userIds) {
-      this.job.userIds = [];
+    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
+    if (!userIdsInJobs) {
+      userIdsInJobs = [];
     }
-    this.job.userIds.push(user.id);
-    this.jobsService.updateJobs(this.job);
+    this.jobsService.updateJobs({
+      ...this.job,
+      userIds: [...userIdsInJobs, user.id]
+    });
+    this.getData();
+  }
+
+  removeUser(userId: string) {
+    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
+    let newUserIds = userIdsInJobs.filter((x) => x !== userId);
+    this.jobsService.updateJobs({
+      ...this.job,
+      userIds: newUserIds
+    });
+    this.getData();
   }
 
   checkFinish() {
-    this.job.finish = this.checked;
-    this.jobsService.updateJobs(this.job);
+    this.jobsService.updateJobs({
+      ...this.job,
+      finish: this.checked
+    });
+    this.getData();
   }
 }

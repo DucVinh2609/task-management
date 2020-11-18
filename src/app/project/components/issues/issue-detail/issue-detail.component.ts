@@ -7,6 +7,9 @@ import { IssueAddWorkListModalComponent } from '../issue-add-work-list-modal/iss
 import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-model';
 import { JListJobs } from '@trungk18/interface/list-job';
 import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
+import { IssuesService } from '@trungk18/project/services/issues.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { JUser } from '@trungk18/interface/user';
 
 @Component({
   selector: 'issue-detail',
@@ -21,16 +24,29 @@ export class IssueDetailComponent implements OnInit {
   @Output() onOpenIssue = new EventEmitter<string>();
   @Output() onDelete = new EventEmitter<DeleteIssueModel>();
   workLists: JListJobs[] = [];
+  users: JUser[] = [];
 
   constructor(public projectQuery: ProjectQuery,
     private _modalService: NzModalService,
-    private listJobsService: ListJobsService) {}
+    private listJobsService: ListJobsService,
+    private issuesService: IssuesService,
+    private usersService: UsersService) {}
 
   ngOnInit(): void {}
 
   ngAfterContentChecked() {
     if (this.issue) {
       this.workLists = this.listJobsService.getWorkListsInIssue(this.issue.id);
+      let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
+      this.users = [];
+      if (userIds) {
+        for (let u in userIds ) {
+          let user = this.usersService.getUsersById(userIds[u]);
+          if (user) {
+            this.users.push(user);
+          }
+        }
+      }
     }
   }
 

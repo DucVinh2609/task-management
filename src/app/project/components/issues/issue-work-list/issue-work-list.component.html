@@ -12,7 +12,7 @@
     <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
   </section>
 
-  <issue-jobs *ngFor="let job of jobs" [job]="job" cdkDrag [cdkDragData]="job">
+  <issue-jobs *ngFor="let job of jobs" [job]="job" [users]="users" cdkDrag [cdkDragData]="job">
   </issue-jobs>
 
   <ng-container *ngIf="!checkAddJob">

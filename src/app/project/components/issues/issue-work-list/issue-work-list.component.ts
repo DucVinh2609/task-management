@@ -3,6 +3,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { JListJobs } from '@trungk18/interface/list-job';
 import { JJobs } from '@trungk18/interface/job';
 import { JobsService } from '@trungk18/project/services/jobs.service';
+import { JUser } from '@trungk18/interface/user';
 
 @Component({
   selector: 'issue-work-list',
@@ -12,6 +13,7 @@ import { JobsService } from '@trungk18/project/services/jobs.service';
 @UntilDestroy()
 export class IssueWorkListComponent implements OnChanges {
   @Input() workList: JListJobs;
+  @Input() users: JUser[];
   title: string = '';
   listJobsId: number;
   issueId: string = '';

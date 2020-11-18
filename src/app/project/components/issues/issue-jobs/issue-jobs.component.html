@@ -5,7 +5,7 @@
   <div class="flex-auto"></div>
   <span class="icon">
     <mat-icon style="line-height: inherit;"
-              (click)="editMode=true">access_time
+              (click)="AddDeadline()">access_time
     </mat-icon>
   </span>
   <span class="icon">
@@ -29,35 +29,34 @@
     </ng-container>
   </ul>
 </nz-dropdown-menu>
-<div style="display: flex; flex: 100%;">
-  <div style="display: flex; flex: 50%;">
-    <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold">
-      Assignees
-    </div>
-  
-    <j-button *ngFor="let assignee of assignees"
-              [className]="'btn-secondary mr-1-5 mb-2'">
-        <div class="flex items-center">
-            <j-user [user]="assignee"></j-user>
-            <svg-icon (click)="removeUser(assignee.id)"
-                      title="Remove user"
-                      [size]="20"
-                      [name]="'times'"
-                      class="text-textLight">
-            </svg-icon>
-        </div>
-    </j-button>
-  </div>
-  <div style="display: flex; flex: 50%;">
 
+<div style="display: flex; flex: 100%; margin-bottom: 10px; margin-left: 40px;">
+  <div style="display: block; flex: 50%;">
+    <ng-container *ngIf="checkAssignees">
+      <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
+        Assignees
+      </div>
+      
+      <j-button *ngFor="let assignee of assignees" [className]="'btn-secondary mr-1-5 mb-2'">
+        <div class="flex items-center">
+          <j-user [user]="assignee"></j-user>
+          <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
+          </svg-icon>
+        </div>
+      </j-button>
+    </ng-container>
+  </div>
+  <div style="display: block; flex: 50%;">
+    <ng-container *ngIf="checkDeadline">
+      <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
+        Deadline
+      </div>
+      <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="editMode=true"
+        nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" (ngModelChange)="addDeadlineToJobs($event)">
+      </nz-date-picker>
+    </ng-container>
   </div>
 </div>
 
-<nz-date-picker [nzOpen]="editMode"
-                *ngIf='editMode'
-                nzShowTime
-                (nzOnOpenChange)="editMode=false"
-                nzFormat="yyyy-MM-dd HH:mm:ss"
-                [(ngModel)]="date"
-                (ngModelChange)="addDeadlineToJobs($event)">
-</nz-date-picker>
+<hr>
+<br>

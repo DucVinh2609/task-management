@@ -37,6 +37,10 @@ export class JobsService {
     }
   }
 
+  getListUsersInJob(jobId: number) {
+    return dummy.jobs.filter(j => j.id == jobId)[0].userIds;
+  }
+
   updateJobs(jobs: JJobs) {
     let job = dummy.jobs.filter(j => j.id == jobs.id)[0];
     if(job) {
@@ -47,6 +51,5 @@ export class JobsService {
       job.userIds = jobs.userIds;
       job.deadlineAt = jobs.deadlineAt;
     }
-    console.log(job);
   }
 }

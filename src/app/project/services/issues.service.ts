@@ -31,6 +31,7 @@ export class IssuesService {
       issueUpdate.issueStatusId = issue.issueStatusId;
       issueUpdate.title = issue.title;
       issueUpdate.deadlineAt = issue.updatedAt;
+      issueUpdate.userIds = issue.userIds;
     }
     console.log(issueUpdate);
   }

@@ -29,6 +29,7 @@
 
             <issue-work-list *ngFor="let workList of workLists"
                 [workList]="workList"
+                [users]="users"
                 cdkDrag
                 [cdkDragData]="workList">
             </issue-work-list>
@@ -51,8 +52,7 @@
             <issue-reporter [issue]="issue"
                             [users]="projectQuery.users$ | async">
             </issue-reporter>
-            <issue-assignees [issue]="issue"
-                             [users]="projectQuery.users$ | async">
+            <issue-assignees [issue]="issue">
             </issue-assignees>
             <issue-priority [issue]="issue"></issue-priority>
 
