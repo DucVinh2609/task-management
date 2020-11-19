@@ -18,7 +18,7 @@ import { IssueTypesService } from 'src/app/project/services/issue-types.service'
 @UntilDestroy()
 export class IssueCardComponent implements OnChanges {
   @Input() issue: JIssue;
-  assignees: JUser[] = [];
+  @Input() assignees: JUser[];
   issueTypeIcon: string;
   priorityIcon: IssuePriorityIcon;
   issueTypesName: string = '';
@@ -30,17 +30,16 @@ export class IssueCardComponent implements OnChanges {
 
   ngOnInit(): void {
     this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
-    this.issue.userIds.forEach(users => {
-      this.assignees.push(this.usersService.getUsersById(users))
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
-    if (issueChange?.currentValue !== issueChange.previousValue) {
-      this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
-      this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
-    }
+    // if (issueChange?.currentValue !== issueChange.previousValue) {
+    //   this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
+    //   this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
+    // }
+    this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
+    this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
   }
 
   openIssueModal(issueId: string) {

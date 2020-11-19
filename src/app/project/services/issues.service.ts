@@ -23,6 +23,10 @@ export class IssuesService {
     return dummy.issues.filter(j => j.id == issueId)[0].userIds;
   }
 
+  getInfoIssue(issueId: string) {
+    return dummy.issues.filter(j => j.id == issueId)[0];
+  }
+
   updateIssue(issue: JIssue) {
     let issueUpdate = dummy.issues.filter(i => i.id == issue.id)[0];
     let updatedAt = DateUtil.getNow();
@@ -32,6 +36,7 @@ export class IssuesService {
       issueUpdate.title = issue.title;
       issueUpdate.deadlineAt = issue.updatedAt;
       issueUpdate.userIds = issue.userIds;
+      issueUpdate.issuePriorityId = issue.issuePriorityId;
     }
     console.log(issueUpdate);
   }

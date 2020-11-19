@@ -5,6 +5,7 @@ import { IssueUtil } from '@trungk18/project/utils/issue';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { ProjectConst } from '@trungk18/project/config/const';
 import { IssuePrioritiesService } from '@trungk18/project/services/issue-priorities.service';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'issue-priority',
@@ -23,7 +24,8 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
 
   constructor(private _projectService: ProjectService,
-    private issuePrioritiesService: IssuePrioritiesService) {}
+    private issuePrioritiesService: IssuePrioritiesService,
+    private issuesService: IssuesService) {}
 
   ngOnInit() {
     this.priorities = ProjectConst.PrioritiesWithIcon;
@@ -39,10 +41,9 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
 
   updateIssue(priority) {
     this.selectedPriority = priority;
-    this._projectService.updateIssue({
-      ...this.issue,
-      issuePriorityId: this.selectedPriority
-    });
+    let newIssue: JIssue = { ...this.issue };
+    newIssue.issuePriorityId = priority;
+    this.issuesService.updateIssue(newIssue);
   }
 
   getIssuePriorities(issuePrioritiesId) {

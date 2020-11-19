@@ -32,10 +32,13 @@ export class IssueDetailComponent implements OnInit {
     private issuesService: IssuesService,
     private usersService: UsersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   ngAfterContentChecked() {
     if (this.issue) {
+      this.issue = this.issuesService.getInfoIssue(this.issue.id);
       this.workLists = this.listJobsService.getWorkListsInIssue(this.issue.id);
       let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
       this.users = [];

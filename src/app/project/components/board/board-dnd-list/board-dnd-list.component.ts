@@ -11,6 +11,8 @@ import { IssueUtil } from '@trungk18/project/utils/issue';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { IssuesService } from '@trungk18/project/services/issues.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { JUser } from '@trungk18/interface/user';
 
 @Component({
   selector: '[board-dnd-list]',
@@ -43,7 +45,8 @@ export class BoardDndListComponent implements OnChanges {
   constructor(private _projectService: ProjectService,
     private _filterQuery: FilterQuery,
     public authQuery: AuthQuery,
-    private issuesService: IssuesService) {
+    private issuesService: IssuesService,
+    private usersService: UsersService) {
     }
 
   ngOnInit(): void {
@@ -76,6 +79,14 @@ export class BoardDndListComponent implements OnChanges {
       newIssue.issueStatusId = event.container.id['id'];
       this.issuesService.updateIssue(newIssue);
     }
+  }
+
+  getAssigneesOfIssues(issue: JIssue) {
+    let assignees: JUser[] = [];
+    issue.userIds.forEach(users => {
+      assignees.push(this.usersService.getUsersById(users))
+    });
+    return assignees;
   }
 
   private updateListPosition(newList: JIssue[]) {

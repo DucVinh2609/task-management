@@ -10,6 +10,7 @@
         (cdkDropListDropped)="drop($event)">
         <issue-card *ngFor="let issue of issues"
             [issue]="issue"
+            [assignees]="getAssigneesOfIssues(issue)"
             cdkDrag
             [cdkDragData]="issue">
         </issue-card>
