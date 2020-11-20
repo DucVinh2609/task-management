@@ -45,6 +45,7 @@ export class ProjectQuery extends Query<ProjectState> {
       delay(500),
       map((issues) => {
         let issue = issues.find(x => x.id === issueId);
+        console.log(issue);
         return issue;
       })
     )

@@ -10,6 +10,9 @@ import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
 import { JUser } from '@trungk18/interface/user';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: 'issue-detail',
@@ -25,15 +28,24 @@ export class IssueDetailComponent implements OnInit {
   @Output() onDelete = new EventEmitter<DeleteIssueModel>();
   workLists: JListJobs[] = [];
   users: JUser[] = [];
+  projectsId: number;
+  nameProject: string = '';
 
   constructor(public projectQuery: ProjectQuery,
     private _modalService: NzModalService,
     private listJobsService: ListJobsService,
     private issuesService: IssuesService,
-    private usersService: UsersService) {}
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService,
+    public authQuery: AuthQuery) {
+      console.log("SSSSS");
+      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+      console.log(this.nameProject);
+    }
 
   ngOnInit(): void {
-    
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
   }
 
   ngAfterContentChecked() {

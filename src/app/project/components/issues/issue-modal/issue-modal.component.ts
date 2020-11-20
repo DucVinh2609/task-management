@@ -12,7 +12,7 @@ import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-mode
   styleUrls: ['./issue-modal.component.scss']
 })
 export class IssueModalComponent implements OnInit {
-  @Input() issue$: Observable<JIssue>;
+  @Input() issue: JIssue;
 
   constructor(
     private _modal: NzModalRef,

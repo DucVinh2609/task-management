@@ -34,21 +34,22 @@
                 [cdkDragData]="workList">
             </issue-work-list>
 
-            <div class="pt-4 pb-2 text-15 font-medium">Comments</div>
-            <issue-comments [issue]="issue"></issue-comments>
         </div>
         <div class="sm:w-full md:w-5/12 lg:w-2/6 pt-1">
-            <j-button className="btn-add-work-list" (click)="openAddWorkListModal()">
-                <mat-icon>fact_check</mat-icon>
-                <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>
-            </j-button>
-            <br>
+            <ng-container *ngIf="authQuery.user$ | async as user">
+                <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+                    <j-button className="btn-add-work-list" (click)="openAddWorkListModal()">
+                        <mat-icon>fact_check</mat-icon>
+                        <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>
+                    </j-button>
+                    <br>
+                </ng-container>
+            </ng-container>
             <!-- <j-button className="btn-add-work-list">
                 <mat-icon>access_time</mat-icon>
                 <span style="vertical-align: super; margin-left: 10px;"> Deadline </span>
             </j-button> -->
             <issue-deadline [issue]="issue"></issue-deadline>
-            <issue-status [issue]="issue"></issue-status>
             <issue-reporter [issue]="issue"
                             [users]="projectQuery.users$ | async">
             </issue-reporter>

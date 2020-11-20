@@ -5,6 +5,9 @@ import { JUser } from '@trungk18/interface/user';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
 import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: 'issue-assignees',
@@ -16,13 +19,22 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
   users: JUser[] = [];
   assignees: JUser[] = [];
+  projectsId: number;
+  nameProject: string = '';
 
   constructor(private issuesService: IssuesService,
     private usersService: UsersService,
-    private issueStatusService: IssueStatusService) {}
+    private issueStatusService: IssueStatusService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService,
+    public authQuery: AuthQuery) {
+      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+    }
 
   ngOnInit(): void {
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.getData();
+    console.log(this.assignees);
   }
 
   ngOnChanges(changes: SimpleChanges) {

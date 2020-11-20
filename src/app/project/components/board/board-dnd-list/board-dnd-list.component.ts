@@ -13,6 +13,8 @@ import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
 import { JUser } from '@trungk18/interface/user';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: '[board-dnd-list]',
@@ -29,6 +31,9 @@ export class BoardDndListComponent implements OnChanges {
   issues: JIssue[] = [];
   checkAddTask: boolean = false;
   titleTask: string = '';
+  projectsId: number;
+  nameProject: string = '';
+  checkAdmin: boolean = false;
 
   get issuesCount(): number {
     return this.issues.length;
@@ -46,10 +51,19 @@ export class BoardDndListComponent implements OnChanges {
     private _filterQuery: FilterQuery,
     public authQuery: AuthQuery,
     private issuesService: IssuesService,
-    private usersService: UsersService) {
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService) {
+      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+      console.log(this.nameProject);
     }
 
   ngOnInit(): void {
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.authQuery.user$.subscribe(user => {
+      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
+      console.log(this.projectsId);
+    });
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))
       .subscribe(([issues, filter]) => {

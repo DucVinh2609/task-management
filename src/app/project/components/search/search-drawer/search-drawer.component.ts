@@ -9,6 +9,7 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, debounceTime, startWith } from 'rxjs/operators';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IssueModalComponent } from '../../issues/issue-modal/issue-modal.component';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'search-drawer',
@@ -28,7 +29,8 @@ export class SearchDrawerComponent implements OnInit {
   constructor(
     private _projectQuery: ProjectQuery,
     private _drawer: NzDrawerRef,
-    private _modalService: NzModalService
+    private _modalService: NzModalService,
+    private issuesService: IssuesService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class SearchDrawerComponent implements OnInit {
       nzClosable: false,
       nzFooter: null,
       nzComponentParams: {
-        issue$: this._projectQuery.issueById$(issue.id)
+        issue: this.issuesService.getInfoIssue(issue.id)
       }
     });
     this.closeDrawer();
