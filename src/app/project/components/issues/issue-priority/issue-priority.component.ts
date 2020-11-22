@@ -6,6 +6,7 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 import { ProjectConst } from '@trungk18/project/config/const';
 import { IssuePrioritiesService } from '@trungk18/project/services/issue-priorities.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'issue-priority',
@@ -22,10 +23,12 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
   priorities: IssuePriorityIcon[];
 
   @Input() issue: JIssue;
+  @Input() projectsId: number;
 
   constructor(private _projectService: ProjectService,
     private issuePrioritiesService: IssuePrioritiesService,
-    private issuesService: IssuesService) {}
+    private issuesService: IssuesService,
+    public authQuery: AuthQuery) {}
 
   ngOnInit() {
     this.priorities = ProjectConst.PrioritiesWithIcon;

@@ -1,6 +1,19 @@
-<textarea class="textarea-inline-control"
-          cdkTextareaAutosize
-          [formControl]="titleControl"
-          [rows]="1"
-          (blur)="onBlur()">
-</textarea>
+<ng-container *ngIf="authQuery.user$ | async as user">
+  <ng-container *ngIf="!user.projectAdmin.includes(projectsId)">
+    <textarea class="textarea-inline-control"
+              cdkTextareaAutosize
+              [formControl]="titleControl"
+              [rows]="1"
+              (blur)="onBlur()"
+              disabled>
+    </textarea>
+  </ng-container>
+  <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+    <textarea class="textarea-inline-control"
+              cdkTextareaAutosize
+              [formControl]="titleControl"
+              [rows]="1"
+              (blur)="onBlur()">
+    </textarea>
+  </ng-container>
+</ng-container>

@@ -1,23 +1,27 @@
 <div class="flex issue-job">
-  <label nz-checkbox [(ngModel)]="checked" style="margin-left: 9px; line-height: 37px; cursor: pointer;"
+  <label nz-checkbox [(ngModel)]="checked" [nzDisabled]="isDisabledButton" style="margin-left: 9px; line-height: 37px; cursor: pointer;"
     (change) = "checkFinish()"></label>
   <span style="margin-left: 20px; vertical-align: middle; line-height: 32px; font-size: 16px;">{{ titleJobs }}</span>
   <div class="flex-auto"></div>
-  <span class="icon">
-    <mat-icon style="line-height: inherit;"
-              (click)="AddDeadline()">access_time
-    </mat-icon>
-  </span>
-  <span class="icon">
-    <mat-icon style="line-height: inherit;"
-              nz-dropdown
-              nzTrigger="click"
-              [nzDropdownMenu]="menu">group_add
-    </mat-icon>
-  </span>
-  <span class="icon">
-    <mat-icon style="line-height: inherit;">delete</mat-icon>
-  </span>
+  <ng-container *ngIf="authQuery.user$ | async as user">
+    <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+      <span class="icon">
+        <mat-icon style="line-height: inherit;"
+                  (click)="AddDeadline()">access_time
+        </mat-icon>
+      </span>
+      <span class="icon">
+        <mat-icon style="line-height: inherit;"
+                  nz-dropdown
+                  nzTrigger="click"
+                  [nzDropdownMenu]="menu">group_add
+        </mat-icon>
+      </span>
+      <span class="icon">
+        <mat-icon style="line-height: inherit;">delete</mat-icon>
+      </span>
+    </ng-container>
+  </ng-container>
 </div>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -40,8 +44,12 @@
       <j-button *ngFor="let assignee of assignees" [className]="'btn-secondary mr-1-5 mb-2'">
         <div class="flex items-center">
           <j-user [user]="assignee"></j-user>
-          <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
-          </svg-icon>
+          <ng-container *ngIf="authQuery.user$ | async as user">
+            <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+              <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
+              </svg-icon>
+            </ng-container>
+          </ng-container>
         </div>
       </j-button>
     </ng-container>
@@ -51,8 +59,8 @@
       <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
         Deadline
       </div>
-      <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="editMode=true"
-        nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" (ngModelChange)="addDeadlineToJobs($event)">
+      <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="openDatePicker()"
+        nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" [nzDisabled]="isDisabledDeadline" (ngModelChange)="addDeadlineToJobs($event)">
       </nz-date-picker>
     </ng-container>
   </div>

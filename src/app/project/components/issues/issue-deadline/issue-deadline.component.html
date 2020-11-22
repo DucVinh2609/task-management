@@ -4,5 +4,6 @@
 <nz-date-picker nzShowTime
                 nzFormat="yyyy-MM-dd HH:mm:ss"
                 [(ngModel)]="deadline"
-                (nzOnOpenChange)="handleDeadlineOpenChange($event)">
+                (nzOnOpenChange)="handleDeadlineOpenChange($event)"
+                [nzDisabled]="isDisabledDeadline">
 </nz-date-picker>

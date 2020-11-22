@@ -64,7 +64,8 @@ export class IssueCardComponent implements OnChanges {
           nzClosable: false,
           nzFooter: null,
           nzComponentParams: {
-            issue: this.issuesService.getInfoIssue(issueId)
+            issue: this.issuesService.getInfoIssue(issueId),
+            projectsId: this.projectsId
           }
         });
       }

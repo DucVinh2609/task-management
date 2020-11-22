@@ -55,14 +55,12 @@ export class BoardDndListComponent implements OnChanges {
     private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
-      console.log(this.nameProject);
     }
 
   ngOnInit(): void {
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.authQuery.user$.subscribe(user => {
       this.checkAdmin = user.projectAdmin.includes(this.projectsId);
-      console.log(this.projectsId);
     });
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))

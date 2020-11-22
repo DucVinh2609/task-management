@@ -4,6 +4,7 @@ import { JUser } from '@trungk18/interface/user';
 import { JobsService } from '@trungk18/project/services/jobs.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'issue-jobs',
@@ -13,6 +14,7 @@ import { UsersService } from '@trungk18/project/services/users.service';
 export class IssueJobsComponent implements OnChanges {
   @Input() job: JJobs;
   @Input() users: JUser[];
+  @Input() projectsId: number;
   titleJobs: string = '';
   checked = false;
   assignees: JUser[] = [];
@@ -20,10 +22,13 @@ export class IssueJobsComponent implements OnChanges {
   date = '2019-08-18T08:38:22.329Z';
   checkAssignees: boolean = false;
   checkDeadline: boolean = false;
+  isDisabledButton: boolean = true;
+  isDisabledDeadline: boolean = true;
 
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
-    private usersService: UsersService) { }
+    private usersService: UsersService,
+    public authQuery: AuthQuery) { }
 
   ngOnInit(): void {
     this.getData()
@@ -35,9 +40,16 @@ export class IssueJobsComponent implements OnChanges {
 
   getData() {
     this.titleJobs = this.job.name;
-
     this.assignees = [];
     let userIds = this.jobsService.getListUsersInJob(this.job.id);
+    this.authQuery.user$.subscribe(user => {
+      if (user.projectAdmin.includes(this.projectsId)) {
+        this.isDisabledDeadline = false;
+      }
+      if (userIds.includes(user.id) || user.projectAdmin.includes(this.projectsId)) {
+        this.isDisabledButton = false;
+      }
+    });
     if (userIds) {
       for (let u in userIds ) {
         let user = this.usersService.getUsersById(userIds[u]);
@@ -50,7 +62,7 @@ export class IssueJobsComponent implements OnChanges {
     if (this.assignees.length != 0) {
       this.checkAssignees = true;
     }
-    if (this.editMode) {
+    if (this.editMode || this.job.deadlineAt) {
       this.checkDeadline = true;
     }
   }
@@ -102,5 +114,11 @@ export class IssueJobsComponent implements OnChanges {
       finish: this.checked
     });
     this.getData();
+  }
+
+  openDatePicker() {
+    if(this.isDisabledDeadline) {
+      this.editMode = false;
+    } else this.editMode = true;
   }
 }

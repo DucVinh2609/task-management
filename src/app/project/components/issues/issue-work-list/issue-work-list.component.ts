@@ -4,6 +4,7 @@ import { JListJobs } from '@trungk18/interface/list-job';
 import { JJobs } from '@trungk18/interface/job';
 import { JobsService } from '@trungk18/project/services/jobs.service';
 import { JUser } from '@trungk18/interface/user';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'issue-work-list',
@@ -14,6 +15,7 @@ import { JUser } from '@trungk18/interface/user';
 export class IssueWorkListComponent implements OnChanges {
   @Input() workList: JListJobs;
   @Input() users: JUser[];
+  @Input() projectsId: number;
   title: string = '';
   listJobsId: number;
   issueId: string = '';
@@ -22,7 +24,8 @@ export class IssueWorkListComponent implements OnChanges {
   percent = 0;
   jobs: JJobs[] = [];
 
-  constructor(private jobsService: JobsService) { }
+  constructor(private jobsService: JobsService,
+    public authQuery: AuthQuery) { }
 
   ngOnInit(): void {
   }

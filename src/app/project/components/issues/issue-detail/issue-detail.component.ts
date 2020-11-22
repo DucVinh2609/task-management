@@ -21,6 +21,7 @@ import { ProjectsService } from '@trungk18/project/services/projects.service';
 })
 export class IssueDetailComponent implements OnInit {
   @Input() issue: JIssue;
+  @Input() projectsId: number;
   @Input() isShowFullScreenButton: boolean;
   @Input() isShowCloseButton: boolean;
   @Output() onClosed = new EventEmitter();
@@ -28,7 +29,6 @@ export class IssueDetailComponent implements OnInit {
   @Output() onDelete = new EventEmitter<DeleteIssueModel>();
   workLists: JListJobs[] = [];
   users: JUser[] = [];
-  projectsId: number;
   nameProject: string = '';
 
   constructor(public projectQuery: ProjectQuery,
@@ -39,13 +39,9 @@ export class IssueDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService,
     public authQuery: AuthQuery) {
-      console.log("SSSSS");
-      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
-      console.log(this.nameProject);
     }
 
   ngOnInit(): void {
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
   }
 
   ngAfterContentChecked() {

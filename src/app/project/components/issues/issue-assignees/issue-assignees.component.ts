@@ -17,24 +17,20 @@ import { ProjectsService } from '@trungk18/project/services/projects.service';
 @UntilDestroy()
 export class IssueAssigneesComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
+  @Input() projectsId: number;
   users: JUser[] = [];
   assignees: JUser[] = [];
-  projectsId: number;
   nameProject: string = '';
 
   constructor(private issuesService: IssuesService,
     private usersService: UsersService,
     private issueStatusService: IssueStatusService,
-    private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService,
     public authQuery: AuthQuery) {
-      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
   ngOnInit(): void {
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.getData();
-    console.log(this.assignees);
   }
 
   ngOnChanges(changes: SimpleChanges) {

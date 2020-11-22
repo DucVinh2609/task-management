@@ -13,6 +13,7 @@ import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-mode
 })
 export class IssueModalComponent implements OnInit {
   @Input() issue: JIssue;
+  @Input() projectsId: number;
 
   constructor(
     private _modal: NzModalRef,
@@ -20,7 +21,8 @@ export class IssueModalComponent implements OnInit {
     private _projectService: ProjectService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   closeModal() {
     this._modal.close();

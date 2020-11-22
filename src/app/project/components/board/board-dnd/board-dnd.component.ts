@@ -19,16 +19,20 @@ export class BoardDndComponent implements OnInit {
   titleListTask: string = '';
   nameProject: string = '';
   projectsId: number;
+  checkAdmin: boolean = false;
 
   constructor(public projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
     private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
-    }
+  }
 
   ngOnInit(): void {
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.authQuery.user$.subscribe(user => {
+      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
+    });
   }
 
   addDndList() {
