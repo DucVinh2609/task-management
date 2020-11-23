@@ -56,7 +56,8 @@ export class IssueWorkListComponent implements OnChanges {
         finish: false,
         userIds: null,
         deadlineAt: null,
-        listJobsId: this.listJobsId
+        listJobsId: this.listJobsId,
+        description: null
       };
 
       this.jobsService.addJobs(job);

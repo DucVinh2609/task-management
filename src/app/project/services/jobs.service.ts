@@ -37,6 +37,10 @@ export class JobsService {
     }
   }
 
+  getJobsInfo(jobId: number) {
+    return dummy.jobs.filter(j => j.id == jobId)[0];
+  }
+
   getListUsersInJob(jobId: number) {
     return dummy.jobs.filter(j => j.id == jobId)[0].userIds;
   }

@@ -12,7 +12,7 @@ export class IssuesService {
   constructor() { }
 
   getAllIssueInStatus (statusId: number) {
-    return dummy.issues.filter(j => j.issueStatusId == statusId);
+    return dummy.issues.filter(j => j.issueStatusId == statusId).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);;
   }
 
   addIssue(issue: JIssue) {

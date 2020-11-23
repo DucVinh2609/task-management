@@ -18,6 +18,13 @@ export class UsersService {
     }
   }
 
+  updateAdminProjects(userId: string, projectId: number) {
+    let user = dummy.users.filter(u => u.id == userId)[0];
+    if(user) {
+      user.projectAdmin.push(projectId);
+    }
+  }
+
   getUsersInProjects(projectId: number) {
     this.listUserProjects = dummy.userProjects.filter(u => u.projectId == projectId);
     this.listUserProjects.forEach(users => {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { arrayRemove, arrayUpsert, setLoading } from '@datorama/akita';
 import { JComment } from '@trungk18/interface/comment';
 import { JIssue, JIssueTypes } from '@trungk18/interface/issue';
-import { JProject, JProjectDemo } from '@trungk18/interface/project';
+import { JProject, JProjects } from '@trungk18/interface/project';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import dummy from 'src/assets/data/project.json'
 })
 export class ProjectService {
   baseUrl: string;
-  projects: JProjectDemo[] = dummy.projects;
+  projects: JProjects[] = dummy.projects;
   issues: JIssue[] = dummy.issues;
 
   constructor(private _http: HttpClient,
@@ -51,7 +51,7 @@ export class ProjectService {
       .subscribe();
   }
 
-  createProject(project: JProjectDemo) {
+  createProject(project: JProjects) {
     this.projects.push(project);
   }
 

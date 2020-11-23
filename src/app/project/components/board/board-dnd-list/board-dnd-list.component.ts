@@ -12,9 +12,11 @@ import { DateUtil } from '@trungk18/project/utils/date';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
+import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
 import { JUser } from '@trungk18/interface/user';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: '[board-dnd-list]',
@@ -27,13 +29,13 @@ export class BoardDndListComponent implements OnChanges {
   @Input() status: JIssueStatus;
   @Input() currentUserId: string;
   @Input() issues$: Observable<JIssue[]>;
-  
   issues: JIssue[] = [];
   checkAddTask: boolean = false;
   titleTask: string = '';
   projectsId: number;
   nameProject: string = '';
   checkAdmin: boolean = false;
+  statusName: string = '';
 
   get issuesCount(): number {
     return this.issues.length;
@@ -53,11 +55,13 @@ export class BoardDndListComponent implements OnChanges {
     private issuesService: IssuesService,
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
-    private projectsService: ProjectsService) {
+    private projectsService: ProjectsService,
+    private issueStatusService: IssueStatusService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
   ngOnInit(): void {
+    this.statusName = this.issueStatusName;
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.authQuery.user$.subscribe(user => {
       this.checkAdmin = user.projectAdmin.includes(this.projectsId);
@@ -166,5 +170,16 @@ export class BoardDndListComponent implements OnChanges {
   cancelAddTask() {
     this.checkAddTask = false;
     this.titleTask = '';
+  }
+
+  onBlur() {
+    // this.issuesService.updateIssue({
+    //   ...this.issue,
+    //   title: this.titleControl.value
+    // });
+    this.issueStatusService.updateIssueStatus({
+      ...this.status,
+      status: this.statusName
+    });
   }
 }

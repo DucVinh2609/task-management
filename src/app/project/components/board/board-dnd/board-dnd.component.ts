@@ -5,6 +5,7 @@ import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
+import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
 import dummy from 'src/assets/data/project.json';
 
 @UntilDestroy()
@@ -14,7 +15,7 @@ import dummy from 'src/assets/data/project.json';
   styleUrls: ['./board-dnd.component.scss']
 })
 export class BoardDndComponent implements OnInit {
-  issueStatuses: JIssueStatus[] = dummy.status.sort((a, b) => (a.position > b.position) ? 1 : -1);
+  issueStatuses: JIssueStatus[] = [];
   checkAddDndList: boolean = false;
   titleListTask: string = '';
   nameProject: string = '';
@@ -24,15 +25,22 @@ export class BoardDndComponent implements OnInit {
   constructor(public projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
     private activatedRoute: ActivatedRoute,
-    private projectsService: ProjectsService) {
+    private projectsService: ProjectsService,
+    private issueStatusService: IssueStatusService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+      this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+      this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+      this.authQuery.user$.subscribe(user => {
+        this.checkAdmin = user.projectAdmin.includes(this.projectsId);
+      });
   }
 
   ngOnInit(): void {
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.authQuery.user$.subscribe(user => {
-      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
-    });
+
+  }
+
+  getData() {
+    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
   }
 
   addDndList() {
@@ -40,15 +48,10 @@ export class BoardDndComponent implements OnInit {
   }
 
   addListTask() {
-    let newListTask: JIssueStatus = {
-      "id": 5,
-      "position": 4,
-      "status": this.titleListTask,
-      "projectId": this.projectsId
-    }
-    this.issueStatuses.push(newListTask);
+    this.issueStatusService.createIssueStatus(this.titleListTask, this.projectsId);
     this.checkAddDndList = false;
     this.titleListTask = '';
+    this.getData();
   }
 
   cancelAddListTask() {
