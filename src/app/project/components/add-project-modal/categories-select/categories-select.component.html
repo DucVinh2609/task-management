@@ -1,0 +1,12 @@
+<nz-select class="w-full" [formControl]="control" [nzCustomTemplate]="defaultTemplate">
+  <nz-option nzCustomContent *ngFor="let category of categories" [nzValue]="category.id">
+    <div class="flex items-center">
+      <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ category.category }}</span>
+    </div>
+  </nz-option>
+</nz-select>
+<ng-template #defaultTemplate let-selected>
+  <div class="flex items-center">
+    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ getCategory(selected.nzValue) }}</span>
+  </div>
+</ng-template>

@@ -6,7 +6,7 @@
         </j-input>
     </form>
     <div class="flex flex-row mr-3">
-        <div *ngFor="let user of projectQuery.users$ | async"
+        <div *ngFor="let user of listUsersInProjects"
              class="lift-avatar"
              nz-tooltip
              [nzTooltipPlacement]="'bottom'"

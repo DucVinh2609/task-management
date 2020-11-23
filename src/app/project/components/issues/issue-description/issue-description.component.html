@@ -23,7 +23,7 @@
 <ng-template #readonlyModeTmpl>
     <div class="ql-snow content-readonly"
          *ngIf="!isEditing"
-         (click)="setEditMode(true)">
+         (click)="setEditMode()">
         <div class="ql-editor"
              [innerHTML]="issue.description || 'Click to add description'"></div>
         <div class="icon-edit">

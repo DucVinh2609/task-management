@@ -14,7 +14,7 @@ export class IssueTypeComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
 
   get selectedIssueTypeIcon(): string {
-    return IssueUtil.getIssueTypeIcon(this.issue.type);
+    return IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
   }
 
   issueTypes: IssueTypeWithIcon[];
@@ -27,14 +27,14 @@ export class IssueTypeComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {}
 
-  updateIssue(issueType: IssueType) {
+  updateIssue(issueTypeId) {
     this._projectService.updateIssue({
       ...this.issue,
-      type: issueType
+      issueTypeId: issueTypeId
     });
   }
 
-  isTypeSelected(type: IssueType) {
-    return this.issue.type === type;
+  isTypeSelected(issueTypeId) {
+    return this.issue.issueTypeId === issueTypeId;
   }
 }

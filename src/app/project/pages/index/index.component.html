@@ -1,0 +1,44 @@
+<div class="w-full h-full flex">
+  <div class="navigation">
+    <div class="flex flex-row overflow-hidden h-full">
+      <aside class="navbarLeft">
+        <div class="navbarLeft-content">
+          <mat-icon style="color: white; margin-left: 15px; font-size: 35px; cursor: pointer;" (click)="home()">home</mat-icon>
+
+          <div class="flex-auto"></div>
+          <div class="item" *ngIf="authQuery.user$ | async as user">
+            <div nz-tooltip [nzTooltipTitle]="user.name" nzTooltipPlacement="right" class="itemIcon">
+              <j-avatar class="flex" [avatarUrl]="user.avatarUrl" [size]="26">
+              </j-avatar>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div style="display: flex; flex: 100%; margin: 40px 0 0;">
+    <div style="display: flex; flex: 30%; margin-right: 10px; justify-content: flex-end;">
+      <nav style="width: 240px">
+        <div>
+          <ul>
+            <li style="margin-bottom: 5px;">
+              <j-button className="btn-add-task">
+                <mat-icon>backup_table</mat-icon>
+                <span style="vertical-align: super;"> Projects </span>
+              </j-button>
+            </li>
+            <li style="margin-bottom: 5px;">
+              <j-button className="btn-add-task">
+                <mat-icon>add</mat-icon>
+                <span style="vertical-align: super;"> Projects </span>
+              </j-button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div style="display: flex; flex: 70%;">
+      yyyyyyyyyyyyyyy
+    </div>
+  </div>
+</div>

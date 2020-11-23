@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IssuePriorityIcon } from '@trungk18/interface/issue-priority-icon';
 import { IssueUtil } from '@trungk18/project/utils/issue';
-import { IssuePriority } from '@trungk18/interface/issue';
+// import { IssuePriority } from '@trungk18/interface/issue';
 import { ProjectConst } from '@trungk18/project/config/const';
 
 @Component({
@@ -18,7 +18,7 @@ export class IssuePrioritySelectComponent implements OnInit {
     this.priorities = ProjectConst.PrioritiesWithIcon;
   }
 
-  getPriorityIcon(priority: IssuePriority) {
+  getPriorityIcon(priority) {
     return IssueUtil.getIssuePriorityIcon(priority);
   }
 

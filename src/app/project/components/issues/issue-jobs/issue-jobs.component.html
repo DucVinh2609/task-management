@@ -1,0 +1,70 @@
+<div class="flex issue-job">
+  <label nz-checkbox [(ngModel)]="checked" [nzDisabled]="isDisabledButton" style="margin-left: 9px; line-height: 37px; cursor: pointer;"
+    (change) = "checkFinish()"></label>
+  <span style="margin-left: 20px; vertical-align: middle; line-height: 32px; font-size: 16px;">{{ titleJobs }}</span>
+  <div class="flex-auto"></div>
+  <ng-container *ngIf="authQuery.user$ | async as user">
+    <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+      <span class="icon">
+        <mat-icon style="line-height: inherit;"
+                  (click)="AddDeadline()">access_time
+        </mat-icon>
+      </span>
+      <span class="icon">
+        <mat-icon style="line-height: inherit;"
+                  nz-dropdown
+                  nzTrigger="click"
+                  [nzDropdownMenu]="menu">group_add
+        </mat-icon>
+      </span>
+      <span class="icon">
+        <mat-icon style="line-height: inherit;">delete</mat-icon>
+      </span>
+    </ng-container>
+  </ng-container>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul class="mt-3" nz-menu nzNoAnimation>
+    <ng-container *ngFor="let option of users">
+      <li nz-menu-item *ngIf="!isUserSelected(option)" (click)="addUserToJobs(option)">
+        <j-user [user]="option"></j-user>
+      </li>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>
+
+<div style="display: flex; flex: 100%; margin-bottom: 10px; margin-left: 40px;">
+  <div style="display: block; flex: 50%;">
+    <ng-container *ngIf="checkAssignees">
+      <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
+        Assignees
+      </div>
+      
+      <j-button *ngFor="let assignee of assignees" [className]="'btn-secondary mr-1-5 mb-2'">
+        <div class="flex items-center">
+          <j-user [user]="assignee"></j-user>
+          <ng-container *ngIf="authQuery.user$ | async as user">
+            <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+              <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
+              </svg-icon>
+            </ng-container>
+          </ng-container>
+        </div>
+      </j-button>
+    </ng-container>
+  </div>
+  <div style="display: block; flex: 50%;">
+    <ng-container *ngIf="checkDeadline">
+      <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
+        Deadline
+      </div>
+      <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="openDatePicker()"
+        nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" [nzDisabled]="isDisabledDeadline" (ngModelChange)="addDeadlineToJobs($event)">
+      </nz-date-picker>
+    </ng-container>
+  </div>
+</div>
+
+<hr>
+<br>

@@ -2,7 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { JIssue } from '@trungk18/interface/issue';
 import { JUser } from '@trungk18/interface/user';
-import { ProjectService } from '@trungk18/project/state/project/project.service';
+import { IssuesService } from '@trungk18/project/services/issues.service';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'issue-reporter',
@@ -12,28 +13,16 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 @UntilDestroy()
 export class IssueReporterComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
-  @Input() users: JUser[];
   reporter: JUser;
 
-  constructor(private _projectService: ProjectService) {}
+  constructor(private issuesService: IssuesService,
+    private usersService: UsersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let reporterId = this.issuesService.getInfoIssue(this.issue.id).reporterId;
+    this.reporter = this.usersService.getUsersById(reporterId);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    let issueChange = changes.issue;
-    if (this.users && issueChange.currentValue !== issueChange.previousValue) {
-      this.reporter = this.users.find((x) => x.id === this.issue.reporterId);
-    }
-  }
-
-  isUserSelected(user: JUser) {
-    return user.id === this.issue.reporterId;
-  }
-
-  updateIssue(user: JUser) {
-    this._projectService.updateIssue({
-      ...this.issue,
-      reporterId: user.id
-    });
   }
 }

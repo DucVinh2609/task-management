@@ -1,0 +1,24 @@
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.ant-progress {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.ant-progress-inner {
+  position: relative !important;
+  display: inline-block !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+  background-color: #f5f5f5 !important;
+  border-radius: 100px !important;
+  height: 8px !important;
+  margin-left: 40px !important;
+}

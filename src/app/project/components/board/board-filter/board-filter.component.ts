@@ -6,6 +6,9 @@ import { FilterService } from '@trungk18/project/state/filter/filter.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { JUser } from '@trungk18/interface/user';
+import { UsersService } from 'src/app/project/services/users.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: 'board-filter',
@@ -16,13 +19,20 @@ import { JUser } from '@trungk18/interface/user';
 export class BoardFilterComponent implements OnInit {
   searchControl: FormControl = new FormControl("");
   userIds: string[];
+  listUsersInProjects: JUser[] = [];
+  nameProject: string = '';
+  projectsId: number;
 
   constructor(
     public projectQuery: ProjectQuery,
     public filterQuery: FilterQuery,
-    public filterService: FilterService
+    public filterService: FilterService,
+    private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private projectsService: ProjectsService
   ) {
     this.userIds = [];
+    this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
   ngOnInit(): void {
@@ -35,6 +45,9 @@ export class BoardFilterComponent implements OnInit {
     this.filterQuery.userIds$.pipe(untilDestroyed(this)).subscribe((userIds) => {
       this.userIds = userIds;
     });
+
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
   }
 
   isUserSelected(user: JUser) {

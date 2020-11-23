@@ -3,6 +3,8 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { JIssueStatus } from '@trungk18/interface/issue';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 import dummy from 'src/assets/data/project.json';
 
 @UntilDestroy()
@@ -15,11 +17,22 @@ export class BoardDndComponent implements OnInit {
   issueStatuses: JIssueStatus[] = dummy.status.sort((a, b) => (a.position > b.position) ? 1 : -1);
   checkAddDndList: boolean = false;
   titleListTask: string = '';
+  nameProject: string = '';
+  projectsId: number;
+  checkAdmin: boolean = false;
 
-  constructor(public projectQuery: ProjectQuery, public authQuery: AuthQuery) {}
+  constructor(public projectQuery: ProjectQuery,
+    public authQuery: AuthQuery,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService) {
+      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+  }
 
   ngOnInit(): void {
-    console.log(dummy);
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.authQuery.user$.subscribe(user => {
+      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
+    });
   }
 
   addDndList() {
@@ -30,7 +43,8 @@ export class BoardDndComponent implements OnInit {
     let newListTask: JIssueStatus = {
       "id": 5,
       "position": 4,
-      "status": this.titleListTask
+      "status": this.titleListTask,
+      "projectId": this.projectsId
     }
     this.issueStatuses.push(newListTask);
     this.checkAddDndList = false;

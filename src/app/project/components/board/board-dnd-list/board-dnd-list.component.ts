@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { JIssueStatus, IssueStatusDisplay, JIssue, IssueType, IssuePriority } from '@trungk18/interface/issue';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { JIssueStatus, JIssue } from '@trungk18/interface/issue';
 import { FilterState } from '@trungk18/project/state/filter/filter.store';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { Observable, combineLatest, from } from 'rxjs';
@@ -10,6 +10,11 @@ import * as dateFns from 'date-fns';
 import { IssueUtil } from '@trungk18/project/utils/issue';
 import { DateUtil } from '@trungk18/project/utils/date';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { IssuesService } from '@trungk18/project/services/issues.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { JUser } from '@trungk18/interface/user';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: '[board-dnd-list]',
@@ -18,7 +23,7 @@ import { AuthQuery } from '@trungk18/project/auth/auth.query';
   encapsulation: ViewEncapsulation.None
 })
 @UntilDestroy()
-export class BoardDndListComponent implements OnInit {
+export class BoardDndListComponent implements OnChanges {
   @Input() status: JIssueStatus;
   @Input() currentUserId: string;
   @Input() issues$: Observable<JIssue[]>;
@@ -26,26 +31,47 @@ export class BoardDndListComponent implements OnInit {
   issues: JIssue[] = [];
   checkAddTask: boolean = false;
   titleTask: string = '';
+  projectsId: number;
+  nameProject: string = '';
+  checkAdmin: boolean = false;
 
   get issuesCount(): number {
     return this.issues.length;
   }
 
-  get issueStatus(): string {
+  get issueStatus(): number {
+    return this.status.id;
+  }
+
+  get issueStatusName(): string {
     return this.status.status;
   }
 
   constructor(private _projectService: ProjectService,
     private _filterQuery: FilterQuery,
-    public authQuery: AuthQuery) {
+    public authQuery: AuthQuery,
+    private issuesService: IssuesService,
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService) {
+      this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
   ngOnInit(): void {
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.authQuery.user$.subscribe(user => {
+      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
+    });
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))
       .subscribe(([issues, filter]) => {
         this.issues = this.filterIssues(issues, filter);
-      });
+      }
+    );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
   }
 
   drop(event: CdkDragDrop<JIssue[]>) {
@@ -62,15 +88,23 @@ export class BoardDndListComponent implements OnInit {
         event.currentIndex
       );
       this.updateListPosition(newIssues);
-      newIssue.status = event.container.id;
-      this._projectService.updateIssue(newIssue);
+      newIssue.issueStatusId = event.container.id['id'];
+      this.issuesService.updateIssue(newIssue);
     }
+  }
+
+  getAssigneesOfIssues(issue: JIssue) {
+    let assignees: JUser[] = [];
+    issue.userIds.forEach(users => {
+      assignees.push(this.usersService.getUsersById(users))
+    });
+    return assignees;
   }
 
   private updateListPosition(newList: JIssue[]) {
     newList.forEach((issue, idx) => {
       let newIssueWithNewPosition = { ...issue, listPosition: idx + 1 };
-      this._projectService.updateIssue(newIssueWithNewPosition);
+      this.issuesService.updateIssue(newIssueWithNewPosition);
     });
   }
 
@@ -89,7 +123,7 @@ export class BoardDndListComponent implements OnInit {
         ? this.currentUserId && issue.userIds.includes(this.currentUserId)
         : true;
 
-      let isIgnoreResolved = ignoreResolved ? issue.status !== 'Done' : true;
+      let isIgnoreResolved = ignoreResolved ? issue.issueStatusId !== 4 : true;
 
       return isMatchTerm && isIncludeUsers && isMyIssue && isIgnoreResolved;
     });
@@ -111,23 +145,19 @@ export class BoardDndListComponent implements OnInit {
       let issue: JIssue = {
         title: this.titleTask,
         id: IssueUtil.getRandomId(),
-        status: this.issueStatus,
+        issueStatusId: this.issueStatus,
         createdAt: now,
         updatedAt: now,
-        priority: IssuePriority.MEDIUM,
-        type: IssueType.TASK,
-        listPosition: this.issuesCount,
+        deadlineAt: null,
+        issuePriorityId: 3,
+        issueTypeId: 1,
+        listPosition: this.issuesCount + 1,
         description: '',
-        estimate: 1,
-        timeSpent: 1,
-        timeRemaining: 1,
         reporterId: this.currentUserId,
-        userIds: [],
-        comments: null,
-        projectId: ''
+        userIds: []
       };
 
-      this._projectService.updateIssue(issue);
+      this.issuesService.addIssue(issue);
       this.checkAddTask = false;
       this.titleTask = '';
     }

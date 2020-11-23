@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IssueStatus, IssueStatusDisplay, JIssue } from '@trungk18/interface/issue';
+import { JIssueStatus, JIssue } from '@trungk18/interface/issue';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
+import dummy from 'src/assets/data/project.json';
 
 @Component({
   selector: 'issue-status',
@@ -10,47 +11,26 @@ import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 })
 export class IssueStatusComponent implements OnInit {
   @Input() issue: JIssue;
-  IssueStatusDisplay = IssueStatusDisplay;
-
-  variants = {
-    [IssueStatus.BACKLOG]: 'btn-secondary',
-    [IssueStatus.SELECTED]: 'btn-secondary',
-    [IssueStatus.IN_PROGRESS]: 'btn-primary',
-    [IssueStatus.DONE]: 'btn-success'
-  };
-
-  issueStatuses: IssueStatusValueTitle[];
+  issueStatuses: JIssueStatus[] = dummy.status.sort((a, b) => (a.position > b.position) ? 1 : -1);
 
   constructor(private _projectService: ProjectService, private _projectQuery: ProjectQuery) {}
 
-  ngOnInit(): void {
-    this.issueStatuses = [
-      new IssueStatusValueTitle(IssueStatus.BACKLOG),
-      new IssueStatusValueTitle(IssueStatus.SELECTED),
-      new IssueStatusValueTitle(IssueStatus.IN_PROGRESS),
-      new IssueStatusValueTitle(IssueStatus.DONE)
-    ];
-  }
+  ngOnInit(): void {}
 
-  updateIssue(status: IssueStatus) {
-    let newPosition = this._projectQuery.lastIssuePosition(status);
+  updateIssue(issueStatusId: number) {
+    let newPosition = this._projectQuery.lastIssuePosition(issueStatusId);
     this._projectService.updateIssue({
       ...this.issue,
-      status,
+      issueStatusId,
       listPosition: newPosition + 1
     });
   }
 
-  isStatusSelected(status: IssueStatus) {
-    return this.issue.status === status;
+  isStatusSelected(issueStatusId: number) {
+    return this.issue.issueStatusId === issueStatusId;
   }
-}
 
-class IssueStatusValueTitle {
-  value: IssueStatus;
-  label: string;
-  constructor(issueStatus: IssueStatus) {
-    this.value = issueStatus;
-    this.label = IssueStatusDisplay[issueStatus];
+  getIssueStatusDisplay(issueStatusId: number) {
+    return this.issueStatuses.filter(s => s.id === issueStatusId)[0].status
   }
 }

@@ -1,0 +1,9 @@
+<div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold">
+  Deadline
+</div>
+<nz-date-picker nzShowTime
+                nzFormat="yyyy-MM-dd HH:mm:ss"
+                [(ngModel)]="deadline"
+                (nzOnOpenChange)="handleDeadlineOpenChange($event)"
+                [nzDisabled]="isDisabledDeadline">
+</nz-date-picker>

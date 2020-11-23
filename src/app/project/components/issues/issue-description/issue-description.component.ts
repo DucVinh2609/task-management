@@ -3,6 +3,7 @@ import { JIssue } from '@trungk18/interface/issue';
 import { FormControl } from '@angular/forms';
 import { quillConfiguration } from '@trungk18/project/config/editor';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'issue-description',
@@ -12,12 +13,14 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 })
 export class IssueDescriptionComponent implements OnChanges {
   @Input() issue: JIssue;
+  @Input() projectsId: number;
   descriptionControl: FormControl;
   editorOptions = quillConfiguration;
   isEditing: boolean;
   isWorking: boolean;
 
-  constructor(private _projectService: ProjectService) {}
+  constructor(private _projectService: ProjectService,
+    public authQuery: AuthQuery) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
@@ -26,8 +29,12 @@ export class IssueDescriptionComponent implements OnChanges {
     }
   }
 
-  setEditMode(mode: boolean) {
-    this.isEditing = mode;
+  setEditMode() {
+    this.authQuery.user$.subscribe(user => {
+      if (user.projectAdmin.includes(this.projectsId)) {
+        this.isEditing = true;
+      }
+    });
   }
 
   editorCreated(editor: any) {
@@ -39,12 +46,12 @@ export class IssueDescriptionComponent implements OnChanges {
       ...this.issue,
       description: this.descriptionControl.value
     });
-    this.setEditMode(false);
+    this.isEditing = false;
   }
 
   cancel() {
     this.descriptionControl.patchValue(this.issue.description);
-    this.setEditMode(false);
+    this.isEditing = false;
   }
 
   ngOnInit(): void {}

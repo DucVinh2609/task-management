@@ -1,39 +1,50 @@
 <div class="status-list">
     <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
-        {{ issueStatus }}
+        {{ issueStatusName }}
         <span class="lowercase text-13">{{ issuesCount }}</span>
     </div>
-    <div class="h-full pl-2"
-        cdkDropList
-        [cdkDropListData]="issues"
-        [id]="status"
-        (cdkDropListDropped)="drop($event)">
-        <issue-card *ngFor="let issue of issues"
-            [issue]="issue"
-            cdkDrag
-            [cdkDragData]="issue">
-        </issue-card>
+    <ng-container *ngIf="checkAdmin">
+        <div class="h-full pl-2"
+            cdkDropList
+            [cdkDropListData]="issues"
+            [id]="status"
+            (cdkDropListDropped)="drop($event)">
+            <issue-card *ngFor="let issue of issues"
+                [issue]="issue"
+                [assignees]="getAssigneesOfIssues(issue)"
+                cdkDrag
+                [cdkDragData]="issue">
+            </issue-card>
 
-        <ng-container *ngIf="!checkAddTask">
-            <j-button className="btn-add-task" (click)="addTask()">
-                <mat-icon>add</mat-icon>
-                <span style="vertical-align: super;"> Add another Task </span>
-            </j-button>
-        </ng-container>
-
-        <ng-container *ngIf="checkAddTask">
-            <div class="issue">
-                <mat-form-field>
-                    <textarea matInput rows="1" [(ngModel)]="titleTask"></textarea>
-                </mat-form-field>
-            </div>
-            <div style="padding-top: 5px;">
-                <j-button [className]="'btn-primary'" class="mr-2" (click)="addTasks()">
-                    Add Task
+            <ng-container *ngIf="!checkAddTask">
+                <j-button className="btn-add-task" (click)="addTask()">
+                    <mat-icon>add</mat-icon>
+                    <span style="vertical-align: super;"> Add another Task </span>
                 </j-button>
-                <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddTask()">close</mat-icon>
-            </div>
-        </ng-container>
+            </ng-container>
 
-    </div>
+            <ng-container *ngIf="checkAddTask">
+                <div class="issue">
+                    <mat-form-field>
+                        <textarea matInput rows="1" [(ngModel)]="titleTask"></textarea>
+                    </mat-form-field>
+                </div>
+                <div style="padding-top: 5px;">
+                    <j-button [className]="'btn-primary'" class="mr-2" (click)="addTasks()">
+                        Add Task
+                    </j-button>
+                    <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddTask()">close</mat-icon>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!checkAdmin">
+        <div class="h-full pl-2">
+            <issue-card *ngFor="let issue of issues"
+                [issue]="issue"
+                [assignees]="getAssigneesOfIssues(issue)"
+            >
+            </issue-card>
+        </div>
+    </ng-container>
 </div>

@@ -4,8 +4,8 @@
 <j-button nz-dropdown
           nzTrigger="click"
           [nzDropdownMenu]="menu"
-          [className]="variants[issue.status] + ' uppercase text-textMedium text-13'">
-    {{ IssueStatusDisplay[issue.status] }}
+          [className]="'btn-secondary' + ' uppercase text-textMedium text-13'">
+    {{ getIssueStatusDisplay(issue.issueStatusId) }}
 </j-button>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -14,10 +14,10 @@
         class="mt-3">
         <ng-container *ngFor="let option of issueStatuses">
             <li nz-menu-item
-                *ngIf="!isStatusSelected(option.value)"
-                (click)="updateIssue(option.value)">
+                *ngIf="!isStatusSelected(option.id)"
+                (click)="updateIssue(option.id)">
                 <div class="flex items-center">
-                    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ option.label }}</span>
+                    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ option.status }}</span>
                 </div>
             </li>
         </ng-container>

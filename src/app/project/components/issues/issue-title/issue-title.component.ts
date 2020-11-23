@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { JIssue } from '@trungk18/interface/issue';
-import { ProjectService } from '@trungk18/project/state/project/project.service';
+import { IssuesService } from '@trungk18/project/services/issues.service';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'issue-title',
@@ -10,9 +11,11 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 })
 export class IssueTitleComponent implements OnChanges {
   @Input() issue: JIssue;
+  @Input() projectsId: number;
   titleControl: FormControl;
 
-  constructor(private _projectService: ProjectService) {}
+  constructor(private issuesService: IssuesService,
+    public authQuery: AuthQuery) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
@@ -22,7 +25,7 @@ export class IssueTitleComponent implements OnChanges {
   }
 
   onBlur() {
-    this._projectService.updateIssue({
+    this.issuesService.updateIssue({
       ...this.issue,
       title: this.titleControl.value
     });

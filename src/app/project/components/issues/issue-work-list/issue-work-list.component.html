@@ -1,0 +1,45 @@
+<div style="margin-bottom: 20px;">
+  <div class="flex">
+    <mat-icon style="margin-top: 5px;">fact_check</mat-icon>
+    <h3 style="margin-left: 10px; font-size: 16px; margin-top: 3px;">{{ title }}</h3>
+    <div class="flex-auto"></div>
+    <ng-container *ngIf="authQuery.user$ | async as user">
+      <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+        <j-button className="btn-delete-work-list">
+          Delete
+        </j-button>
+      </ng-container>
+    </ng-container>
+  </div>
+  <section class="example-section">
+    <span style="position: absolute;"> {{ percent }}%</span>
+    <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
+  </section>
+
+  <issue-jobs *ngFor="let job of jobs" [job]="job" [users]="users" [projectsId]="projectsId" cdkDrag [cdkDragData]="job">
+  </issue-jobs>
+
+  <ng-container *ngIf="authQuery.user$ | async as user">
+    <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
+      <ng-container *ngIf="!checkAddJob">
+        <j-button style="margin-left: 40px;" className="btn-add-job" (click)="addJob()">
+          Add Jobs
+        </j-button>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="checkAddJob">
+    <div class="issue" style="margin-left: 40px;">
+      <mat-form-field>
+        <textarea matInput rows="2" [(ngModel)]="titleJobs"></textarea>
+      </mat-form-field>
+    </div>
+    <div style="padding-top: 5px; margin-left: 40px;">
+      <j-button [className]="'btn-primary'" class="mr-2" (click)="addJobs()">
+        Add
+      </j-button>
+      <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddJob()">close</mat-icon>
+    </div>
+  </ng-container>
+</div>

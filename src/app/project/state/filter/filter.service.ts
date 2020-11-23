@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FilterStore, createInitialFilterState } from './filter.store';
+import dummy from 'src/assets/data/project.json';
 
 @Injectable({
   providedIn: 'root'

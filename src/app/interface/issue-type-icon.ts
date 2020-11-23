@@ -5,8 +5,8 @@ export class IssueTypeWithIcon {
   value: string;
   icon: string;
 
-  constructor(issueType: IssueType) {
-    this.value = issueType;
-    this.icon = IssueUtil.getIssueTypeIcon(issueType);
+  constructor(issueTypeId) {
+    this.value = issueTypeId;
+    this.icon = IssueUtil.getIssueTypeIcon(issueTypeId);
   }
 }

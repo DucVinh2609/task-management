@@ -1,7 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IndexComponent } from '@trungk18/project/pages/index/index.component';
+import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
+import { LoginComponent } from '@trungk18/project/pages/common/login/login.component';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'index',
+    component: IndexComponent
+  },
   {
     path: 'project',
     loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule)
@@ -15,9 +26,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'project',
+    redirectTo: 'index',
     pathMatch: 'full'
-  }
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
+  },
 ];
 
 @NgModule({

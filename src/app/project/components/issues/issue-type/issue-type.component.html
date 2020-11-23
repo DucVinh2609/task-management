@@ -5,7 +5,7 @@
               [icon]="selectedIssueTypeIcon"
               [iconSize]="20"
               [className]="'btn-empty font-semibold uppercase text-textMedium text-13'">
-        {{ issue.type }}-{{issue.id}}
+        {{ issue.issueTypeId }}-{{issue.id}}
     </j-button>
 </div>
 
@@ -14,13 +14,13 @@
         nzNoAnimation>
         <ng-container *ngFor="let option of issueTypes">
             <li nz-menu-item
-                *ngIf="!isTypeSelected(option.value)"
-                (click)="updateIssue(option.value)">
+                *ngIf="!isTypeSelected(option.id)"
+                (click)="updateIssue(option.id)">
                 <div class="flex items-center">
                     <svg-icon [name]="option.icon"
                               [size]="20">
                     </svg-icon>
-                    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ option.value }}</span>
+                    <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ option.type }}</span>
                 </div>
             </li>
         </ng-container>
