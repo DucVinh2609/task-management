@@ -89,7 +89,7 @@
       "title": "A1",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-25T07:23:38.183Z",
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
       "listPosition": 0
     },
@@ -103,7 +103,7 @@
       "title": "A2",
       "issueTypeId": 2,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-26T07:23:38.183Z",
       "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "listPosition": 1
     },
@@ -117,7 +117,7 @@
       "title": "B1",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-24T07:23:38.183Z",
       "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4"],
       "listPosition": 0
     },
