@@ -26,6 +26,7 @@ export class UsersService {
   }
 
   getUsersInProjects(projectId: number) {
+    this.listUsers = [];
     this.listUserProjects = dummy.userProjects.filter(u => u.projectId == projectId);
     this.listUserProjects.forEach(users => {
       this.listUsers.push(dummy.users.filter(u => u.id == users.userId)[0])
