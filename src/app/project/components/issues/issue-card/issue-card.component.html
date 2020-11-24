@@ -14,10 +14,13 @@
                           nzTooltipTitle="Assignee: {{ user.name }}"
                           nzTooltipPlacement="bottom"
                           [avatarUrl]="user.avatarUrl">
-                </j-avatar>                
-                <span [class.ml-3]="assignees?.length" class="uppercase">
-                    {{issueTypesName}}-{{issue.id}}
-                </span>
+                </j-avatar>
+                <ng-container *ngIf="deadline">
+                    <span style="margin-left: 10px;">
+                        <mat-icon style="vertical-align: bottom;">schedule</mat-icon>
+                        {{ deadlineAt.getDate() }}-{{ month }}
+                    </span>
+                </ng-container>
             </div>
             <div class="flex items-center">
                 <svg-icon class="text-textMedium mr-1"

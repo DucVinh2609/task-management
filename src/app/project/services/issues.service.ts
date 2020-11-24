@@ -40,4 +40,9 @@ export class IssuesService {
     }
     console.log(issueUpdate);
   }
+
+  deleteIssue(issueId: string) {
+    const index = dummy.issues.findIndex(x => x.id === issueId);
+    if (index !== undefined) dummy.issues.splice(index, 1);
+  }
 }

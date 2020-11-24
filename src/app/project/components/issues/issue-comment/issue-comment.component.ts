@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { JJobs } from '@trungk18/interface/job';
 import { JUser } from '@trungk18/interface/user';
@@ -14,15 +13,14 @@ import { JobsService } from '@trungk18/project/services/jobs.service';
 @UntilDestroy()
 export class IssueCommentComponent implements OnInit {
   @Input() job: JJobs;
-  commentControl: FormControl;
+  description: string = '';
   user: JUser;
   isEditing: boolean;
 
   constructor(private _authQuery: AuthQuery, private jobsService: JobsService) {}
 
   ngOnInit(): void {
-    this.commentControl = new FormControl('');
-    this.commentControl.patchValue(this.jobsService.getJobsInfo(this.job.id).description);
+    this.description = this.jobsService.getJobsInfo(this.job.id).description;
   }
 
   setCommentEdit(mode: boolean) {
@@ -30,11 +28,16 @@ export class IssueCommentComponent implements OnInit {
   }
 
   addComment() {
+    console.log(this.description);
+    this.jobsService.updateJobs({
+      ...this.job,
+      description: this.description
+    });
     this.cancelAddComment();
   }
 
   cancelAddComment() {
-    this.commentControl.patchValue(this.jobsService.getJobsInfo(this.job.id).description);
+    this.description = this.jobsService.getJobsInfo(this.job.id).description;
     this.setCommentEdit(false);
   }
 }

@@ -19,8 +19,10 @@ export class IssueDeadlineComponent implements OnInit {
     public authQuery: AuthQuery) { }
 
   ngOnInit(): void {
-    this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
-    this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+    if(this.issuesService.getInfoIssue(this.issue.id).deadlineAt) {
+      this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
+      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+    }
     this.authQuery.user$.subscribe(user => {
       if (user.projectAdmin.includes(this.projectsId)) {
         this.isDisabledDeadline = false;

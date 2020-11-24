@@ -2,7 +2,7 @@
     <div class="pl-10">
         <div class="editing-area">
             <textarea class="textarea-inline-control textarea-border"
-                      [formControl]="commentControl"
+                      [(ngModel)]="description"
                       placeholder="Add a description"
                       [rows]="2"
                       cdkTextareaAutosize
