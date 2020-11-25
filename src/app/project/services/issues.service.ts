@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { JIssue } from '@trungk18/interface/issue';
 import dummy from 'src/assets/data/project.json';
 import { DateUtil } from '@trungk18/project/utils/date';
+import { IssueUtil } from '@trungk18/project/utils/issue';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,31 @@ export class IssuesService {
   constructor() { }
 
   getAllIssueInStatus (statusId: number) {
-    return dummy.issues.filter(j => j.issueStatusId == statusId).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);;
+    return dummy.issues.filter(j => j.issueStatusId == statusId).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+  }
+
+  getIssuesOfUserInStatus (issues: JIssue[], userIds: any, statusId: number) {
+    let listIssues: JIssue[] = [];
+    let listIssuesMerge: JIssue[] = [];
+    userIds.forEach(user => {
+      listIssuesMerge = [
+        ...listIssues,
+        ...issues.filter(j => j.userIds.includes(user) && j.issueStatusId == statusId).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1)
+      ];
+      listIssuesMerge = listIssuesMerge.filter((item, index) => listIssuesMerge.indexOf(item) === index).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+      listIssues = listIssuesMerge;
+    });
+    return listIssuesMerge;
+  }
+
+  searchIssuesInStatus (issues: JIssue[], searchTerm: string, statusId: number) {
+    let listIssues: JIssue[] = [];
+    issues.forEach(issue => {
+      if (IssueUtil.searchString(issue.title, searchTerm) && issue.issueStatusId === statusId) {
+        listIssues.push(issue);
+      }
+    });
+    return listIssues;
   }
 
   addIssue(issue: JIssue) {

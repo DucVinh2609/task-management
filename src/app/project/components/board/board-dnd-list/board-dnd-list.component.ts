@@ -61,6 +61,8 @@ export class BoardDndListComponent implements OnChanges {
     }
 
   ngOnInit(): void {
+    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+    const issuesConst = this.issues;
     this.statusName = this.issueStatusName;
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.authQuery.user$.subscribe(user => {
@@ -69,13 +71,13 @@ export class BoardDndListComponent implements OnChanges {
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))
       .subscribe(([issues, filter]) => {
-        this.issues = this.filterIssues(issues, filter);
+        this.issues = this.filterIssues(issuesConst, filter);
       }
     );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+    // this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
   }
 
   drop(event: CdkDragDrop<JIssue[]>) {
@@ -114,23 +116,30 @@ export class BoardDndListComponent implements OnChanges {
 
   filterIssues(issues: JIssue[], filter: FilterState): JIssue[] {
     const { onlyMyIssue, ignoreResolved, searchTerm, userIds } = filter;
-    return issues.filter((issue) => {
-      let isMatchTerm = searchTerm
-        ? IssueUtil.searchString(issue.title, searchTerm)
-        : true;
+    if (userIds.length) {
+      return this.issuesService.getIssuesOfUserInStatus(issues, userIds, this.issueStatus);
+    } else if (searchTerm) {
+      return this.issuesService.searchIssuesInStatus(issues, searchTerm, this.issueStatus);
+    }
+    else return this.issuesService.getAllIssueInStatus(this.issueStatus);
+    // return issues.filter((issue) => {
+    //   // let isMatchTerm = searchTerm
+    //   //   ? IssueUtil.searchString(issue.title, searchTerm)
+    //   //   : true;
 
-      let isIncludeUsers = userIds.length
-        ? issue.userIds.some((userId) => userIds.includes(userId))
-        : true;
+    //   let isIncludeUsers = userIds.length
+    //     ? this.issuesService.getIssuesOfUser(userIds)
+    //     : [];
+    //   console.log(isIncludeUsers);
 
-      let isMyIssue = onlyMyIssue
-        ? this.currentUserId && issue.userIds.includes(this.currentUserId)
-        : true;
+    //   // let isMyIssue = onlyMyIssue
+    //   //   ? this.currentUserId && issue.userIds.includes(this.currentUserId)
+    //   //   : true;
 
-      let isIgnoreResolved = ignoreResolved ? issue.issueStatusId !== 4 : true;
+    //   // let isIgnoreResolved = ignoreResolved ? issue.issueStatusId !== 4 : true;
 
-      return isMatchTerm && isIncludeUsers && isMyIssue && isIgnoreResolved;
-    });
+    //   return isIncludeUsers;
+    // });
   }
 
   isDateWithinThreeDaysFromNow(date: string) {
