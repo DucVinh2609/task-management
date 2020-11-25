@@ -62,22 +62,22 @@ export class BoardDndListComponent implements OnChanges {
 
   ngOnInit(): void {
     this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
-    const issuesConst = this.issues;
     this.statusName = this.issueStatusName;
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.authQuery.user$.subscribe(user => {
       this.checkAdmin = user.projectAdmin.includes(this.projectsId);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+    const issuesConst = this.issues;
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))
       .subscribe(([issues, filter]) => {
         this.issues = this.filterIssues(issuesConst, filter);
       }
     );
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
   }
 
   drop(event: CdkDragDrop<JIssue[]>) {
@@ -116,30 +116,48 @@ export class BoardDndListComponent implements OnChanges {
 
   filterIssues(issues: JIssue[], filter: FilterState): JIssue[] {
     const { onlyMyIssue, ignoreResolved, searchTerm, userIds } = filter;
+    let listIssues1: JIssue[] = [];
+    let listIssues2: JIssue[] = [];
+    let listIssues3: JIssue[] = [];
+    let listIssues4: JIssue[] = [];
     if (userIds.length) {
-      return this.issuesService.getIssuesOfUserInStatus(issues, userIds, this.issueStatus);
-    } else if (searchTerm) {
-      return this.issuesService.searchIssuesInStatus(issues, searchTerm, this.issueStatus);
+      listIssues1 = this.issuesService.getIssuesOfUserInStatus(issues, userIds, this.issueStatus);
+      issues = listIssues1;
+    }
+    if (searchTerm) {
+      listIssues2 = this.issuesService.searchIssuesInStatus(issues, searchTerm, this.issueStatus);
+      issues = listIssues2;
+    }
+    if (onlyMyIssue) {
+      listIssues3 = this.issuesService.getIssuesOfCurrentUserInStatus(issues, this.currentUserId, this.issueStatus);
+      issues = listIssues3;
+    }
+    if (ignoreResolved) {
+      listIssues4 = this.issuesService.getIssuesDoneInStatus(issues, this.projectsId, this.issueStatus);
+      issues = listIssues4;
+    }
+    if (userIds.length || searchTerm || onlyMyIssue || ignoreResolved) {
+      let listIssuesFilter: JIssue[] = [];
+      let listIssuesFilterResult: JIssue[] = [];
+      if (userIds.length && !searchTerm && !onlyMyIssue && !ignoreResolved) {
+        return listIssues1;
+      } else if (!userIds.length && searchTerm && !onlyMyIssue && !ignoreResolved) {
+        return listIssues2;
+      } else if (!userIds.length && !searchTerm && onlyMyIssue && !ignoreResolved) {
+        return listIssues3;
+      } else if (!userIds.length && !searchTerm && !onlyMyIssue && ignoreResolved) {
+        return listIssues4;
+      } else {
+        listIssuesFilter = listIssues1.concat(listIssues2, listIssues3, listIssues4).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+        listIssuesFilter.filter((item, index) => {
+          if (listIssuesFilter.indexOf(item) !== index) {
+            listIssuesFilterResult.push(item);
+          }
+        });
+        return [...new Set(listIssuesFilterResult)];
+      }
     }
     else return this.issuesService.getAllIssueInStatus(this.issueStatus);
-    // return issues.filter((issue) => {
-    //   // let isMatchTerm = searchTerm
-    //   //   ? IssueUtil.searchString(issue.title, searchTerm)
-    //   //   : true;
-
-    //   let isIncludeUsers = userIds.length
-    //     ? this.issuesService.getIssuesOfUser(userIds)
-    //     : [];
-    //   console.log(isIncludeUsers);
-
-    //   // let isMyIssue = onlyMyIssue
-    //   //   ? this.currentUserId && issue.userIds.includes(this.currentUserId)
-    //   //   : true;
-
-    //   // let isIgnoreResolved = ignoreResolved ? issue.issueStatusId !== 4 : true;
-
-    //   return isIncludeUsers;
-    // });
   }
 
   isDateWithinThreeDaysFromNow(date: string) {
