@@ -45,9 +45,6 @@ export class IssueCardComponent implements OnChanges {
 
   ngOnInit(): void {
     this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
-    this.deadline = this.issuesService.getInfoIssue(this.issue.id).deadlineAt;
-    this.deadlineAt = new Date(this.deadline);
-    this.month = this.deadlineAt.getMonth() + 1;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,6 +56,9 @@ export class IssueCardComponent implements OnChanges {
     // }
     this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
     this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
+    this.deadline = this.issuesService.getInfoIssue(this.issue.id).deadlineAt;
+    this.deadlineAt = new Date(this.deadline);
+    this.month = this.deadlineAt.getMonth() + 1;
   }
 
   openIssueModal(issueId: string) {

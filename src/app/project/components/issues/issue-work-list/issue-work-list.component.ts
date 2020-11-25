@@ -1,9 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { JListJobs } from '@trungk18/interface/list-job';
+import { IssueDeleteModalComponent } from '../issue-delete-modal/issue-delete-modal.component';
 import { JJobs } from '@trungk18/interface/job';
 import { JobsService } from '@trungk18/project/services/jobs.service';
 import { JUser } from '@trungk18/interface/user';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
@@ -25,7 +27,8 @@ export class IssueWorkListComponent implements OnChanges {
   jobs: JJobs[] = [];
 
   constructor(private jobsService: JobsService,
-    public authQuery: AuthQuery) { }
+    public authQuery: AuthQuery,
+    private _modalService: NzModalService) { }
 
   ngOnInit(): void {
   }
@@ -78,5 +81,22 @@ export class IssueWorkListComponent implements OnChanges {
   cancelAddJob() {
     this.checkAddJob = false;
     this.titleJobs = '';
+  }
+
+  deleteWorkList() {
+    this._modalService.create({
+      nzContent: IssueDeleteModalComponent,
+      nzClosable: false,
+      nzFooter: null,
+      nzStyle: {
+        top: "140px"
+      },
+      nzComponentParams: {
+        title: "Are you sure you want to delete this work list?",
+        data: this.workList.id,
+        onDelete: null,
+        delete: "worklist"
+      }      
+    });
   }
 }

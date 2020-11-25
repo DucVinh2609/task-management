@@ -81,9 +81,10 @@ export class IssuesService {
       issueUpdate.updatedAt = updatedAt;
       issueUpdate.issueStatusId = issue.issueStatusId;
       issueUpdate.title = issue.title;
-      issueUpdate.deadlineAt = issue.updatedAt;
+      issueUpdate.deadlineAt = issue.deadlineAt;
       issueUpdate.userIds = issue.userIds;
       issueUpdate.issuePriorityId = issue.issuePriorityId;
+      issueUpdate.description = issue.description;
     }
     console.log(issueUpdate);
   }

@@ -5,7 +5,7 @@
     <div class="flex-auto"></div>
     <ng-container *ngIf="authQuery.user$ | async as user">
       <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-        <j-button className="btn-delete-work-list">
+        <j-button className="btn-delete-work-list" (click)="deleteWorkList()">
           Delete
         </j-button>
       </ng-container>

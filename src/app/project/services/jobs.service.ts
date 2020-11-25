@@ -56,4 +56,9 @@ export class JobsService {
       job.description = jobs.description;
     }
   }
+
+  deleteJobs(jobId: number) {
+    const index = dummy.jobs.findIndex(x => x.id === jobId);
+    if (index !== undefined) dummy.jobs.splice(index, 1);
+  }
 }

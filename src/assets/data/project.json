@@ -1,6 +1,6 @@
 {
   "id": "140892",
-  "name": "Task Management",
+  "name": "Task management",
   "url": "https://github.com/trungk18/jira-clone-angular",
   "description": "A Jira clone app built with Angular and Akita - by trungk18",
   "category": "Software",
@@ -263,8 +263,8 @@
     },
     {
       "id": 102,
-      "name": "vinhnd",
-      "description": "VINHND LUVINA",
+      "name": "demo",
+      "description": "DEMO",
       "projectCategoriesId": 1,
       "createdAt": "2020-11-08T15:30:00.000Z",
       "updateAt": "2020-11-08T15:30:00.000Z"

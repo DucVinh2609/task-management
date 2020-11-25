@@ -22,6 +22,9 @@ export class IssueDeadlineComponent implements OnInit {
     if(this.issuesService.getInfoIssue(this.issue.id).deadlineAt) {
       this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
       this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+    } else {
+      this.deadline = new Date();
+      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
     }
     this.authQuery.user$.subscribe(user => {
       if (user.projectAdmin.includes(this.projectsId)) {
@@ -36,6 +39,7 @@ export class IssueDeadlineComponent implements OnInit {
       if(this.deadline) {
         newIssue.deadlineAt = this.deadline.toLocaleString();
         this.issuesService.updateIssue(newIssue);
+        this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
       }
     }
   }

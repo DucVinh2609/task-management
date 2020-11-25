@@ -13,6 +13,10 @@ export class ProjectsService {
     return dummy.projects.filter(u => u.name == projectsName)[0].id;
   }
 
+  getProjectsInfo(projectCategoriesId: number) {
+    return dummy.projects.filter(u => u.id == projectCategoriesId)[0];
+  }
+
   createProject(newProjects: JProjects) {
     newProjects.id = dummy.projects.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
     dummy.projects.push(newProjects);
