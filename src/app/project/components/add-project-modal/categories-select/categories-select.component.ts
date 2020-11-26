@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { JProjectCategories } from '@trungk18/interface/project'
-import dummy from 'src/assets/data/project.json';
+import { JProjectCategories } from '@trungk18/interface/project';
+import { ProjectsCategoriesService } from '@trungk18/project/services/projects-categories.service';
 
 @Component({
   selector: 'categories-select',
@@ -10,13 +10,15 @@ import dummy from 'src/assets/data/project.json';
 })
 export class CategoriesSelectComponent implements OnInit {
   @Input() control: FormControl;
-  categories: JProjectCategories[] = dummy.categories;
+  categories: JProjectCategories[] = [];
 
-  constructor() {}
+  constructor(private projectsCategoriesService: ProjectsCategoriesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categories = this.projectsCategoriesService.getAllCategory();
+  }
 
   getCategory(id) {
-    return this.categories.filter(p => p.id === id)[0].category;
+    return this.projectsCategoriesService.getCategoryName(id);
   }
 }

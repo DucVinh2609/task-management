@@ -14,6 +14,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { QuillModule } from 'ngx-quill';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { MatIconModule } from '@angular/material/icon';
+import { NZ_JIRA_ICONS } from '@trungk18/project/config/icons';
 import en from '@angular/common/locales/en';
 
 registerLocaleData(en);
@@ -27,7 +31,10 @@ registerLocaleData(en);
     HttpClientModule,
     AppRoutingModule,
     NzSpinModule,
-    NzIconModule.forRoot([]),
+    NzDrawerModule,
+    NzModalModule,
+    MatIconModule,
+    NzIconModule.forChild(NZ_JIRA_ICONS),
     environment.production ? [] : AkitaNgDevtools,
     AkitaNgRouterStoreModule,
     QuillModule.forRoot()

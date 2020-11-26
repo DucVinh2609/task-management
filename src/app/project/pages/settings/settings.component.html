@@ -15,20 +15,11 @@
         </div>
         <div class="form-group mt-3">
             <label class="label">
-                URL
-            </label>
-            <input class="form-input"
-                   placeholder="Project URL"
-                   formControlName="url" />
-        </div>
-        <div class="form-group mt-3">
-            <label class="label">
                 Category
             </label>
-            <select class="form-input"
-                    formControlName="category">
-                <option *ngFor="let category of categories">
-                    {{ category }}
+            <select class="form-input" formControlName="category">
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.category }}
                 </option>
             </select>
         </div>
@@ -40,6 +31,24 @@
                       placeholder="Project Description"
                       formControlName="description">
             </textarea>
+        </div>
+        <div class="form-group mt-3">
+            <label class="label">
+                Members
+            </label>
+            <div style="display: inline-grid;">
+                <j-button *ngFor="let member of members" [className]="'btn-secondary mr-1-5 mb-2'">
+                    <div class="flex items-center">
+                        <j-user [user]="member"></j-user>
+                        <svg-icon (click)="removeMember(member.id, member.name)"
+                                title="Remove member"
+                                [size]="20"
+                                [name]="'times'"
+                                class="text-textLight">
+                        </svg-icon>
+                    </div>
+                </j-button>
+            </div>
         </div>
         <div class="form-group mt-3">
             <j-button className="btn-primary mr-2"

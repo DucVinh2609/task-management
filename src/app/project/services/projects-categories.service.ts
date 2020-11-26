@@ -10,6 +10,10 @@ export class ProjectsCategoriesService {
 
   constructor() { }
 
+  getAllCategory() {
+    return dummy.categories;
+  }
+
   getCategoryName(projectCategoriesId: number) {
     return dummy.categories.filter(c => c.id === projectCategoriesId)[0].category;
   }
