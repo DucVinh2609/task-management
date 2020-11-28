@@ -42,7 +42,27 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": [101]
+      "projectAdmin": [101],
+      "projectAsAdmin": [
+        {
+          "id": 1,
+          "name": "Project 1"
+        },
+        {
+          "id": 2,
+          "name": "Project 2"
+        }
+      ],
+      "projectAsClient": [
+        {
+          "id": 3,
+          "name": "Project Client 1"
+        },
+        {
+          "id": 4,
+          "name": "Project CLient 2"
+        }
+      ]
     },
     {
       "id": "7ac265f9-b9ac-443f-a2b2-795682e579a4",
