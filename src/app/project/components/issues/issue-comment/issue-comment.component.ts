@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { JComment } from '@trungk18/interface/comment';
+import { JJobs } from '@trungk18/interface/job';
 import { JUser } from '@trungk18/interface/user';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
-import { ProjectService } from '@trungk18/project/state/project/project.service';
+import { JobsService } from '@trungk18/project/services/jobs.service';
 
 @Component({
   selector: 'issue-comment',
@@ -13,35 +12,15 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 })
 @UntilDestroy()
 export class IssueCommentComponent implements OnInit {
-  @Input() issueId: string;
-  @Input() comment: JComment;
-  @Input() createMode: boolean;
-  @ViewChild('commentBoxRef') commentBoxRef: ElementRef;
-  commentControl: FormControl;
+  @Input() job: JJobs;
+  description: string = '';
   user: JUser;
   isEditing: boolean;
 
-  constructor(private _authQuery: AuthQuery, private projectService: ProjectService) {}
-
-  @HostListener('window:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent) {
-    if (!this.createMode || this.isEditing) {
-      return;
-    }
-    if (event.key == 'M') {
-      this.commentBoxRef.nativeElement.focus();
-      this.isEditing = true;
-    }
-  }
+  constructor(private _authQuery: AuthQuery, private jobsService: JobsService) {}
 
   ngOnInit(): void {
-    this.commentControl = new FormControl('');
-    this._authQuery.user$.pipe(untilDestroyed(this)).subscribe((user) => {
-      this.user = user;
-      if (this.createMode) {
-        this.comment = new JComment(this.issueId, this.user);
-      }
-    });
+    this.description = this.jobsService.getJobsInfo(this.job.id).description;
   }
 
   setCommentEdit(mode: boolean) {
@@ -49,19 +28,16 @@ export class IssueCommentComponent implements OnInit {
   }
 
   addComment() {
-    let now = new Date();
-    this.projectService.updateIssueComment(this.issueId, {
-      ...this.comment,
-      id: `${now.getTime()}`,
-      createdAt: now.toISOString(),
-      updatedAt: now.toISOString(),
-      body: this.commentControl.value
+    console.log(this.description);
+    this.jobsService.updateJobs({
+      ...this.job,
+      description: this.description
     });
     this.cancelAddComment();
   }
 
   cancelAddComment() {
-    this.commentControl.patchValue('');
+    this.description = this.jobsService.getJobsInfo(this.job.id).description;
     this.setCommentEdit(false);
   }
 }

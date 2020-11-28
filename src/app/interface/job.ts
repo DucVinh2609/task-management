@@ -6,4 +6,5 @@ export interface JJobs {
   userIds: string[];
   deadlineAt: string;
   listJobsId: number;
+  description: string;
 }

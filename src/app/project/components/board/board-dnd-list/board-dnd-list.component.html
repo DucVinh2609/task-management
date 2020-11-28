@@ -1,7 +1,16 @@
 <div class="status-list">
     <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
-        {{ issueStatusName }}
-        <span class="lowercase text-13">{{ issuesCount }}</span>
+        <ng-container *ngIf="!checkAdmin">
+            <textarea style="width: 85%;" class="textarea-inline-control" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
+                (blur)="onBlur()" disabled>
+            </textarea>
+        </ng-container>
+        <ng-container *ngIf="checkAdmin">
+            <textarea style="width: 85%; background-color: initial;" class="textarea-inline-control" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
+                (blur)="onBlur()">
+            </textarea>
+        </ng-container>
+        <span style="width: 10%; vertical-align: super; margin-left: 5px;" class="lowercase text-13">{{ issuesCount }}</span>
     </div>
     <ng-container *ngIf="checkAdmin">
         <div class="h-full pl-2"

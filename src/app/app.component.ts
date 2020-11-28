@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { ProjectQuery } from './project/state/project/project.query';
 import { ProjectService } from './project/state/project/project.service';
 import { GoogleAnalyticsService } from './core/services/google-analytics.service';
+import { AuthService, LoginPayload } from './project/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,11 @@ export class AppComponent implements AfterViewInit {
     public projectQuery: ProjectQuery,
     private _cdr: ChangeDetectorRef,
     private _projectService: ProjectService,
-    private _googleAnalytics: GoogleAnalyticsService
+    private _googleAnalytics: GoogleAnalyticsService,
+    private _authService: AuthService
   ) {
     this._projectService.setLoading(true);
+    this._authService.login(new LoginPayload());
     if (environment.production) {
       this.handleGoogleAnalytics();
     }

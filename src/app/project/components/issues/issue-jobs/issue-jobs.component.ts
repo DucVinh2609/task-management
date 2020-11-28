@@ -5,6 +5,8 @@ import { JobsService } from '@trungk18/project/services/jobs.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { UsersService } from '@trungk18/project/services/users.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { IssueDeleteModalComponent } from '../issue-delete-modal/issue-delete-modal.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'issue-jobs',
@@ -28,14 +30,15 @@ export class IssueJobsComponent implements OnChanges {
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
     private usersService: UsersService,
-    public authQuery: AuthQuery) { }
+    public authQuery: AuthQuery,
+    private _modalService: NzModalService) { }
 
   ngOnInit(): void {
     this.getData()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.getData()
+    // this.getData()
   }
 
   getData() {
@@ -46,6 +49,7 @@ export class IssueJobsComponent implements OnChanges {
       if (user.projectAdmin.includes(this.projectsId)) {
         this.isDisabledDeadline = false;
       }
+      console.log(user);
       if (userIds.includes(user.id) || user.projectAdmin.includes(this.projectsId)) {
         this.isDisabledButton = false;
       }
@@ -120,5 +124,22 @@ export class IssueJobsComponent implements OnChanges {
     if(this.isDisabledDeadline) {
       this.editMode = false;
     } else this.editMode = true;
+  }
+
+  deleteJobs() {
+    this._modalService.create({
+      nzContent: IssueDeleteModalComponent,
+      nzClosable: false,
+      nzFooter: null,
+      nzStyle: {
+        top: "140px"
+      },
+      nzComponentParams: {
+        title: "Are you sure you want to delete this jobs?",
+        data: this.job.id,
+        onDelete: null,
+        delete: "jobs"
+      }      
+    });
   }
 }

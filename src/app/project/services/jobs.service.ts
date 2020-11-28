@@ -37,6 +37,10 @@ export class JobsService {
     }
   }
 
+  getJobsInfo(jobId: number) {
+    return dummy.jobs.filter(j => j.id == jobId)[0];
+  }
+
   getListUsersInJob(jobId: number) {
     return dummy.jobs.filter(j => j.id == jobId)[0].userIds;
   }
@@ -49,7 +53,12 @@ export class JobsService {
       job.finish = jobs.finish;
       job.deadlineAt = jobs.deadlineAt;
       job.userIds = jobs.userIds;
-      job.deadlineAt = jobs.deadlineAt;
+      job.description = jobs.description;
     }
+  }
+
+  deleteJobs(jobId: number) {
+    const index = dummy.jobs.findIndex(x => x.id === jobId);
+    if (index !== undefined) dummy.jobs.splice(index, 1);
   }
 }

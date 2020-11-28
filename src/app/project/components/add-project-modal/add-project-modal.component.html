@@ -21,12 +21,6 @@
       </label>
       <categories-select [control]="f?.projectCategoriesId"></categories-select>
     </div>
-    <div class="form-group mt-3">
-      <label class="label">
-        Groups
-      </label>
-      <groups-select [control]="f?.groupId"></groups-select>
-    </div>
     <div class="form-group mt-5 form-action">
       <j-button className="btn-primary mr-2" type="submit" [disabled]="issueForm?.invalid" (click)="submitForm()">
         Create Issue

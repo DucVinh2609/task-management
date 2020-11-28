@@ -28,6 +28,9 @@ export class IssueCardComponent implements OnChanges {
   issueTypesName: string = '';
   projectsId: number;
   nameProject: string = '';
+  deadline: string = '';
+  deadlineAt: Date;
+  month: number;
 
   constructor(private _projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
@@ -53,6 +56,9 @@ export class IssueCardComponent implements OnChanges {
     // }
     this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
     this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
+    this.deadline = this.issuesService.getInfoIssue(this.issue.id).deadlineAt;
+    this.deadlineAt = new Date(this.deadline);
+    this.month = this.deadlineAt.getMonth() + 1;
   }
 
   openIssueModal(issueId: string) {

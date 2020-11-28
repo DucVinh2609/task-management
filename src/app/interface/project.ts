@@ -19,14 +19,13 @@ export enum ProjectCategory {
   BUSINESS = 'Business'
 }
 
-export interface JProjectDemo {
+export interface JProjects {
   id: number;
   name: string;
   description: string;
   projectCategoriesId: number;
   createdAt: string;
   updateAt: string;
-  groupId: number;
 }
 
 export interface JProjectCategories {
