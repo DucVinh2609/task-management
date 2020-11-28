@@ -33,4 +33,8 @@ export class UsersService {
     });
     return this.listUsers
   }
+
+  getIdUserByEmail(email: string) {
+    return dummy.users.filter(u => u.email == email)[0].id;
+  }
 }

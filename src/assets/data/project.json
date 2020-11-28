@@ -76,6 +76,17 @@
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "projectAdmin": []
+    },
+    {
+      "id": "430451aa-10c8-4d7e-9363-311357c0b0cc",
+      "name": "Tran Hoang Bao",
+      "avatarUrl": "assets/img/users/tranhoangbao.jpg",
+      "email": "khongphaidangvuadau09@gmail.com",
+      "password": "123123",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "projectAdmin": []
     }
   ],
   "issues": [

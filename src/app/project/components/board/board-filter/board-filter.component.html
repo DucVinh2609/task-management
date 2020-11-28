@@ -19,6 +19,14 @@
                       (click)="userChanged(user)">
             </j-avatar>
         </div>
+        <div class="lift-avatar" nz-tooltip [nzTooltipPlacement]="'bottom'" nzTooltipTitle="Invite new members to the project">
+            <j-avatar class="flex"
+                      className="select-none shadow-outline-white"
+                      avatarUrl="assets/img/icons/add-member.png"
+                      [size]="36"
+                      (click)="inviteMember()">
+            </j-avatar>
+        </div>
     </div>
     <j-button class="ml-3"
               className="btn-empty"
