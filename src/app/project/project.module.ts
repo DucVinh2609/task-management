@@ -103,6 +103,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoginComponent } from './pages/common/login/login.component';
 import { IssueJobsComponent } from './components/issues/issue-jobs/issue-jobs.component';
 import { IssueDeadlineComponent } from './components/issues/issue-deadline/issue-deadline.component';
+import { RegistrationComponent } from './pages/common/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +131,8 @@ import { IssueDeadlineComponent } from './components/issues/issue-deadline/issue
     IndexComponent,
     LoginComponent,
     IssueJobsComponent,
-    IssueDeadlineComponent
+    IssueDeadlineComponent,
+    RegistrationComponent
   ],
   imports: [
     CommonModule,

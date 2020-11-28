@@ -24,4 +24,8 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
   }
+
+  register() {
+    window.location.href = '/registration';
+  }
 }
