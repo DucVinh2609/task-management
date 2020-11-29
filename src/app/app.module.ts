@@ -18,6 +18,10 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { MatIconModule } from '@angular/material/icon';
 import { NZ_JIRA_ICONS } from '@trungk18/project/config/icons';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import en from '@angular/common/locales/en';
 
 registerLocaleData(en);
@@ -36,6 +40,10 @@ registerLocaleData(en);
     MatIconModule,
     NzIconModule.forChild(NZ_JIRA_ICONS),
     environment.production ? [] : AkitaNgDevtools,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'task-management-client'),
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
     AkitaNgRouterStoreModule,
     QuillModule.forRoot()
   ],

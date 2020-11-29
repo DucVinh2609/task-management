@@ -11,12 +11,15 @@ export class UserProjectsService {
 
   addUserProjects(email: string, projectId: number) {
     let userId = this.usersService.getIdUserByEmail(email);
-    let newUserProjects = {
-      "userId": userId,
-      "projectId": projectId
-    }
     if (userId) {
+      let newUserProjects = {
+        "userId": userId,
+        "projectId": projectId
+      }
       dummy.userProjects.push(newUserProjects);
+      return "success";
+    } else {
+      return "error";
     }
   }
 }

@@ -2,9 +2,9 @@
   <span style="font-size: 36px; margin-left: 105px;"> Login </span>
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()" style="margin-top: 15px;">
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please input your username!">
+      <nz-form-control nzErrorTip="Please input your email!">
         <nz-input-group>
-          <input type="text" nz-input formControlName="userName" placeholder="Username" />
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
@@ -15,6 +15,11 @@
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
+    <ng-container *ngIf="error">
+      <span style=" color: red; vertical-align: revert;">
+        Email or password is incorrect
+      </span>
+    </ng-container>
     <div nz-row class="login-form-margin">
       <div nz-col [nzSpan]="12">
         <label nz-checkbox formControlName="remember">

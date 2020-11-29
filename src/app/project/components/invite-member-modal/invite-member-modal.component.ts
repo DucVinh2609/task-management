@@ -40,9 +40,13 @@ export class InviteMemberModalComponent implements OnInit {
     if (this.inviteMemberForm.invalid) {
       return;
     }
-    this.userProjectsService.addUserProjects(this.inviteMemberForm.get('email').value, this.projectsId);
-
-    this.closeModal();
+    let result = this.userProjectsService.addUserProjects(this.inviteMemberForm.get('email').value, this.projectsId);
+    if (result == 'error') {
+      this.error = true;
+    } else if (result == 'success') {
+      this.closeModal();
+    }
+    // this._modalRef.destroy({ result: result});
   }
 
   cancel() {

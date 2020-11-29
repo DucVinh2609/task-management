@@ -51,9 +51,6 @@ export class BoardFilterComponent implements OnInit {
 
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
-    this._modalService.afterAllClose.subscribe(() => {
-      this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
-    });
   }
 
   isUserSelected(user: JUser) {
@@ -78,7 +75,7 @@ export class BoardFilterComponent implements OnInit {
   }
 
   inviteMember() {
-    this._modalService.create({
+    const modalRef = this._modalService.create({
       nzContent: InviteMemberModalComponent,
       nzClosable: false,
       nzFooter: null,
@@ -86,6 +83,14 @@ export class BoardFilterComponent implements OnInit {
       nzComponentParams: {
         projectsId: this.projectsId
       }
+    });
+    modalRef.afterClose.subscribe(() => {
+      this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+      // if (result.result == 'error') {
+
+      // } else if (result.result == 'success') {
+      //   this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+      // }
     });
   }
 }

@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { NzMessageService } from 'ng-zorro-antd/message';
+import { JUser } from '@trungk18/interface/user';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { v4 as uuid } from 'uuid';
+import { DateUtil } from '@trungk18/project/utils/date';
+import { UsersService } from '@trungk18/project/services/users.service'
 
 @Component({
   selector: 'registration',
@@ -12,6 +18,7 @@ import { Observable, Observer } from 'rxjs';
 export class RegistrationComponent implements OnInit {
   validateForm!: FormGroup;
   loading = false;
+  selectedImg: any;
   avatarUrl?: string;
 
   submitForm(): void {
@@ -40,6 +47,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder,
+    private storage: AngularFireStorage,
+    private usersService: UsersService,
     // private msg: NzMessageService
     ) {}
 
@@ -49,15 +58,12 @@ export class RegistrationComponent implements OnInit {
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
       nickname: [null, [Validators.required]],
-      phoneNumberPrefix: ['+86'],
-      phoneNumber: [null, [Validators.required]],
-      website: [null, [Validators.required]],
-      captcha: [null, [Validators.required]],
-      agree: [false]
     });
   }
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
+    this.selectedImg = file;
+    console.log(this.selectedImg);
     return new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
@@ -83,6 +89,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   handleChange(info: { file: NzUploadFile }): void {
+    console.log(info.file.status);
     switch (info.file.status) {
       case 'uploading':
         this.loading = true;
@@ -99,6 +106,32 @@ export class RegistrationComponent implements OnInit {
         this.loading = false;
         break;
     }
+  }
+
+  async register() {
+    let id: string = uuid();
+    let now = DateUtil.getNow();
+    let filePath = `images/${this.selectedImg.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+    const fileRef = this.storage.ref(filePath);
+    let upload = this.storage.upload(filePath, this.selectedImg).snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe((url) => {
+          this.avatarUrl = url;
+          let newUser: JUser = {
+            id: id,
+            name: this.validateForm.get('nickname').value,
+            email: this.validateForm.get('email').value,
+            password: this.validateForm.get('password').value,
+            description: null,
+            avatarUrl: this.avatarUrl,
+            createdAt: now,
+            updatedAt: null,
+            projectAdmin: []
+          };
+          this.usersService.registerNewUser(newUser);
+        })
+      })
+    ).subscribe();
   }
 
   login() {

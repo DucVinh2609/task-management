@@ -35,6 +35,15 @@ export class UsersService {
   }
 
   getIdUserByEmail(email: string) {
-    return dummy.users.filter(u => u.email == email)[0].id;
+    if (dummy.users.filter(u => u.email == email).length !== 0) {
+      return dummy.users.filter(u => u.email == email)[0].id;
+    } else {
+      return null;
+    }
+  }
+
+  registerNewUser(user: JUser) {
+    dummy.users.push(user);
+    console.log(dummy.users);
   }
 }

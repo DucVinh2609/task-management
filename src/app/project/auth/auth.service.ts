@@ -25,12 +25,11 @@ export class AuthService {
   //   return this.currentUserSubject.value;
   // }
 
-  login({ email = '', password = '' }: LoginPayload) {
-    this._store.setLoading(true);
-    this._http
-      .get<JUser>(`${this.baseUrl}/auth.json`)
-      .pipe(
-        map((user) => {
+  login({ email, password }: LoginPayload) {
+    if (dummy.users.filter(u => u.email == email).length !== 0) {
+      if (dummy.users.filter(u => u.email == email)[0].password === password) {
+        this._store.setLoading(true);
+        dummy.users.filter(u => u.email == email).map((user) => {
           this._store.update((state) => ({
             ...state,
             ...user
@@ -42,9 +41,14 @@ export class AuthService {
         catchError((err) => {
           this._store.setError(err);
           return of(err);
-        })
-      )
-      .subscribe();
+        });
+        return "success";
+      } else {
+        return "failed";
+      }
+    } else {
+      return "failed";
+    }
   }
 
   // login(email: string, password: string) {
@@ -64,7 +68,7 @@ export class LoginPayload {
   email: string;
   password: string;
   constructor() {
-    this.email = 'ducvinhnguyen2609@gmail.com';
-    this.password = '123123';
+    this.email = '';
+    this.password = '';
   }
 }
