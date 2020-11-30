@@ -17,22 +17,12 @@
   </div>
   <div style="margin: 40px 0 0;">
     <div style="margin-right: 10px;">
-      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Participating projects</span>
+      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Project to participate as Admin</span>
       <div>
         <ul style="display: inline-block;">
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+          <li *ngFor="let projectAdmin of projectAdmins" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
-            </j-button>
-          </li>
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
-            <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
-            </j-button>
-          </li>
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
-            <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
+              <span style="vertical-align: super;padding: 75px;"> {{ projectAdmin.name }} </span>
             </j-button>
           </li>
           <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
@@ -44,22 +34,12 @@
       </div>
     </div>
     <div style="margin-right: 10px;">
-      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Project to participate as Admin</span>
+      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Project to participate as Client</span>
       <div>
         <ul style="display: inline-block;">
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+          <li *ngFor="let projectClient of projectClients" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
-            </j-button>
-          </li>
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
-            <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
-            </j-button>
-          </li>
-          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
-            <j-button className="btn-add-task">
-              <span style="vertical-align: super;padding: 75px;"> Projects </span>
+              <span style="vertical-align: super;padding: 75px;"> {{ projectClient.name }} </span>
             </j-button>
           </li>
           <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">

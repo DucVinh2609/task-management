@@ -22,4 +22,8 @@ export class ProjectsService {
     dummy.projects.push(newProjects);
     return newProjects.id;
   }
+
+  getProjectsInforById(projectId: any[]) {
+    return dummy.projects.filter(u => projectId.includes(u.id));
+  }
 }
