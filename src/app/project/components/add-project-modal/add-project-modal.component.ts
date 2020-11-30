@@ -86,8 +86,8 @@ export class AddProjectModalComponent implements OnInit {
       this.usersService.updateAdminProjects(user.id, newProjectId);
     });
     this.closeModal();
-    window.location.href = '/project/board/' + newProject.name;
-    // this.router.navigate(['/project/board/' + newProject.name]);
+    // window.location.href = '/project/board/' + newProject.name;
+    this.router.navigate(['/project/board/' + newProject.name]);
   }
 
   cancel() {

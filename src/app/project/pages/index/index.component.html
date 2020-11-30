@@ -4,7 +4,6 @@
       <aside class="navbarLeft">
         <div class="navbarLeft-content">
           <mat-icon style="color: white; margin-left: 15px; font-size: 35px; cursor: pointer;" (click)="home()">home</mat-icon>
-
           <div class="flex-auto"></div>
           <div class="item" *ngIf="authQuery.user$ | async as user">
             <div nz-tooltip [nzTooltipTitle]="user.name" nzTooltipPlacement="right" class="itemIcon">
@@ -16,29 +15,41 @@
       </aside>
     </div>
   </div>
-  <div style="display: flex; flex: 100%; margin: 40px 0 0;">
-    <div style="display: flex; flex: 30%; margin-right: 10px; justify-content: flex-end;">
-      <nav style="width: 240px">
-        <div>
-          <ul>
-            <li style="margin-bottom: 5px;">
-              <j-button className="btn-add-task">
-                <mat-icon>backup_table</mat-icon>
-                <span style="vertical-align: super;"> Projects </span>
-              </j-button>
-            </li>
-            <li style="margin-bottom: 5px;">
-              <j-button className="btn-add-task">
-                <mat-icon>add</mat-icon>
-                <span style="vertical-align: super;"> Projects </span>
-              </j-button>
-            </li>
-          </ul>
-        </div>
-      </nav>
+  <div style="margin: 40px 0 0;">
+    <div style="margin-right: 10px;">
+      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Project to participate as Admin</span>
+      <div>
+        <ul style="display: inline-block;">
+          <li *ngFor="let projectAdmin of projectAdmins" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+            <j-button className="btn-add-task">
+              <span style="vertical-align: super;padding: 75px;"> {{ projectAdmin.name }} </span>
+            </j-button>
+          </li>
+          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+            <j-button (click)="openCreateProjectModal()" className="btn-add-task">
+              <mat-icon style="margin-left: 80px; font-size: 50px;">add</mat-icon>
+            </j-button>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div style="display: flex; flex: 70%;">
-      yyyyyyyyyyyyyyy
+    <div style="margin-right: 10px;">
+      <span style="font-size: 24px; font-weight: bold; margin-left: 40px;">Project to participate as Client</span>
+      <div>
+        <ul style="display: inline-block;">
+          <li *ngFor="let projectClient of projectClients" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+            <j-button className="btn-add-task">
+              <span style="vertical-align: super;padding: 75px;"> {{ projectClient.name }} </span>
+            </j-button>
+          </li>
+          <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
+            <j-button (click)="openCreateProjectModal()" className="btn-add-task">
+              <mat-icon style="margin-left: 80px; font-size: 50px;">add</mat-icon>
+            </j-button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
+

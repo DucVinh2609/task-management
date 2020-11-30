@@ -22,4 +22,15 @@ export class UserProjectsService {
       return "error";
     }
   }
+
+  getProjectOfUsers(userId: string, projectId: any[]) {
+    let userProjects = [];
+    dummy.userProjects.forEach(userProject => {
+      if (userId && userProject.userId.includes(userId) && !projectId.includes(userProject.projectId)) {
+        userProjects.push(userProject.projectId);
+      }
+    });
+
+    return userProjects;
+  }
 }

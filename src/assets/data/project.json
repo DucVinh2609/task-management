@@ -42,7 +42,27 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": [101]
+      "projectAdmin": [101],
+      "projectAsAdmin": [
+        {
+          "id": 1,
+          "name": "Project 1"
+        },
+        {
+          "id": 2,
+          "name": "Project 2"
+        }
+      ],
+      "projectAsClient": [
+        {
+          "id": 3,
+          "name": "Project Client 1"
+        },
+        {
+          "id": 4,
+          "name": "Project CLient 2"
+        }
+      ]
     },
     {
       "id": "7ac265f9-b9ac-443f-a2b2-795682e579a4",
@@ -279,6 +299,14 @@
       "projectCategoriesId": 1,
       "createdAt": "2020-11-08T15:30:00.000Z",
       "updateAt": "2020-11-08T15:30:00.000Z"
+    },
+    {
+      "id": 103,
+      "name": "demo",
+      "description": "DEMO",
+      "projectCategoriesId": 1,
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z"
     }
   ],
   "issuePriority": [
@@ -337,6 +365,10 @@
     {
       "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
       "projectId": 102
+    },
+    {
+      "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "projectId": 103
     }
   ],
   "listJobs": [

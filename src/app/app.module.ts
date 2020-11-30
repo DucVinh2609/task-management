@@ -45,7 +45,8 @@ registerLocaleData(en);
     AngularFireStorageModule,
     AngularFireAuthModule,
     AkitaNgRouterStoreModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    NzModalModule,
   ],
   providers: [
     {
