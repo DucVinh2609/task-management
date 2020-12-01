@@ -92,6 +92,7 @@ import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectComponent } from './project.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 import { AddProjectModalComponent } from './components/add-project-modal/add-project-modal.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
@@ -105,6 +106,7 @@ import { IssueJobsComponent } from './components/issues/issue-jobs/issue-jobs.co
 import { IssueDeadlineComponent } from './components/issues/issue-deadline/issue-deadline.component';
 import { RegistrationComponent } from './pages/common/registration/registration.component';
 import { InviteMemberModalComponent } from './components/invite-member-modal/invite-member-modal.component';
+import { AccountSettingComponent } from './pages/common/account-setting/account-setting.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,8 @@ import { InviteMemberModalComponent } from './components/invite-member-modal/inv
     IssueJobsComponent,
     IssueDeadlineComponent,
     RegistrationComponent,
-    InviteMemberModalComponent
+    InviteMemberModalComponent,
+    AccountSettingComponent
   ],
   imports: [
     CommonModule,
@@ -220,6 +223,7 @@ import { InviteMemberModalComponent } from './components/invite-member-modal/inv
     QuillModule,
     MatIconModule,
     MatInputModule,
+    MatTabsModule,
     MatSelectModule,
     MatCardModule,
     MatProgressBarModule

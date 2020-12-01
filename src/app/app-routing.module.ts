@@ -5,6 +5,7 @@ import { ErrorComponent } from '@trungk18/project/pages/common/error/error.compo
 import { LoginComponent } from '@trungk18/project/pages/common/login/login.component';
 import { RegistrationComponent } from '@trungk18/project/pages/common/registration/registration.component';
 import { BoardComponent } from '@trungk18/project/pages/board/board.component';
+import { AccountSettingComponent } from '@trungk18/project/pages/common/account-setting/account-setting.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'index',
     component: IndexComponent
+  },
+  {
+    path: 'account-setting',
+    component: AccountSettingComponent
   },
   {
     path: 'project',
