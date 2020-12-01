@@ -11,12 +11,12 @@ const routes: Routes = [
     path: '',
     component: ProjectComponent,
     children: [
+      // {
+      //   path: 'board/:nameProject',
+      //   component: BoardComponent
+      // },
       {
-        path: 'board/:nameProject',
-        component: BoardComponent
-      },
-      {
-        path: 'settings',
+        path: 'board/:nameProject/settings',
         component: SettingsComponent
       },
       {
@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'board',
+        redirectTo: 'board/:nameProject',
         pathMatch: 'full'
       }
     ]

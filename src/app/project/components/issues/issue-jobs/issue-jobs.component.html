@@ -18,7 +18,7 @@
         </mat-icon>
       </span>
       <span class="icon">
-        <mat-icon style="line-height: inherit;">delete</mat-icon>
+        <mat-icon style="line-height: inherit;" (click)="deleteJobs()">delete</mat-icon>
       </span>
     </ng-container>
   </ng-container>
@@ -65,6 +65,11 @@
     </ng-container>
   </div>
 </div>
-
+<ng-container *ngIf="authQuery.user$ | async as user">
+  <ng-container *ngIf="user.projectAdmin.includes(projectsId) || job.userIds.includes(user.id)">
+    <issue-comment [job]=job></issue-comment>
+  </ng-container>
+</ng-container>
+<br>
 <hr>
 <br>

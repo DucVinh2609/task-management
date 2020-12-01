@@ -1,6 +1,6 @@
 {
   "id": "140892",
-  "name": "Task Management",
+  "name": "Task management",
   "url": "https://github.com/trungk18/jira-clone-angular",
   "description": "A Jira clone app built with Angular and Akita - by trungk18",
   "category": "Software",
@@ -11,25 +11,25 @@
       "id": 1,
       "position": 0,
       "status": "Backlog",
-      "projectId": 1
+      "projectId": 101
     },
     {
       "id": 2,
       "position": 1,
       "status": "Selected",
-      "projectId": 1
+      "projectId": 101
     },
     {
       "id": 3,
       "position": 2,
       "status": "InProgress",
-      "projectId": 1
+      "projectId": 101
     },
     {
       "id": 4,
       "position": 3,
       "status": "Done",
-      "projectId": 1
+      "projectId": 101
     }
   ],
   "users": [
@@ -42,7 +42,27 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": [101]
+      "projectAdmin": [101],
+      "projectAsAdmin": [
+        {
+          "id": 1,
+          "name": "Project 1"
+        },
+        {
+          "id": 2,
+          "name": "Project 2"
+        }
+      ],
+      "projectAsClient": [
+        {
+          "id": 3,
+          "name": "Project Client 1"
+        },
+        {
+          "id": 4,
+          "name": "Project CLient 2"
+        }
+      ]
     },
     {
       "id": "7ac265f9-b9ac-443f-a2b2-795682e579a4",
@@ -76,6 +96,17 @@
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "projectAdmin": []
+    },
+    {
+      "id": "430451aa-10c8-4d7e-9363-311357c0b0cc",
+      "name": "Tran Hoang Bao",
+      "avatarUrl": "assets/img/users/tranhoangbao.jpg",
+      "email": "khongphaidangvuadau09@gmail.com",
+      "password": "123123",
+      "description": null,
+      "createdAt": "2020-08-27T14:23:38.183Z",
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "projectAdmin": []
     }
   ],
   "issues": [
@@ -89,9 +120,9 @@
       "title": "A1",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-25T07:23:38.183Z",
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
-      "listPosition": 1
+      "listPosition": 0
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -103,9 +134,9 @@
       "title": "A2",
       "issueTypeId": 2,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-26T07:23:38.183Z",
       "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
-      "listPosition": 2
+      "listPosition": 1
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -117,9 +148,9 @@
       "title": "B1",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": "2020-11-24T07:23:38.183Z",
       "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4"],
-      "listPosition": 1
+      "listPosition": 0
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -133,7 +164,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4"],
-      "listPosition": 2
+      "listPosition": 1
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -147,7 +178,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
-      "listPosition": 3
+      "listPosition": 2
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -161,7 +192,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
-      "listPosition": 1
+      "listPosition": 0
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -175,7 +206,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
-      "listPosition": 2
+      "listPosition": 1
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -189,7 +220,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
-      "listPosition": 1
+      "listPosition": 0
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -203,7 +234,7 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
       "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
-      "listPosition": 2
+      "listPosition": 1
     },
     {
       "createdAt": "2020-08-27T14:23:38.183Z",
@@ -215,9 +246,9 @@
       "title": "D3",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "deadlineAt": "2020-09-27T14:23:38.183Z",
+      "deadlineAt": null,
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
-      "listPosition": 3
+      "listPosition": 2
     }
   ],
   "categories": [
@@ -259,8 +290,23 @@
       "description": "ĐỒ ÁN TỐT NGHIỆP",
       "projectCategoriesId": 1,
       "createdAt": "2020-11-08T15:30:00.000Z",
-      "updateAt": "2020-11-08T15:30:00.000Z",
-      "groupId": 1
+      "updateAt": "2020-11-08T15:30:00.000Z"
+    },
+    {
+      "id": 102,
+      "name": "demo",
+      "description": "DEMO",
+      "projectCategoriesId": 1,
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z"
+    },
+    {
+      "id": 103,
+      "name": "demo",
+      "description": "DEMO",
+      "projectCategoriesId": 1,
+      "createdAt": "2020-11-08T15:30:00.000Z",
+      "updateAt": "2020-11-08T15:30:00.000Z"
     }
   ],
   "issuePriority": [
@@ -315,6 +361,14 @@
     {
       "userId": "610451aa-10c8-4d7e-9363-311357c0b0dd",
       "projectId": 101
+    },
+    {
+      "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "projectId": 102
+    },
+    {
+      "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "projectId": 103
     }
   ],
   "listJobs": [
@@ -332,7 +386,8 @@
       "finish": false,
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "deadlineAt": "2020-09-27T14:23:38.183Z",
-      "listJobsId": 1
+      "listJobsId": 1,
+      "description": "Done"
     },
     {
       "id": 1002,
@@ -341,7 +396,8 @@
       "finish": false,
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "deadlineAt": "2020-09-27T14:23:38.183Z",
-      "listJobsId": 1
+      "listJobsId": 1,
+      "description": null
     }
   ]
 }

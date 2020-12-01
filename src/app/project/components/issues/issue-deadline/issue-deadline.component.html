@@ -1,9 +1,29 @@
 <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold">
   Deadline
 </div>
-<nz-date-picker nzShowTime
-                nzFormat="yyyy-MM-dd HH:mm:ss"
-                [(ngModel)]="deadline"
-                (nzOnOpenChange)="handleDeadlineOpenChange($event)"
-                [nzDisabled]="isDisabledDeadline">
-</nz-date-picker>
+<ng-container *ngIf="deadlineLimit > 1">
+  <nz-date-picker nzShowTime
+                  nzFormat="yyyy-MM-dd HH:mm:ss"
+                  [(ngModel)]="deadline"
+                  (nzOnOpenChange)="handleDeadlineOpenChange($event)"
+                  [nzDisabled]="isDisabledDeadline">
+  </nz-date-picker>
+</ng-container>
+<ng-container *ngIf="deadlineLimit <= 1 && deadlineLimit > 0">
+  <nz-date-picker nzShowTime
+                  nzFormat="yyyy-MM-dd HH:mm:ss"
+                  [(ngModel)]="deadline"
+                  (nzOnOpenChange)="handleDeadlineOpenChange($event)"
+                  [nzDisabled]="isDisabledDeadline"
+                  style="background-color: yellow">
+  </nz-date-picker>
+</ng-container>
+<ng-container *ngIf="deadlineLimit < 0">
+  <nz-date-picker nzShowTime
+                  nzFormat="yyyy-MM-dd HH:mm:ss"
+                  [(ngModel)]="deadline"
+                  (nzOnOpenChange)="handleDeadlineOpenChange($event)"
+                  [nzDisabled]="isDisabledDeadline"
+                  style="background-color: red">
+  </nz-date-picker>
+</ng-container>

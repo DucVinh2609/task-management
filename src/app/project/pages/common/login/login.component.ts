@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService, LoginPayload } from '@trungk18/project/auth/auth.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -8,11 +10,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  error: boolean = false;
+
+  constructor(private fb: FormBuilder,
+    private _authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       remember: [true]
     });
@@ -23,5 +29,20 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
+    let loginPayload: LoginPayload;
+    loginPayload = {
+      email: this.validateForm.get('email').value,
+      password: this.validateForm.get('password').value
+    }
+    let checkLogin = this._authService.login(loginPayload);
+    if (checkLogin === 'success') {
+      this.router.navigateByUrl('index');
+    } else if (checkLogin === 'failed') {
+      this.error = true;
+    }
+  }
+
+  register() {
+    window.location.href = '/registration';
   }
 }

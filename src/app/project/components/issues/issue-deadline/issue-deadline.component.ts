@@ -12,12 +12,20 @@ export class IssueDeadlineComponent implements OnInit {
   @Input() issue: JIssue;
   @Input() projectsId: number;
   deadline: Date | null = null;
+  deadlineLimit: number;
+  now = Date.now();
   isDisabledDeadline: boolean = true;
   constructor(private issuesService: IssuesService,
     public authQuery: AuthQuery) { }
 
   ngOnInit(): void {
-    this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
+    if(this.issuesService.getInfoIssue(this.issue.id).deadlineAt) {
+      this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
+      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+    } else {
+      this.deadline = new Date();
+      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+    }
     this.authQuery.user$.subscribe(user => {
       if (user.projectAdmin.includes(this.projectsId)) {
         this.isDisabledDeadline = false;
@@ -31,7 +39,7 @@ export class IssueDeadlineComponent implements OnInit {
       if(this.deadline) {
         newIssue.deadlineAt = this.deadline.toLocaleString();
         this.issuesService.updateIssue(newIssue);
-        console.log(newIssue);
+        this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
       }
     }
   }

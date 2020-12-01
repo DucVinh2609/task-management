@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectConst } from '@trungk18/project/config/const';
-import { JProject, ProjectCategory } from '@trungk18/interface/project';
+import { JProject, JProjectCategories, JProjects, ProjectCategory } from '@trungk18/interface/project';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
-import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NoWhitespaceValidator } from '@trungk18/core/validators/no-whitespace.validator';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
+import { ProjectsCategoriesService } from '@trungk18/project/services/projects-categories.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { JUser } from '@trungk18/interface/user';
+import { IssueDeleteModalComponent } from '@trungk18/project/components/issues/issue-delete-modal/issue-delete-modal.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -15,11 +21,14 @@ import { NoWhitespaceValidator } from '@trungk18/core/validators/no-whitespace.v
 })
 @UntilDestroy()
 export class SettingsComponent implements OnInit {
-  project: JProject;
   projectForm: FormGroup;
-  categories: ProjectCategory[];
+  categories: JProjectCategories[] = [];
+  nameProject: string = '';
+  projectsId: number;
+  project: JProjects;
+  members: JUser[] = [];
   get breadcrumbs(): string[] {
-    return [ProjectConst.Projects, this.project?.name, 'Settings'];
+    return [ProjectConst.Projects, this.nameProject, 'Settings'];
   }
 
   constructor(
@@ -27,49 +36,67 @@ export class SettingsComponent implements OnInit {
     private _projectService: ProjectService,
     private _notification: NzNotificationService,
     private _fb: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService,
+    private projectsCategoriesService: ProjectsCategoriesService,
+    private usersService: UsersService,
+    private _modalService: NzModalService
   ) {
-    this.categories = [
-      ProjectCategory.BUSINESS,
-      ProjectCategory.MARKETING,
-      ProjectCategory.SOFTWARE
-    ];
+    this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
   ngOnInit(): void {
     this.initForm();
-    this._projectQuery.all$.pipe(untilDestroyed(this)).subscribe((project) => {
-      this.project = project;
-      this.updateForm(project);
-    });
+    this.categories = this.projectsCategoriesService.getAllCategory();
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.project = this.projectsService.getProjectsInfo(this.projectsId);
+    this.members = this.usersService.getUsersInProjects(this.projectsId);
+    this.updateForm(this.project);
   }
 
   initForm() {
     this.projectForm = this._fb.group({
       name: ['', NoWhitespaceValidator()],
-      url: [''],
       description: [''],
-      category: [ProjectCategory.SOFTWARE]
+      category: ['']
     });
   }
 
-  updateForm(project: JProject) {
+  updateForm(project: JProjects) {
     this.projectForm.patchValue({
       name: project.name,
-      url: project.url,
       description: project.description,
-      category: project.category
+      category: project.projectCategoriesId
     });
   }
 
   submitForm() {
     let formValue: Partial<JProject> = this.projectForm.getRawValue();
+    console.log(formValue);
     this._projectService.updateProject(formValue);
     this._notification.create(
       "success",
       'Changes have been saved successfully.',
       ""      
     );
+  }
+
+  removeMember(userId: string, name: string) {
+    this._modalService.create({
+      nzContent: IssueDeleteModalComponent,
+      nzClosable: false,
+      nzFooter: null,
+      nzStyle: {
+        top: "140px"
+      },
+      nzComponentParams: {
+        title: "Are you sure you want to remove " + name +" from the projject?",
+        data: userId + "," + this.projectsId,
+        onDelete: null,
+        delete: "jobs"
+      }      
+    });
   }
 
   cancel() {

@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { quillConfiguration } from '@trungk18/project/config/editor';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'issue-description',
@@ -20,7 +21,8 @@ export class IssueDescriptionComponent implements OnChanges {
   isWorking: boolean;
 
   constructor(private _projectService: ProjectService,
-    public authQuery: AuthQuery) {}
+    public authQuery: AuthQuery,
+    private issuesService: IssuesService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
@@ -42,7 +44,7 @@ export class IssueDescriptionComponent implements OnChanges {
   }
 
   save() {
-    this._projectService.updateIssue({
+    this.issuesService.updateIssue({
       ...this.issue,
       description: this.descriptionControl.value
     });

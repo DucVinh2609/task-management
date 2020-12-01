@@ -3,11 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from '@trungk18/project/pages/index/index.component';
 import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
 import { LoginComponent } from '@trungk18/project/pages/common/login/login.component';
+import { RegistrationComponent } from '@trungk18/project/pages/common/registration/registration.component';
+import { BoardComponent } from '@trungk18/project/pages/board/board.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent
   },
   {
     path: 'index',
@@ -16,6 +22,10 @@ const routes: Routes = [
   {
     path: 'project',
     loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule)
+  },
+  {
+    path: 'project/board/:nameProject',
+    component: BoardComponent
   },
   {
     path: 'wip',

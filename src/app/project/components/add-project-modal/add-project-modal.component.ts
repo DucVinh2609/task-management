@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { JProjectCategories, JProjectDemo } from '@trungk18/interface/project'
+import { JProjectCategories, JProjects } from '@trungk18/interface/project'
 import { quillConfiguration } from '@trungk18/project/config/editor';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
@@ -14,6 +14,10 @@ import { until } from 'protractor';
 import { NoWhitespaceValidator } from '@trungk18/core/validators/no-whitespace.validator';
 import { DateUtil } from '@trungk18/project/utils/date';
 import dummy from 'src/assets/data/project.json';
+import { ProjectsService} from '@trungk18/project/services/projects.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { Router } from '@angular/router';
+import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
 @Component({
   selector: 'add-project-modal',
@@ -36,7 +40,11 @@ export class AddProjectModalComponent implements OnInit {
     private _fb: FormBuilder,
     private _modalRef: NzModalRef,
     private _projectService: ProjectService,
-    public _projectQuery: ProjectQuery
+    public _projectQuery: ProjectQuery,
+    private projectsService: ProjectsService,
+    private usersService: UsersService,
+    public router: Router,
+    public authQuery: AuthQuery
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +65,7 @@ export class AddProjectModalComponent implements OnInit {
   initForm() {
     this.issueForm = this._fb.group({
       name: ['', NoWhitespaceValidator()],
-      projectCategoriesId: [1],
-      groupId: [0]
+      projectCategoriesId: [1]
     });
   }
 
@@ -67,16 +74,20 @@ export class AddProjectModalComponent implements OnInit {
       return;
     }
     let now = DateUtil.getNow();
-    let newProject: JProjectDemo = {
+    let newProject: JProjects = {
       ...this.issueForm.getRawValue(),
-      id: 2,
       createdAt: now,
       updatedAt: null,
       description: null
     };
 
-    this._projectService.createProject(newProject);
+    let newProjectId = this.projectsService.createProject(newProject);
+    this.authQuery.user$.subscribe(user => {
+      this.usersService.updateAdminProjects(user.id, newProjectId);
+    });
     this.closeModal();
+    // window.location.href = '/project/board/' + newProject.name;
+    this.router.navigate(['/project/board/' + newProject.name]);
   }
 
   cancel() {

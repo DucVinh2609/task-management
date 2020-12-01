@@ -9,6 +9,8 @@ import { JUser } from '@trungk18/interface/user';
 import { UsersService } from 'src/app/project/services/users.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
+import { InviteMemberModalComponent } from '@trungk18/project/components/invite-member-modal/invite-member-modal.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'board-filter',
@@ -26,6 +28,7 @@ export class BoardFilterComponent implements OnInit {
   constructor(
     public projectQuery: ProjectQuery,
     public filterQuery: FilterQuery,
+    private _modalService: NzModalService,
     public filterService: FilterService,
     private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
@@ -69,5 +72,25 @@ export class BoardFilterComponent implements OnInit {
   resetAll() {
     this.searchControl.setValue('');
     this.filterService.resetAll();
+  }
+
+  inviteMember() {
+    const modalRef = this._modalService.create({
+      nzContent: InviteMemberModalComponent,
+      nzClosable: false,
+      nzFooter: null,
+      nzWidth: 500,
+      nzComponentParams: {
+        projectsId: this.projectsId
+      }
+    });
+    modalRef.afterClose.subscribe(() => {
+      this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+      // if (result.result == 'error') {
+
+      // } else if (result.result == 'success') {
+      //   this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+      // }
+    });
   }
 }

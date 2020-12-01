@@ -1,0 +1,67 @@
+<div class="form-login">
+  <span style="font-size: 36px; margin-left: 210px;"> Registration </span>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="margin-top: 15px;">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="email" id="email" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
+        <input nz-input type="password" id="password" formControlName="password"
+          (ngModelChange)="updateConfirmValidator()" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+        <input nz-input type="password" formControlName="checkPassword" id="checkPassword" />
+        <ng-template #errorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please confirm your password!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('confirm')">
+            Two passwords that you enter is inconsistent!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired
+        nzTooltipTitle="What do you want other to call you">
+        <span>Nickname</span>
+      </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
+        <input nz-input id="nickname" formControlName="nickname" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="flex-flow: inherit;">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Avatar" nzRequired
+        nzTooltipTitle="Upload Avatar of User">
+        <span>Avatar</span>
+      </nz-form-label>
+      <nz-upload class="avatar-uploader" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzName="avatar"
+        nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)">
+        <ng-container *ngIf="!avatarUrl">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">Upload</div>
+        </ng-container>
+        <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+      </nz-upload>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary" (click)="register()">Register</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row class="register-area">
+      <span style="margin-left: 150px;">
+        Registered already
+        <a (click)="login()"> Log in </a>
+      </span>
+    </nz-form-item>
+  </form>
+</div>

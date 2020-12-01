@@ -84,8 +84,10 @@ export class IssueDetailComponent implements OnInit {
         top: "140px"
       },
       nzComponentParams: {
-        issueId: this.issue.id,
-        onDelete: this.onDelete                
+        title: "Are you sure you want to delete this issue?",
+        data: this.issue.id,
+        onDelete: this.onDelete,
+        delete: "issue"
       }      
     });
   }
