@@ -17,6 +17,8 @@ export class IssueJobsComponent implements OnChanges {
   @Input() job: JJobs;
   @Input() users: JUser[];
   @Input() projectsId: number;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
   titleJobs: string = '';
   checked = false;
   assignees: JUser[] = [];
@@ -34,6 +36,7 @@ export class IssueJobsComponent implements OnChanges {
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.getData()
   }
 

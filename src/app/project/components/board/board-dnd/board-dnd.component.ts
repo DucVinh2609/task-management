@@ -7,6 +7,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
 import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
 import dummy from 'src/assets/data/project.json';
+import { JUser } from '@trungk18/interface/user';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @UntilDestroy()
 @Component({
@@ -15,6 +17,8 @@ import dummy from 'src/assets/data/project.json';
   styleUrls: ['./board-dnd.component.scss']
 })
 export class BoardDndComponent implements OnInit {
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
   issueStatuses: JIssueStatus[] = [];
   checkAddDndList: boolean = false;
   titleListTask: string = '';
@@ -25,18 +29,17 @@ export class BoardDndComponent implements OnInit {
   constructor(public projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
     private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
     private projectsService: ProjectsService,
     private issueStatusService: IssueStatusService) {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
-      this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-      this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
-      this.authQuery.user$.subscribe(user => {
-        this.checkAdmin = user.projectAdmin.includes(this.projectsId);
-      });
   }
 
   ngOnInit(): void {
-
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.checkAdmin = this.currentUser.projectAdmin.includes(this.projectsId);
   }
 
   getData() {

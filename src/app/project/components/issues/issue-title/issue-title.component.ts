@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { JIssue } from '@trungk18/interface/issue';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { JUser } from '@trungk18/interface/user';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'issue-title',
@@ -13,9 +15,16 @@ export class IssueTitleComponent implements OnChanges {
   @Input() issue: JIssue;
   @Input() projectsId: number;
   titleControl: FormControl;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   constructor(private issuesService: IssuesService,
+    private usersService: UsersService,
     public authQuery: AuthQuery) {}
+
+  ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;

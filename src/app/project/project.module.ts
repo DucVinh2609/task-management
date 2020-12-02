@@ -107,6 +107,7 @@ import { IssueDeadlineComponent } from './components/issues/issue-deadline/issue
 import { RegistrationComponent } from './pages/common/registration/registration.component';
 import { InviteMemberModalComponent } from './components/invite-member-modal/invite-member-modal.component';
 import { AccountSettingComponent } from './pages/common/account-setting/account-setting.component';
+import { LogoutComponent } from './pages/common/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { AccountSettingComponent } from './pages/common/account-setting/account-
     IssueDeadlineComponent,
     RegistrationComponent,
     InviteMemberModalComponent,
-    AccountSettingComponent
+    AccountSettingComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,

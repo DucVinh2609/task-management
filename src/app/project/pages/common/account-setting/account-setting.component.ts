@@ -34,6 +34,8 @@ export class AccountSettingComponent implements OnInit {
   loading = false;
   selectedImg: any;
   avatarUrl?: string;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   constructor(public authQuery: AuthQuery,
     private _router: Router,
@@ -47,6 +49,7 @@ export class AccountSettingComponent implements OnInit {
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.initForm();
     this.updateForm();
     this.accountSettingForm.controls['email'].disable();
@@ -75,14 +78,12 @@ export class AccountSettingComponent implements OnInit {
   };
 
   updateForm() {
-    this.authQuery.user$.subscribe(user => {
-      this.accountSettingForm.patchValue({
-        email: user.email,
-        name: user.name,
-        description: user.description
-      });
-      this.avatarUrl = user.avatarUrl;
+    this.accountSettingForm.patchValue({
+      email: this.currentUser.email,
+      name: this.currentUser.name,
+      description: this.currentUser.description
     });
+    this.avatarUrl = this.currentUser.avatarUrl;
   }
 
   submitForm() {

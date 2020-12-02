@@ -3,24 +3,22 @@
     (change) = "checkFinish()"></label>
   <span style="margin-left: 20px; vertical-align: middle; line-height: 32px; font-size: 16px;">{{ titleJobs }}</span>
   <div class="flex-auto"></div>
-  <ng-container *ngIf="authQuery.user$ | async as user">
-    <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-      <span class="icon">
-        <mat-icon style="line-height: inherit;"
-                  (click)="AddDeadline()">access_time
-        </mat-icon>
-      </span>
-      <span class="icon">
-        <mat-icon style="line-height: inherit;"
-                  nz-dropdown
-                  nzTrigger="click"
-                  [nzDropdownMenu]="menu">group_add
-        </mat-icon>
-      </span>
-      <span class="icon">
-        <mat-icon style="line-height: inherit;" (click)="deleteJobs()">delete</mat-icon>
-      </span>
-    </ng-container>
+  <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+    <span class="icon">
+      <mat-icon style="line-height: inherit;"
+                (click)="AddDeadline()">access_time
+      </mat-icon>
+    </span>
+    <span class="icon">
+      <mat-icon style="line-height: inherit;"
+                nz-dropdown
+                nzTrigger="click"
+                [nzDropdownMenu]="menu">group_add
+      </mat-icon>
+    </span>
+    <span class="icon">
+      <mat-icon style="line-height: inherit;" (click)="deleteJobs()">delete</mat-icon>
+    </span>
   </ng-container>
 </div>
 
@@ -44,11 +42,9 @@
       <j-button *ngFor="let assignee of assignees" [className]="'btn-secondary mr-1-5 mb-2'">
         <div class="flex items-center">
           <j-user [user]="assignee"></j-user>
-          <ng-container *ngIf="authQuery.user$ | async as user">
-            <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-              <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
-              </svg-icon>
-            </ng-container>
+          <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+            <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
+            </svg-icon>
           </ng-container>
         </div>
       </j-button>
@@ -65,10 +61,8 @@
     </ng-container>
   </div>
 </div>
-<ng-container *ngIf="authQuery.user$ | async as user">
-  <ng-container *ngIf="user.projectAdmin.includes(projectsId) || job.userIds.includes(user.id)">
-    <issue-comment [job]=job></issue-comment>
-  </ng-container>
+<ng-container *ngIf="currentUser.projectAdmin.includes(projectsId) || job.userIds.includes(currentUserId)">
+  <issue-comment [job]=job></issue-comment>
 </ng-container>
 <br>
 <hr>

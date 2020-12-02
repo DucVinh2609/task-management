@@ -18,6 +18,8 @@ import { ProjectsService } from '@trungk18/project/services/projects.service';
 export class IssueAssigneesComponent implements OnInit, OnChanges {
   @Input() issue: JIssue;
   @Input() projectsId: number;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
   users: JUser[] = [];
   assignees: JUser[] = [];
   nameProject: string = '';
@@ -30,6 +32,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.getData();
   }
 

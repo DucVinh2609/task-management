@@ -7,6 +7,7 @@ import { AuthStore } from './auth.store';
 import { environment } from 'src/environments/environment';
 import dummy from 'src/assets/data/project.json';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
   public currentUser: Observable<JUser>;
 
   constructor(private _http: HttpClient,
+    private router: Router,
     private _store: AuthStore) {
     this.baseUrl = environment.apiUrl;
     // this.currentUserSubject = new BehaviorSubject<JUser>(JSON.parse(localStorage.getItem('currentUser')));
@@ -28,6 +30,8 @@ export class AuthService {
   login({ email, password }: LoginPayload) {
     if (dummy.users.filter(u => u.email == email).length !== 0) {
       if (dummy.users.filter(u => u.email == email)[0].password === password) {
+        localStorage.setItem('isLoggedIn', "true");  
+        localStorage.setItem('token', dummy.users.filter(u => u.email == email)[0].id); 
         this._store.setLoading(true);
         dummy.users.filter(u => u.email == email).map((user) => {
           this._store.update((state) => ({
@@ -51,6 +55,11 @@ export class AuthService {
     }
   }
 
+  logout() :void {    
+    localStorage.setItem('isLoggedIn','false');
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
   // login(email: string, password: string) {
   //   let currentUser = dummy.users.filter(u => u.email == email && u.password == password)[0];
   //   localStorage.setItem('currentUser', JSON.stringify(currentUser));
