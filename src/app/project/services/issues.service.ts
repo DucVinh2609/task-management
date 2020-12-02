@@ -93,4 +93,8 @@ export class IssuesService {
     const index = dummy.issues.findIndex(x => x.id === issueId);
     if (index !== undefined) dummy.issues.splice(index, 1);
   }
+
+  getListIssuesOfJob(issueId: any[]) {
+    return dummy.issues.filter(u => issueId.includes(u.id));
+  }
 }

@@ -17,6 +17,9 @@ import { IssueDeleteModalComponent } from '@trungk18/project/components/issues/i
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
+import { JobsService } from '@trungk18/project/services/jobs.service';
+import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'account-setting',
@@ -36,6 +39,9 @@ export class AccountSettingComponent implements OnInit {
   avatarUrl?: string;
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
+  taskIsDeadlines: any = [];
+  taskIsOvers: any = [];
+  taskIsComings: any = [];
 
   constructor(public authQuery: AuthQuery,
     private _router: Router,
@@ -46,13 +52,57 @@ export class AccountSettingComponent implements OnInit {
     private projectsService: ProjectsService,
     private projectsCategoriesService: ProjectsCategoriesService,
     private usersService: UsersService,
+    private jobsService: JobsService,
+    private listJobsService: ListJobsService,
+    private issuesService: IssuesService,
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
+    this.taskIsDeadlines = [];
+    this.taskIsOvers = [];
+    this.taskIsComings = [];
     this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.initForm();
     this.updateForm();
     this.accountSettingForm.controls['email'].disable();
+    let jobOfUsers = this.jobsService.getListJobIsDeadlineOfUser(this.currentUser.id);
+    this.getDataIssue(jobOfUsers);
+  }
+
+  getDataIssue(jobOfUsers) {
+    let jobIsDeadline = [];
+    let jobIsOrver = [];
+    let jobIsComing = [];
+    jobOfUsers.forEach(jobOfUser => {
+      console.log(jobOfUser)
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '=')) {
+        jobIsDeadline.push(jobOfUser.listJobsId);
+      }
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '<')) {
+        jobIsOrver.push(jobOfUser.listJobsId);
+      }
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '>')) {
+        jobIsComing.push(jobOfUser.listJobsId);
+      }
+      this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsDeadline));
+      this.taskIsOvers = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsOrver));
+      this.taskIsComings = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsComing));
+      console.log(this.taskIsOvers);
+    });
+  }
+
+  checkDate(date, operator) {
+    let today = new Date();
+    switch (operator) {
+      case '=':
+        return date.getDate() === today.getDate() &&
+          date.getMonth() === today.getMonth() &&
+          date.getFullYear() === today.getFullYear();
+      case '<':
+        return date < today;
+      case '>':
+        return date > today;
+    }
   }
 
   initForm() {
