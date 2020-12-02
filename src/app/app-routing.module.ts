@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from '@trungk18/project/pages/index/index.component';
 import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
@@ -18,26 +19,31 @@ const routes: Routes = [
   },
   {
     path: 'index',
-    component: IndexComponent
+    component: IndexComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'account-setting',
-    component: AccountSettingComponent
+    component: AccountSettingComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'project',
-    loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule)
+    loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'project/board/:nameProject',
-    component: BoardComponent
+    component: BoardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'wip',
     loadChildren: () =>
       import('./work-in-progress/work-in-progress.module').then(
         (m) => m.WorkInProgressModule
-      )
+    ),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
