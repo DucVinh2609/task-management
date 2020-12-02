@@ -5,6 +5,8 @@ import { SearchDrawerComponent } from '../../search/search-drawer/search-drawer.
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AddIssueModalComponent } from '../../add-issue-modal/add-issue-modal.component';
 import { Router } from '@angular/router';
+import { JUser } from '@trungk18/interface/user';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'app-navbar-left',
@@ -13,14 +15,19 @@ import { Router } from '@angular/router';
 })
 export class NavbarLeftComponent implements OnInit {
   items: NavItem[];
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
+
   constructor(
     public authQuery: AuthQuery,
     private _drawerService: NzDrawerService,
+    private usersService: UsersService,
     private _modalService: NzModalService,
     private _router: Router
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.items = [
       new NavItem('search', 'Search issues', this.openSearchDrawler.bind(this)),
       new NavItem('plus', 'Create issue', this.openCreateIssueModal.bind(this))

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from '@trungk18/project/pages/index/index.component';
 import { ErrorComponent } from '@trungk18/project/pages/common/error/error.component';
 import { LoginComponent } from '@trungk18/project/pages/common/login/login.component';
+import { LogoutComponent } from '@trungk18/project/pages/common/logout/logout.component';
 import { RegistrationComponent } from '@trungk18/project/pages/common/registration/registration.component';
 import { BoardComponent } from '@trungk18/project/pages/board/board.component';
 import { AccountSettingComponent } from '@trungk18/project/pages/common/account-setting/account-setting.component';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
   },
   {
     path: 'registration',

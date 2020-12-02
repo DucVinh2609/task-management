@@ -7,6 +7,7 @@ import { JobsService } from '@trungk18/project/services/jobs.service';
 import { JUser } from '@trungk18/interface/user';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'issue-work-list',
@@ -25,12 +26,16 @@ export class IssueWorkListComponent implements OnChanges {
   titleJobs: string = '';
   percent = 0;
   jobs: JJobs[] = [];
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   constructor(private jobsService: JobsService,
     public authQuery: AuthQuery,
+    private usersService: UsersService,
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

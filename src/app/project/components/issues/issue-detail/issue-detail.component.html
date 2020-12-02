@@ -2,13 +2,11 @@
      class="w-full h-full" [class.pl-4]="isShowCloseButton">
     <div class="flex items-center pt-4 text-textDarkest">
         <div class="flex-auto"></div>
-        <ng-container *ngIf="authQuery.user$ | async as user">
-            <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-                <j-button icon="trash"
-                          [className]="'btn-empty'"
-                          (click)="openDeleteIssueModal()">
-                </j-button>
-            </ng-container>
+        <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+            <j-button icon="trash"
+                        [className]="'btn-empty'"
+                        (click)="openDeleteIssueModal()">
+            </j-button>
         </ng-container>
         <j-button *ngIf="isShowCloseButton"
                   icon="expand"
@@ -40,14 +38,12 @@
 
         </div>
         <div class="sm:w-full md:w-5/12 lg:w-2/6 pt-1">
-            <ng-container *ngIf="authQuery.user$ | async as user">
-                <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-                    <j-button className="btn-add-work-list" (click)="openAddWorkListModal()">
-                        <mat-icon>fact_check</mat-icon>
-                        <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>
-                    </j-button>
-                    <br>
-                </ng-container>
+            <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+                <j-button className="btn-add-work-list" (click)="openAddWorkListModal()">
+                    <mat-icon>fact_check</mat-icon>
+                    <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>
+                </j-button>
+                <br>
             </ng-container>
             <!-- <j-button className="btn-add-work-list">
                 <mat-icon>access_time</mat-icon>

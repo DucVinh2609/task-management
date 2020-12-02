@@ -27,6 +27,8 @@ export class IssueDetailComponent implements OnInit {
   @Output() onClosed = new EventEmitter();
   @Output() onOpenIssue = new EventEmitter<string>();
   @Output() onDelete = new EventEmitter<DeleteIssueModel>();
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
   workLists: JListJobs[] = [];
   users: JUser[] = [];
   nameProject: string = '';
@@ -42,6 +44,7 @@ export class IssueDetailComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
   }
 
   ngAfterContentChecked() {

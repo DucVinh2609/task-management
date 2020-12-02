@@ -7,6 +7,8 @@ import { ProjectConst } from '@trungk18/project/config/const';
 import { IssuePrioritiesService } from '@trungk18/project/services/issue-priorities.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { JUser } from '@trungk18/interface/user';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'issue-priority',
@@ -15,6 +17,8 @@ import { AuthQuery } from '@trungk18/project/auth/auth.query';
 })
 export class IssuePriorityComponent implements OnInit, OnChanges {
   selectedPriority: number;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   get selectedPriorityIcon() {
     return IssueUtil.getIssuePriorityIcon(this.selectedPriority);
@@ -28,9 +32,11 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
   constructor(private _projectService: ProjectService,
     private issuePrioritiesService: IssuePrioritiesService,
     private issuesService: IssuesService,
+    private usersService: UsersService,
     public authQuery: AuthQuery) {}
 
   ngOnInit() {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.priorities = ProjectConst.PrioritiesWithIcon;
   }
 

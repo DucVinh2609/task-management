@@ -4,34 +4,32 @@
       board-dnd-list
       *ngFor="let status of issueStatuses"
       [status]="status"
-      [currentUserId]="authQuery.userId$ | async"
+      [currentUserId]="currentUser.id"
       [issues$]="projectQuery.issueByStatusSorted$(status.id)">
     </div>
 
-    <ng-container *ngIf="authQuery.user$ | async as user">
-      <ng-container *ngIf="user.projectAdmin.includes(projectsId)">
-        <div class="add-dnd-list">
-          <ng-container *ngIf="!checkAddDndList">
-            <j-button className="btn-add-task" (click)="addDndList()">
-                <mat-icon>add</mat-icon>
-                <span style="vertical-align: super;"> Add another List Task </span>
+    <ng-container *ngIf="checkAdmin">
+      <div class="add-dnd-list">
+        <ng-container *ngIf="!checkAddDndList">
+          <j-button className="btn-add-task" (click)="addDndList()">
+              <mat-icon>add</mat-icon>
+              <span style="vertical-align: super;"> Add another List Task </span>
+          </j-button>
+        </ng-container>
+  
+        <ng-container *ngIf="checkAddDndList">
+          <div class="issue">
+            <mat-form-field>
+              <textarea matInput rows="1" [(ngModel)]="titleListTask"></textarea>
+            </mat-form-field>
+          </div>
+          <div style="padding-top: 5px;">
+            <j-button [className]="'btn-primary'" class="mr-2" (click)="addListTask()">
+              Add List Task
             </j-button>
-          </ng-container>
-    
-          <ng-container *ngIf="checkAddDndList">
-            <div class="issue">
-              <mat-form-field>
-                <textarea matInput rows="1" [(ngModel)]="titleListTask"></textarea>
-              </mat-form-field>
-            </div>
-            <div style="padding-top: 5px;">
-              <j-button [className]="'btn-primary'" class="mr-2" (click)="addListTask()">
-                Add List Task
-              </j-button>
-              <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddListTask()">close</mat-icon>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
+            <mat-icon style="cursor: pointer; vertical-align: middle;" (click)="cancelAddListTask()">close</mat-icon>
+          </div>
+        </ng-container>
+      </div>
     </ng-container>
 </div>

@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.authService.currentUser) {
+      if (this.isLoggedIn()) {
         return true;
       } else {
         this.router.navigate(['login'], {
@@ -24,5 +24,16 @@ export class AuthGuard implements CanActivate {
         return false;
       }
   }
+
+  public isLoggedIn(): boolean {
+    let status = false;
+    if (localStorage.getItem('isLoggedIn') == "true") {
+      status = true;
+    }    
+    else {
+      status = false;
+    }
+    return status;
+   }
 
 }

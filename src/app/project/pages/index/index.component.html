@@ -5,9 +5,9 @@
         <div class="navbarLeft-content">
           <mat-icon style="color: white; margin-left: 15px; font-size: 35px; cursor: pointer;" (click)="home()">home</mat-icon>
           <div class="flex-auto"></div>
-          <div class="item" *ngIf="authQuery.user$ | async as user">
-            <div nz-tooltip [nzTooltipTitle]="user.name" nzTooltipPlacement="right" class="itemIcon">
-              <j-avatar class="flex" [avatarUrl]="user.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft">
+          <div class="item">
+            <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
+              <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft">
               </j-avatar>
             </div>
           </div>
@@ -59,6 +59,8 @@
       <a [routerLink]="['/account-setting']">Profile and display</a>
     </li>
     <li nz-menu-item>Task management</li>
-    <li nz-menu-item>Log out</li>
+    <li nz-menu-item>
+      <a [routerLink]="['/logout']">Log out</a>
+    </li>
   </ul>
 </nz-dropdown-menu>
