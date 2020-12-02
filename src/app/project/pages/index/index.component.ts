@@ -55,4 +55,8 @@ export class IndexComponent implements OnInit {
       nzWidth: 500
     });
   }
+
+  accountSetting() {
+    this._router.navigate(['account-setting']);
+  }
 }

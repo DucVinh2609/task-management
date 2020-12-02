@@ -1,0 +1,119 @@
+<div class="w-full h-full flex">
+  <div class="navigation">
+    <div class="flex flex-row overflow-hidden h-full">
+      <aside class="navbarLeft">
+        <div class="navbarLeft-content">
+          <mat-icon style="color: white; margin-left: 15px; font-size: 35px; cursor: pointer;" (click)="home()">home
+          </mat-icon>
+          <div class="flex-auto"></div>
+          <div class="item" *ngIf="authQuery.user$ | async as user">
+            <div nz-tooltip [nzTooltipTitle]="user.name" nzTooltipPlacement="right" class="itemIcon">
+              <j-avatar class="flex" [avatarUrl]="user.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu"
+                nzPlacement="topLeft">
+              </j-avatar>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <div style="width: 100%;">
+    <div style="height: 100px;">
+      <div class="aaa">
+        <div *ngIf="authQuery.user$ | async as user" class="bbb">
+          <j-avatar [avatarUrl]="user.avatarUrl" [size]="60">
+          </j-avatar>
+          <span style="margin-left: 10px; font-size: 30px;">
+            {{ user.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Accout setting">
+        <form class="accout-setting-form" (ngSubmit)="submitForm()" [formGroup]="accountSettingForm">
+          <div class="form-group">
+            <label class="label">
+              Email
+            </label>
+            <input class="form-input" formControlName="email" jAutofocus />
+          </div>
+          <div class="form-group">
+            <label class="label" style="padding-top: 12px;">
+              Nickname
+            </label>
+            <input class="form-input" formControlName="name" jAutofocus />
+          </div>
+          <div class="form-group mt-3">
+            <label class="label">
+              Description
+            </label>
+            <textarea class="form-input" formControlName="description">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label class="label">
+              Avatar
+            </label>
+            <nz-upload class="avatar-uploader" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzName="avatar"
+              nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+              (nzChange)="handleChange($event)">
+              <ng-container *ngIf="!avatarUrl">
+                <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                <div class="ant-upload-text">Upload</div>
+              </ng-container>
+              <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+            </nz-upload>
+          </div>
+          <div class="form-group mt-3">
+            <j-button className="btn-primary mr-2" type="submit" [disabled]="accountSettingForm.invalid">
+              Save
+            </j-button>
+            <j-button className="btn-empty" (click)="cancel()">
+              Cancel
+            </j-button>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab label="Change password">
+        <form class="accout-setting-form" (ngSubmit)="submitForm()" [formGroup]="changePasswordForm">
+          <div class="form-group">
+            <label class="label">
+              Password Current
+            </label>
+            <input class="form-input" formControlName="passwordCurrent" jAutofocus type="password"/>
+          </div>
+          <div class="form-group">
+            <label class="label" style="padding-top: 12px;">
+              New Password
+            </label>
+            <input class="form-input" formControlName="newPassword" jAutofocus type="password"/>
+          </div>
+          <div class="form-group">
+            <label class="label" style="padding-top: 12px;">
+              Confirm New Password
+            </label>
+            <input class="form-input" formControlName="confỉmNewPassword" jAutofocus type="password"/>
+          </div>
+          <div class="form-group mt-3">
+            <j-button className="btn-primary mr-2" type="submit" [disabled]="changePasswordForm.invalid">
+              Save
+            </j-button>
+            <j-button className="btn-empty" (click)="cancel()">
+              Cancel
+            </j-button>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab label="Task">Content 3</mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>Profile and display</li>
+    <li nz-menu-item>Task management</li>
+    <li nz-menu-item>Log out</li>
+  </ul>
+</nz-dropdown-menu>

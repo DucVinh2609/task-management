@@ -7,7 +7,7 @@
           <div class="flex-auto"></div>
           <div class="item" *ngIf="authQuery.user$ | async as user">
             <div nz-tooltip [nzTooltipTitle]="user.name" nzTooltipPlacement="right" class="itemIcon">
-              <j-avatar class="flex" [avatarUrl]="user.avatarUrl" [size]="26">
+              <j-avatar class="flex" [avatarUrl]="user.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft">
               </j-avatar>
             </div>
           </div>
@@ -53,3 +53,12 @@
   </div>
 </div>
 
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>
+      <a [routerLink]="['/account-setting']">Profile and display</a>
+    </li>
+    <li nz-menu-item>Task management</li>
+    <li nz-menu-item>Log out</li>
+  </ul>
+</nz-dropdown-menu>

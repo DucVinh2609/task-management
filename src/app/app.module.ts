@@ -22,6 +22,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatTabsModule } from '@angular/material/tabs';
 import en from '@angular/common/locales/en';
 
 registerLocaleData(en);
@@ -45,6 +46,7 @@ registerLocaleData(en);
     AngularFireStorageModule,
     AngularFireAuthModule,
     AkitaNgRouterStoreModule,
+    MatTabsModule,
     QuillModule.forRoot(),
     NzModalModule,
   ],
