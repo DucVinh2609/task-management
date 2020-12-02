@@ -5,6 +5,8 @@ import { quillConfiguration } from '@trungk18/project/config/editor';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { IssuesService } from '@trungk18/project/services/issues.service';
+import { UsersService } from '@trungk18/project/services/users.service';
+import { JUser } from '@trungk18/interface/user';
 
 @Component({
   selector: 'issue-description',
@@ -19,10 +21,15 @@ export class IssueDescriptionComponent implements OnChanges {
   editorOptions = quillConfiguration;
   isEditing: boolean;
   isWorking: boolean;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   constructor(private _projectService: ProjectService,
     public authQuery: AuthQuery,
-    private issuesService: IssuesService) {}
+    private usersService: UsersService,
+    private issuesService: IssuesService) {
+      this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    }
 
   ngOnChanges(changes: SimpleChanges): void {
     let issueChange = changes.issue;
@@ -32,11 +39,9 @@ export class IssueDescriptionComponent implements OnChanges {
   }
 
   setEditMode() {
-    this.authQuery.user$.subscribe(user => {
-      if (user.projectAdmin.includes(this.projectsId)) {
-        this.isEditing = true;
-      }
-    });
+    if (this.currentUser.projectAdmin.includes(this.projectsId)) {
+      this.isEditing = true;
+    }
   }
 
   editorCreated(editor: any) {

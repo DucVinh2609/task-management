@@ -1,5 +1,5 @@
 <ng-container *ngIf="!currentUser.projectAdmin.includes(projectsId)">
-  <textarea class="textarea-inline-control"
+  <textarea class="textarea-inline-control aaa"
             cdkTextareaAutosize
             [formControl]="titleControl"
             [rows]="1"
@@ -8,7 +8,7 @@
   </textarea>
 </ng-container>
 <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
-  <textarea class="textarea-inline-control"
+  <textarea class="textarea-inline-control aaa"
             cdkTextareaAutosize
             [formControl]="titleControl"
             [rows]="1"

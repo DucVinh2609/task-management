@@ -60,7 +60,6 @@ export class IssueWorkListComponent implements OnChanges {
       let job: JJobs = {
         id: this.randomIdJob(),
         name: this.titleJobs.trim(),
-        issueId: this.issueId,
         finish: false,
         userIds: null,
         deadlineAt: null,
