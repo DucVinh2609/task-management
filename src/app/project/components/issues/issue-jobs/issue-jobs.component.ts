@@ -48,15 +48,12 @@ export class IssueJobsComponent implements OnChanges {
     this.titleJobs = this.job.name;
     this.assignees = [];
     let userIds = this.jobsService.getListUsersInJob(this.job.id);
-    this.authQuery.user$.subscribe(user => {
-      if (user.projectAdmin.includes(this.projectsId)) {
-        this.isDisabledDeadline = false;
-      }
-      console.log(user);
-      if (userIds.includes(user.id) || user.projectAdmin.includes(this.projectsId)) {
-        this.isDisabledButton = false;
-      }
-    });
+    if (this.currentUser.projectAdmin.includes(this.projectsId)) {
+      this.isDisabledDeadline = false;
+    }
+    if (userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.includes(this.projectsId)) {
+      this.isDisabledButton = false;
+    }
     if (userIds) {
       for (let u in userIds ) {
         let user = this.usersService.getUsersById(userIds[u]);

@@ -11,7 +11,7 @@
   </div>
   <section class="example-section">
     <span style="position: absolute;"> {{ percent }}%</span>
-    <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
+    <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzShowInfo]="false" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
   </section>
 
   <issue-jobs *ngFor="let job of jobs" [job]="job" [users]="users" [projectsId]="projectsId" cdkDrag [cdkDragData]="job">

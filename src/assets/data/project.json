@@ -302,7 +302,7 @@
     },
     {
       "id": 103,
-      "name": "demo",
+      "name": "demo2",
       "description": "DEMO",
       "projectCategoriesId": 1,
       "createdAt": "2020-11-08T15:30:00.000Z",
@@ -382,7 +382,6 @@
     {
       "id": 1001,
       "name": "jobs 1",
-      "issueId": "6527",
       "finish": false,
       "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "deadlineAt": "2020-09-27T14:23:38.183Z",
@@ -392,7 +391,6 @@
     {
       "id": 1002,
       "name": "jobs 2",
-      "issueId": "6527",
       "finish": false,
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "deadlineAt": "2020-09-27T14:23:38.183Z",

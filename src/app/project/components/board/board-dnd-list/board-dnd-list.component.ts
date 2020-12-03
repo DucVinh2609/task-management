@@ -36,6 +36,8 @@ export class BoardDndListComponent implements OnChanges {
   nameProject: string = '';
   checkAdmin: boolean = false;
   statusName: string = '';
+  currentUsersId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   get issuesCount(): number {
     return this.issues.length;
@@ -61,12 +63,11 @@ export class BoardDndListComponent implements OnChanges {
     }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUsersId);
     this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
     this.statusName = this.issueStatusName;
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.authQuery.user$.subscribe(user => {
-      this.checkAdmin = user.projectAdmin.includes(this.projectsId);
-    });
+    this.checkAdmin = this.currentUser.projectAdmin.includes(this.projectsId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

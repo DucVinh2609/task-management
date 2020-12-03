@@ -31,6 +31,8 @@ export class IssueCardComponent implements OnChanges {
   deadline: string = '';
   deadlineAt: Date;
   month: number;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   constructor(private _projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
@@ -44,6 +46,7 @@ export class IssueCardComponent implements OnChanges {
     }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
   }
 
@@ -62,19 +65,17 @@ export class IssueCardComponent implements OnChanges {
   }
 
   openIssueModal(issueId: string) {
-    this.authQuery.user$.subscribe(user => {
-      if (this.issue.userIds.includes(user.id) || user.projectAdmin.includes(this.projectsId)) {
-        this._modalService.create({
-          nzContent: IssueModalComponent,
-          nzWidth: 1040,
-          nzClosable: false,
-          nzFooter: null,
-          nzComponentParams: {
-            issue: this.issuesService.getInfoIssue(issueId),
-            projectsId: this.projectsId
-          }
-        });
-      }
-    });
+    if (this.issue.userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.includes(this.projectsId)) {
+      this._modalService.create({
+        nzContent: IssueModalComponent,
+        nzWidth: 1040,
+        nzClosable: false,
+        nzFooter: null,
+        nzComponentParams: {
+          issue: this.issuesService.getInfoIssue(issueId),
+          projectsId: this.projectsId
+        }
+      });
+    }
   }
 }

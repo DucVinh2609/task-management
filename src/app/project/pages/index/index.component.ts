@@ -61,4 +61,8 @@ export class IndexComponent implements OnInit {
   accountSetting() {
     this._router.navigate(['account-setting']);
   }
+
+  projectBoard(nameProject: string) {
+    this._router.navigate(['/project/board/' + nameProject]);
+  }
 }

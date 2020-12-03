@@ -17,45 +17,23 @@
         </div>
         <div class="flex-auto"></div>
         <div class="item">
-            <div nz-tooltip
-                 [nzTooltipTitle]="currentUser.name"
-                 nzTooltipPlacement="right"
-                 class="itemIcon">
-                <j-avatar class="flex"
-                          [avatarUrl]="currentUser.avatarUrl"
-                          [size]="26">
+            <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
+                <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu"
+                    nzPlacement="topLeft">
                 </j-avatar>
             </div>
-        </div>
-        <div class="item">
-            <a nz-popover
-               nzPopoverPlacement="rightBottom"
-               [nzPopoverContent]="aboutPopoverTmpl"
-               nzPopoverTrigger="click">
-                <div nz-tooltip
-                     nzTooltipTitle="About"
-                     nzTooltipPlacement="right"
-                     class="itemIcon">
-                    <i class="text-white text-xl"
-                       nz-icon
-                       nzType="question-circle"
-                       nzTheme="fill">
-                    </i>
-                </div>
-            </a>
         </div>
     </div>
 </aside>
 
-<ng-template #aboutPopoverTmpl>
-    <div class="about-popover">
-        <p class="mb-2">This is a <strong>simplified</strong> Jira clone built with Angular 9, Akita and ng-zorro</p>
-        <p class="mb-2">Thanks a bunch for stopping by and supporting me!</p>
-        <p class="mb-3">Reach out to me via <a class="font-semibold"
-               href="email:trungk18@gmail.com">trungk18@gmail.com</a></p>
-        <a href="https://trungk18.com/"
-           target="_blank">
-            <j-button className="btn-primary">Visit My Blog</j-button>
-        </a>
-    </div>
-</ng-template>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item>
+            <a [routerLink]="['/account-setting']">Profile and display</a>
+        </li>
+        <li nz-menu-item>Task management</li>
+        <li nz-menu-item>
+            <a [routerLink]="['/logout']">Log out</a>
+        </li>
+    </ul>
+</nz-dropdown-menu>

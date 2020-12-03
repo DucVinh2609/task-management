@@ -110,7 +110,6 @@ $jira-bg: rgb(222, 235, 255);
   outline: none;
   width: 100%;
   justify-content: left;
-  height: 100%;
   @apply text-textDark;
 
   &:focus,
@@ -138,6 +137,34 @@ $jira-bg: rgb(222, 235, 255);
   outline: none;
   width: 30%;
   justify-content: left;
+  @apply text-textDark;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @apply bg-backgroundLight;
+    }
+    &:active {
+      @apply bg-backgroundLightPrimary;
+      color: $primary;
+    }
+    &.is-active {
+      background-color: $jira-bg;
+      @apply text-textDark;
+    }
+  }
+}
+
+.btn-add-taskss {
+  background: #F4F5F7;
+  outline: none;
+  width: 100%;
+  justify-content: left;
+  height: 100%;
   @apply text-textDark;
 
   &:focus,

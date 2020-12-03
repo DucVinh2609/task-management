@@ -191,7 +191,6 @@ import { LogoutComponent } from './pages/common/logout/logout.component';
     NzPageHeaderModule,
     NzPaginationModule,
     NzPopconfirmModule,
-    NzProgressModule,
     NzRadioModule,
     NzRateModule,
     NzResultModule,

@@ -31,6 +31,8 @@ export class AddProjectModalComponent implements OnInit {
   issueForm: FormGroup;
   editorOptions = quillConfiguration;
   priorities: JProjectCategories[] = dummy.categories;
+  currentUserId: string = localStorage.getItem('token');
+  currentUser: JUser;
 
   get f() {
     return this.issueForm?.controls;
@@ -48,6 +50,7 @@ export class AddProjectModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getUsersById(this.currentUserId);
     this.initForm();
     this.reporterUsers$ = this._projectQuery.users$.pipe(
       untilDestroyed(this),
@@ -82,9 +85,7 @@ export class AddProjectModalComponent implements OnInit {
     };
 
     let newProjectId = this.projectsService.createProject(newProject);
-    this.authQuery.user$.subscribe(user => {
-      this.usersService.updateAdminProjects(user.id, newProjectId);
-    });
+    this.usersService.updateAdminProjects(this.currentUserId, newProjectId);
     this.closeModal();
     // window.location.href = '/project/board/' + newProject.name;
     this.router.navigate(['/project/board/' + newProject.name]);

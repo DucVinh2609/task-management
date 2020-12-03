@@ -1,12 +1,12 @@
 <div class="status-list">
     <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
         <ng-container *ngIf="!checkAdmin">
-            <textarea style="width: 85%;" class="textarea-inline-control" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
+            <textarea style="width: 85%; height: 25px !important;" class="textarea-inline-control" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
                 (blur)="onBlur()" disabled>
             </textarea>
         </ng-container>
         <ng-container *ngIf="checkAdmin">
-            <textarea style="width: 85%; background-color: initial;" class="textarea-inline-control" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
+            <textarea class="textarea-inline-control aaa" cdkTextareaAutosize [(ngModel)]="statusName" [rows]="1"
                 (blur)="onBlur()">
             </textarea>
         </ng-container>
