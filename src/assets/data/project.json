@@ -135,7 +135,7 @@
       "issueTypeId": 2,
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-11-26T07:23:38.183Z",
-      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd", "d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
       "listPosition": 1
     },
     {
@@ -149,7 +149,7 @@
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-11-24T07:23:38.183Z",
-      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4"],
+      "userIds": ["94502aad-c97f-43e1-a9d1-28cf3e4937a7", "7ac265f9-b9ac-443f-a2b2-795682e579a4", "d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
       "listPosition": 0
     },
     {
@@ -163,7 +163,7 @@
       "issueTypeId": 2,
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
-      "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4"],
+      "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
       "listPosition": 1
     },
     {
@@ -177,7 +177,7 @@
       "issueTypeId": 3,
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": "2020-09-27T14:23:38.183Z",
-      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "userIds": ["610451aa-10c8-4d7e-9363-311357c0b0dd", "d65047e5-f4cf-4caa-9a38-6073dcbab7d1"],
       "listPosition": 2
     },
     {
@@ -248,6 +248,120 @@
       "updatedAt": "2020-08-27T14:23:38.183Z",
       "deadlineAt": null,
       "userIds": ["7ac265f9-b9ac-443f-a2b2-795682e579a4", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 2
+    },
+
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "C22",
+      "id": "6537",
+      "issuePriorityId": 5,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 3,
+      "title": "Feature 1",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-15T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 1
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D11",
+      "id": "6538",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Feature 2",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-15T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 0
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D22",
+      "id": "6539",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Feature 3",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-15T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 1
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D33",
+      "id": "6540",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Feature 4",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-15T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 2
+    },
+
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "C22",
+      "id": "6541",
+      "issuePriorityId": 5,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 3,
+      "title": "Today 1",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-05T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 1
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D11",
+      "id": "6542",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Today 2",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-05T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
+      "listPosition": 0
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D22",
+      "id": "6543",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Today 3",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-05T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "94502aad-c97f-43e1-a9d1-28cf3e4937a7"],
+      "listPosition": 1
+    },
+    {
+      "createdAt": "2020-12-15T14:23:38.183Z",
+      "description": "D33",
+      "id": "6544",
+      "issuePriorityId": 3,
+      "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "issueStatusId": 4,
+      "title": "Today 4",
+      "issueTypeId": 1,
+      "updatedAt": "2020-08-27T14:23:38.183Z",
+      "deadlineAt": "2020-12-05T14:23:38.183Z",
+      "userIds": ["d65047e5-f4cf-4caa-9a38-6073dcbab7d1", "610451aa-10c8-4d7e-9363-311357c0b0dd"],
       "listPosition": 2
     }
   ],
