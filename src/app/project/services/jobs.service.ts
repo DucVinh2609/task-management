@@ -61,4 +61,8 @@ export class JobsService {
     const index = dummy.jobs.findIndex(x => x.id === jobId);
     if (index !== undefined) dummy.jobs.splice(index, 1);
   }
+
+  getListJobIsDeadlineOfUser(userId: string) {
+    return dummy.jobs.filter(u => u.userIds.includes(userId));
+  }
 }
