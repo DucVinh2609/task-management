@@ -95,7 +95,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": []
+      "projectAdmin": [101]
     },
     {
       "id": "430451aa-10c8-4d7e-9363-311357c0b0cc",
@@ -314,7 +314,7 @@
       "id": "6541",
       "issuePriorityId": 5,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "issueStatusId": 3,
+      "issueStatusId": 4,
       "title": "Today 1",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
@@ -328,7 +328,7 @@
       "id": "6542",
       "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "issueStatusId": 4,
+      "issueStatusId": 2,
       "title": "Today 2",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
@@ -342,7 +342,7 @@
       "id": "6543",
       "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "issueStatusId": 4,
+      "issueStatusId": 2,
       "title": "Today 3",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
@@ -356,7 +356,7 @@
       "id": "6544",
       "issuePriorityId": 3,
       "reporterId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
-      "issueStatusId": 4,
+      "issueStatusId": 3,
       "title": "Today 4",
       "issueTypeId": 1,
       "updatedAt": "2020-08-27T14:23:38.183Z",
@@ -481,7 +481,15 @@
       "projectId": 102
     },
     {
+      "userId": "610451aa-10c8-4d7e-9363-311357c0b0dd",
+      "projectId": 102
+    },
+    {
       "userId": "d65047e5-f4cf-4caa-9a38-6073dcbab7d1",
+      "projectId": 103
+    },
+    {
+      "userId": "610451aa-10c8-4d7e-9363-311357c0b0dd",
       "projectId": 103
     }
   ],
