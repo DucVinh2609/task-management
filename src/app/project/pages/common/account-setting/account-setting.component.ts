@@ -209,4 +209,8 @@ export class AccountSettingComponent implements OnInit {
         break;
     }
   }
+
+  taskDetail(task: any) {
+    this._router.navigate(['project/issue/' + task.id]);
+  }
 }

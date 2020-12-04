@@ -132,6 +132,78 @@ $jira-bg: rgb(222, 235, 255);
   }
 }
 
+.btn-add-task-yellow {
+  background: yellow;
+  outline: none;
+  width: 100%;
+  justify-content: left;
+  @apply text-textDark;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @apply bg-backgroundLight;
+    }
+    &:active {
+      @apply bg-backgroundLightPrimary;
+      color: $primary;
+    }
+    &.is-active {
+      background-color: $jira-bg;
+      @apply text-textDark;
+    }
+  }
+}
+
+.btn-add-task-red {
+  background: red;
+  outline: none;
+  width: 100%;
+  justify-content: left;
+  @apply text-textDark;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @apply bg-backgroundLight;
+    }
+    &:active {
+      @apply bg-backgroundLightPrimary;
+      color: $primary;
+    }
+    &.is-active {
+      background-color: $jira-bg;
+      @apply text-textDark;
+    }
+  }
+}
+
+.btn-add-task span{
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btn-add-task-yellow span{
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btn-add-task-red span{
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .btn-add-tasks {
   background: #F4F5F7;
   outline: none;
