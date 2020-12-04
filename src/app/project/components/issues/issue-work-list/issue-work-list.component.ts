@@ -35,7 +35,11 @@ export class IssueWorkListComponent implements OnChanges {
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {

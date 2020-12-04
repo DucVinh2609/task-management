@@ -3,7 +3,7 @@
     (change) = "checkFinish()"></label>
   <span style="margin-left: 20px; vertical-align: middle; line-height: 32px; font-size: 16px;">{{ titleJobs }}</span>
   <div class="flex-auto"></div>
-  <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+  <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
     <span class="icon">
       <mat-icon style="line-height: inherit;"
                 (click)="AddDeadline()">access_time
@@ -42,7 +42,7 @@
       <j-button *ngFor="let assignee of assignees" [className]="'btn-secondary mr-1-5 mb-2'">
         <div class="flex items-center">
           <j-user [user]="assignee"></j-user>
-          <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+          <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
             <svg-icon (click)="removeUser(assignee.id)" title="Remove user" [size]="20" [name]="'times'" class="text-textLight">
             </svg-icon>
           </ng-container>
@@ -61,7 +61,7 @@
     </ng-container>
   </div>
 </div>
-<ng-container *ngIf="currentUser.projectAdmin.includes(projectsId) || job.userIds.includes(currentUserId)">
+<ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString()) || job.userIds.includes(currentUserId)">
   <issue-comment [job]=job></issue-comment>
 </ng-container>
 <br>

@@ -32,13 +32,13 @@ export class AuthService {
       if (dummy.users.filter(u => u.email == email)[0].password === password) {
         localStorage.setItem('isLoggedIn', "true");  
         localStorage.setItem('token', dummy.users.filter(u => u.email == email)[0].id); 
-        this._store.setLoading(true);
-        dummy.users.filter(u => u.email == email).map((user) => {
-          this._store.update((state) => ({
-            ...state,
-            ...user
-          }));
-        }),
+        // this._store.setLoading(true);
+        // dummy.users.filter(u => u.email == email).map((user) => {
+        //   this._store.update((state) => ({
+        //     ...state,
+        //     ...user
+        //   }));
+        // }),
         finalize(() => {
           this._store.setLoading(false);
         }),

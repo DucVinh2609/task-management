@@ -29,6 +29,6 @@ export class ProjectsService {
   }
 
   getProjectsInforById(projectId: any[]) {
-    return dummy.projects.filter(u => projectId.includes(u.id));
+    return dummy.projects.filter(u => projectId.includes(u.id.toString()));
   }
 }

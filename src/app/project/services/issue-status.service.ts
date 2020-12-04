@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JIssueStatus } from '@trungk18/interface/issue';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import dummy from 'src/assets/data/project.json';
 
 @Injectable({
@@ -8,9 +10,16 @@ import dummy from 'src/assets/data/project.json';
 export class IssueStatusService {
   status: JIssueStatus;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getStatusName(statusId: number) {
+    // let params = new HttpParams();
+    // params = params.append('userId', userId);
+    let getStatusName = this.http.get(environment.apiUrl + 'api/v1/issue-status/' + statusId);
+    // let getUsersById = this.http.get(environment.apiUrl + 'api/v1/user/' + userId, { params: params });
+    getStatusName.subscribe(data => {
+      console.log(data[0].status);
+    });
     this.status = dummy.status.filter(u => u.id == statusId)[0];
     if (this.status) {
       return this.status.status

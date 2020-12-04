@@ -48,8 +48,13 @@ export class AccountSettingComponent implements OnInit {
     private usersService: UsersService,
     private _modalService: NzModalService) { }
 
-  ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+  async ngOnInit() {
+    let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
+    await Promise.all([getUsersById]);
     this.initForm();
     this.updateForm();
     this.accountSettingForm.controls['email'].disable();

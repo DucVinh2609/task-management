@@ -2,7 +2,7 @@
      class="w-full h-full" [class.pl-4]="isShowCloseButton">
     <div class="flex items-center pt-4 text-textDarkest">
         <div class="flex-auto"></div>
-        <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+        <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
             <j-button icon="trash"
                         [className]="'btn-empty'"
                         (click)="openDeleteIssueModal()">
@@ -38,7 +38,7 @@
 
         </div>
         <div class="sm:w-full md:w-5/12 lg:w-2/6 pt-1">
-            <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+            <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
                 <j-button className="btn-add-work-list" (click)="openAddWorkListModal()">
                     <mat-icon>fact_check</mat-icon>
                     <span style="vertical-align: super; margin-left: 10px;"> Add work list </span>

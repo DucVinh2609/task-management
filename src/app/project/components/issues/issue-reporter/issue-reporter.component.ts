@@ -20,7 +20,11 @@ export class IssueReporterComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     let reporterId = this.issuesService.getInfoIssue(this.issue.id).reporterId;
-    this.reporter = this.usersService.getUsersById(reporterId);
+    this.usersService.getUsersById(reporterId).subscribe(
+      (data) => {
+        this.reporter = data[0];
+      }
+    )
   }
 
   ngOnChanges(changes: SimpleChanges) {

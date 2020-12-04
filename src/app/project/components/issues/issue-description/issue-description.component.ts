@@ -28,7 +28,11 @@ export class IssueDescriptionComponent implements OnChanges {
     public authQuery: AuthQuery,
     private usersService: UsersService,
     private issuesService: IssuesService) {
-      this.currentUser = this.usersService.getUsersById(this.currentUserId);
+      this.usersService.getUsersById(this.currentUserId).subscribe(
+        (data) => {
+          this.currentUser = data[0];
+        }
+      )
     }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -39,7 +43,7 @@ export class IssueDescriptionComponent implements OnChanges {
   }
 
   setEditMode() {
-    if (this.currentUser.projectAdmin.includes(this.projectsId)) {
+    if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isEditing = true;
     }
   }

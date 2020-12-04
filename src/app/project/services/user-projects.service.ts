@@ -25,9 +25,10 @@ export class UserProjectsService {
 
   getProjectOfUsers(userId: string, projectId: any[]) {
     let userProjects = [];
+    console.log(projectId);
     dummy.userProjects.forEach(userProject => {
-      if (userId && userProject.userId.includes(userId) && !projectId.includes(userProject.projectId)) {
-        userProjects.push(userProject.projectId);
+      if (userId && userProject.userId.includes(userId) && !projectId.includes(userProject.projectId.toString())) {
+        userProjects.push(userProject.projectId.toString());
       }
     });
 

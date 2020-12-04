@@ -63,11 +63,15 @@ export class BoardDndListComponent implements OnChanges {
     }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUsersId);
-    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
-    this.statusName = this.issueStatusName;
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.checkAdmin = this.currentUser.projectAdmin.includes(this.projectsId);
+    this.usersService.getUsersById(this.currentUsersId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+        this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+        this.statusName = this.issueStatusName;
+        this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+        this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+      }
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -103,7 +107,11 @@ export class BoardDndListComponent implements OnChanges {
   getAssigneesOfIssues(issue: JIssue) {
     let assignees: JUser[] = [];
     issue.userIds.forEach(users => {
-      assignees.push(this.usersService.getUsersById(users))
+      this.usersService.getUsersById(users).subscribe(
+        (data) => {
+          assignees.push(data[0])
+        }
+      )
     });
     return assignees;
   }

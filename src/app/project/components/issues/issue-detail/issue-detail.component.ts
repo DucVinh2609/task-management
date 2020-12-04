@@ -44,7 +44,11 @@ export class IssueDetailComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
   }
 
   ngAfterContentChecked() {
@@ -55,10 +59,11 @@ export class IssueDetailComponent implements OnInit {
       this.users = [];
       if (userIds) {
         for (let u in userIds ) {
-          let user = this.usersService.getUsersById(userIds[u]);
-          if (user) {
-            this.users.push(user);
-          }
+          this.usersService.getUsersById(userIds[u]).subscribe(
+            (data) => {
+              this.users.push(data[0]);
+            }
+          )
         }
       }
     }

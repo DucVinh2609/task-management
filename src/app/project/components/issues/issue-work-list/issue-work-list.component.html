@@ -3,7 +3,7 @@
     <mat-icon style="margin-top: 5px;">fact_check</mat-icon>
     <h3 style="margin-left: 10px; font-size: 16px; margin-top: 3px;">{{ title }}</h3>
     <div class="flex-auto"></div>
-    <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+    <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
       <j-button className="btn-delete-work-list" (click)="deleteWorkList()">
         Delete
       </j-button>
@@ -17,7 +17,7 @@
   <issue-jobs *ngFor="let job of jobs" [job]="job" [users]="users" [projectsId]="projectsId" cdkDrag [cdkDragData]="job">
   </issue-jobs>
 
-  <ng-container *ngIf="currentUser.projectAdmin.includes(projectsId)">
+  <ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
     <ng-container *ngIf="!checkAddJob">
       <j-button style="margin-left: 40px;" className="btn-add-job" (click)="addJob()">
         Add Jobs

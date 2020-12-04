@@ -10,27 +10,28 @@ import dummy from 'src/assets/data/project.json';
 export class UsersService {
   listUserProjects: JUserProjects[] = [];
   listUsers: JUser[] = [];
-  users: any;
+  users: JUser;
   constructor(private http: HttpClient) { }
 
   getUsersById(userId: string) {
     // let params = new HttpParams();
     // params = params.append('userId', userId);
-    // let getUsersById = this.http.get(environment.apiUrl + 'api/v1/user/' + userId);
+    return this.http.get(environment.apiUrl + 'api/v1/user/' + userId);
     // let getUsersById = this.http.get(environment.apiUrl + 'api/v1/user/' + userId, { params: params });
     // getUsersById.subscribe(data => {
-    //   this.users = data;
+    //   this.users = data[0];
     // });
-    this.users = dummy.users.filter(u => u.id == userId)[0];
-    if (this.users) {
-      return this.users
-    }
+    // return this.users;
+    // this.users = dummy.users.filter(u => u.id == userId)[0];
+    // if (this.users) {
+    //   return this.users
+    // }
   }
 
   updateAdminProjects(userId: string, projectId: number) {
     let user = dummy.users.filter(u => u.id == userId)[0];
     if(user) {
-      user.projectAdmin.push(projectId);
+      user.projectAdmin = projectId.toString();
     }
   }
 

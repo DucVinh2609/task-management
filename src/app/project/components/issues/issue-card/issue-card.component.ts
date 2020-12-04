@@ -46,7 +46,11 @@ export class IssueCardComponent implements OnChanges {
     }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
     this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
   }
 
@@ -65,7 +69,7 @@ export class IssueCardComponent implements OnChanges {
   }
 
   openIssueModal(issueId: string) {
-    if (this.issue.userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.includes(this.projectsId)) {
+    if (this.issue.userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this._modalService.create({
         nzContent: IssueModalComponent,
         nzWidth: 1040,

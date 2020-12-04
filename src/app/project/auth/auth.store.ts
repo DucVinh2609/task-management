@@ -7,7 +7,7 @@ export interface AuthState extends JUser {
 }
 
 export function createInitialAuthState(): AuthState {
-  return { token: `${new Date().getTime()}`, id: '', name: '', email: '', projectAdmin: []} as AuthState;
+  return { token: `${new Date().getTime()}`, id: '', name: '', email: '', projectAdmin: ''} as AuthState;
 }
 
 @Injectable({ providedIn: 'root' })

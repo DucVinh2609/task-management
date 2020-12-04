@@ -42,7 +42,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": [101],
+      "projectAdmin": "101",
       "projectAsAdmin": [
         {
           "id": 1,
@@ -73,7 +73,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": []
+      "projectAdmin": ""
     },
     {
       "id": "94502aad-c97f-43e1-a9d1-28cf3e4937a7",
@@ -84,7 +84,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": []
+      "projectAdmin": ""
     },
     {
       "id": "610451aa-10c8-4d7e-9363-311357c0b0dd",
@@ -95,7 +95,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": []
+      "projectAdmin": ""
     },
     {
       "id": "430451aa-10c8-4d7e-9363-311357c0b0cc",
@@ -106,7 +106,7 @@
       "description": null,
       "createdAt": "2020-08-27T14:23:38.183Z",
       "updatedAt": "2020-08-27T14:23:38.183Z",
-      "projectAdmin": []
+      "projectAdmin": ""
     }
   ],
   "issues": [

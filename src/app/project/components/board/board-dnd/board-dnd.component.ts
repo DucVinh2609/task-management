@@ -36,10 +36,14 @@ export class BoardDndComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
-    this.checkAdmin = this.currentUser.projectAdmin.includes(this.projectsId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+        this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+        this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+        this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+      }
+    )
   }
 
   getData() {

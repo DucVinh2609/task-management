@@ -32,7 +32,11 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
     this.getData();
   }
 
@@ -51,10 +55,11 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
     if (userIds) {
       for (let u in userIds ) {
-        let user = this.usersService.getUsersById(userIds[u]);
-        if (user) {
-          this.assignees.push(user);
-        }
+        this.usersService.getUsersById(userIds[u]).subscribe(
+          (data) => {
+            this.assignees.push(data[0]);
+          }
+        )
       }
     }
   }

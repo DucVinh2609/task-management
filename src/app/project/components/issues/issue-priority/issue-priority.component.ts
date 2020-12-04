@@ -36,7 +36,11 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
     public authQuery: AuthQuery) {}
 
   ngOnInit() {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
     this.priorities = ProjectConst.PrioritiesWithIcon;
   }
 

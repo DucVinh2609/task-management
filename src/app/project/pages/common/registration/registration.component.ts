@@ -126,7 +126,7 @@ export class RegistrationComponent implements OnInit {
             avatarUrl: this.avatarUrl,
             createdAt: now,
             updatedAt: null,
-            projectAdmin: []
+            projectAdmin: ''
           };
           this.usersService.registerNewUser(newUser);
         })

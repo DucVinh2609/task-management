@@ -50,19 +50,12 @@ export class AddProjectModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
     this.initForm();
-    this.reporterUsers$ = this._projectQuery.users$.pipe(
-      untilDestroyed(this),
-      tap((users) => {
-        let [user] = users;
-        if (user) {
-          this.f.reporterId.patchValue(user.id);
-        }
-      })
-    );
-
-    this.assignees$ = this._projectQuery.users$;
   }
 
   initForm() {

@@ -23,7 +23,11 @@ export class IssueTitleComponent implements OnChanges {
     public authQuery: AuthQuery) {}
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {

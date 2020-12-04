@@ -7,7 +7,7 @@ export interface JUser {
   avatarUrl: string;
   createdAt: string;
   updatedAt: string;
-  projectAdmin: number[];
+  projectAdmin: string;
 }
 
 export interface JUserProjects {

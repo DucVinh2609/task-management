@@ -25,16 +25,20 @@ export class IssueDeadlineComponent implements OnInit {
     public authQuery: AuthQuery) { }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+        if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
+          this.isDisabledDeadline = false;
+        }
+      }
+    )
     if(this.issuesService.getInfoIssue(this.issue.id).deadlineAt) {
       this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
       this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
     } else {
       this.deadline = new Date();
       this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
-    }
-    if (this.currentUser.projectAdmin.includes(this.projectsId)) {
-      this.isDisabledDeadline = false;
     }
   }
 

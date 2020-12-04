@@ -35,8 +35,13 @@ export class IssueJobsComponent implements OnChanges {
     public authQuery: AuthQuery,
     private _modalService: NzModalService) { }
 
-  ngOnInit(): void {
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
+  async ngOnInit() {
+    let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
+      (data) => {
+        this.currentUser = data[0];
+      }
+    )
+    await Promise.all([getUsersById])
     this.getData()
   }
 
@@ -48,18 +53,19 @@ export class IssueJobsComponent implements OnChanges {
     this.titleJobs = this.job.name;
     this.assignees = [];
     let userIds = this.jobsService.getListUsersInJob(this.job.id);
-    if (this.currentUser.projectAdmin.includes(this.projectsId)) {
+    if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledDeadline = false;
     }
-    if (userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.includes(this.projectsId)) {
+    if (userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledButton = false;
     }
     if (userIds) {
       for (let u in userIds ) {
-        let user = this.usersService.getUsersById(userIds[u]);
-        if (user) {
-          this.assignees.push(user);
-        }
+        this.usersService.getUsersById(userIds[u]).subscribe(
+          (data) => {
+            this.assignees.push(data[0]);
+          }
+        )
       }
     }
 

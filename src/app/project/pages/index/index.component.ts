@@ -30,24 +30,31 @@ export class IndexComponent implements OnInit {
     ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.projectAdmins = [];
     this.projectClients = [];
-    this.currentUser = this.usersService.getUsersById(this.currentUserId);
-    this.projectAdmins = this.currentUser.projectAdmin;
+    let getUsersById = this.usersService.getUsersById(this.currentUserId).subscribe(
+      (data) => {
+        this.currentUser = data[0];
+        this.projectAdmins = this.currentUser.projectAdmin.split(',');
 
-    if (this.projectAdmins) {
-      this.projectAdmins = this.projectsService.getProjectsInforById(this.projectAdmins);
-    }
-    if (this.currentUser.id && this.currentUser.projectAdmin) {
-      let userProjectClient = this.userProjectsService.getProjectOfUsers(this.currentUser.id, this.currentUser.projectAdmin);
-      this.projectClients = this.projectsService.getProjectsInforById(userProjectClient);
-    }
+        if (this.projectAdmins) {
+          this.projectAdmins = this.projectsService.getProjectsInforById(this.projectAdmins);
+        }
+        if (this.currentUser.id && this.currentUser.projectAdmin) {
+          let userProjectClient = this.userProjectsService.getProjectOfUsers(this.currentUser.id, this.currentUser.projectAdmin.split(','));
+          this.projectClients = this.projectsService.getProjectsInforById(userProjectClient);
+        }
+      }
+    );
+    await Promise.all([getUsersById]);
+    // this.currentUser = this.usersService.getUsersById(this.currentUserId);
+    
   }
 
   home() {
     this._router.navigate(['index']);
-  }
+  } 
 
   openCreateProjectModal() {
     this._modalService.create({
