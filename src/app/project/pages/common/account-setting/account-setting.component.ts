@@ -65,8 +65,20 @@ export class AccountSettingComponent implements OnInit {
     this.initForm();
     this.updateForm();
     this.accountSettingForm.controls['email'].disable();
-    let jobOfUsers = this.jobsService.getListJobIsDeadlineOfUser(this.currentUser.id);
-    this.getDataIssue(jobOfUsers);
+    // let jobOfUsers = this.jobsService.getListJobIsDeadlineOfUser(this.currentUser.id);
+    // this.getDataIssue(jobOfUsers);
+    let ListIssuesByUserIdS = this.issuesService.getListIssuesByUserId(this.currentUser.id);
+    ListIssuesByUserIdS.forEach(jobOfUser => {
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '=')) {
+        this.taskIsDeadlines.push(jobOfUser);
+      }
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '<')) {
+        this.taskIsOvers.push(jobOfUser);
+      }
+      if (this.checkDate(new Date(jobOfUser.deadlineAt), '>')) {
+        this.taskIsComings.push(jobOfUser);
+      }
+    });
   }
 
   getDataIssue(jobOfUsers) {
@@ -84,11 +96,10 @@ export class AccountSettingComponent implements OnInit {
       if (this.checkDate(new Date(jobOfUser.deadlineAt), '>')) {
         jobIsComing.push(jobOfUser.listJobsId);
       }
-      this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsDeadline));
-      this.taskIsOvers = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsOrver));
-      this.taskIsComings = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsComing));
-      console.log(this.taskIsOvers);
     });
+    this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsDeadline));
+    this.taskIsOvers = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsOrver));
+    this.taskIsComings = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsComing));
   }
 
   checkDate(date, operator) {
@@ -101,7 +112,9 @@ export class AccountSettingComponent implements OnInit {
       case '<':
         return date < today;
       case '>':
-        return date > today;
+        return date.getDate() > today.getDate() &&
+          date.getMonth() >= today.getMonth() &&
+          date.getFullYear() >= today.getFullYear();
     }
   }
 

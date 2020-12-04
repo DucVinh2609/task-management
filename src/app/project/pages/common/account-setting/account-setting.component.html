@@ -106,12 +106,12 @@
         </form>
       </mat-tab>
       <mat-tab label="Task">
-        <div style="margin: 40px 0 0;">
-          <div *ngIf="taskIsDeadlines?.length" style="margin-right: 10px;">
+        <div style="margin-top: 20px;">
+          <div *ngIf="taskIsDeadlines?.length" style="margin-right: 10px; margin-top: 20px;">
             <span style="font-size: 16px; font-weight: bold; margin-left: 40px;">The task is due</span>
             <div>
               <ul style="display: inline-block;">
-                <li *ngFor="let taskIsDeadline of taskIsDeadlines" style="display: inline-block;margin: 40px;width: 200px;height: 100px;">
+                <li *ngFor="let taskIsDeadline of taskIsDeadlines" style="display: inline-block; margin-left: 40px; margin-top: 20px;width: 200px;height: 100px;">
                   <j-button className="btn-add-task">
                     <span style="vertical-align: super;padding: 75px;"> {{ taskIsDeadline.title }} </span>
                   </j-button>
@@ -119,11 +119,11 @@
               </ul>
             </div>
           </div>
-          <div *ngIf="taskIsOvers?.length" style="margin-right: 10px;">
+          <div *ngIf="taskIsOvers?.length" style="margin-right: 10px; margin-top: 20px;">
             <span style="font-size: 16px; font-weight: bold; margin-left: 40px;">Overdue duty</span>
             <div>
               <ul style="display: inline-block;">
-                <li *ngFor="let taskIsOver of taskIsOvers" style="display: inline-block;margin: 40px;width: 200px;height: 100px;">
+                <li *ngFor="let taskIsOver of taskIsOvers" style="display: inline-block; margin-left: 40px; margin-top: 20px; width: 200px;height: 100px;">
                   <j-button className="btn-add-task">
                     <span style="vertical-align: super;padding: 75px;"> {{ taskIsOver.title }} </span>
                   </j-button>
@@ -131,11 +131,11 @@
               </ul>
             </div>
           </div>
-          <div *ngIf="taskIsComings?.length" style="margin-right: 10px;">
+          <div *ngIf="taskIsComings?.length" style="margin-right: 10px; margin-top: 20px;">
             <span style="font-size: 16px; font-weight: bold; margin-left: 40px;">The task is due soon</span>
             <div>
               <ul style="display: inline-block;">
-                <li *ngFor="let taskIsComing of taskIsComings" style="display: inline-block;margin: 40px;width: 200px;height: 100px;">
+                <li *ngFor="let taskIsComing of taskIsComings" style="display: inline-block; margin-left: 40px; margin-top: 20px; width: 200px;height: 100px;">
                   <j-button className="btn-add-task">
                     <span style="vertical-align: super;padding: 75px;"> {{ taskIsComing.title }} </span>
                   </j-button>

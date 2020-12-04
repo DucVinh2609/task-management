@@ -97,4 +97,8 @@ export class IssuesService {
   getListIssuesOfJob(issueId: any[]) {
     return dummy.issues.filter(u => issueId.includes(u.id));
   }
+
+  getListIssuesByUserId(userId: string) {
+    return dummy.issues.filter(u => u.userIds.includes(userId));
+  }
 }
