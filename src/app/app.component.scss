@@ -4,9 +4,9 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 
   > nz-spin {
     @apply flex flex-grow;

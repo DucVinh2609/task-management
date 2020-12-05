@@ -20,7 +20,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   @Input() projectsId: number;
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
-  users: JUser[] = [];
+  users: any;
   assignees: JUser[] = [];
   nameProject: string = '';
 
@@ -48,19 +48,23 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   getData() {
     let projectId = this.issueStatusService.getProjectIdByStatusId(this.issue.issueStatusId);
     if (projectId) {
-      this.users = this.usersService.getUsersInProjects(projectId);
+      this.usersService.getUsersInProjects(this.projectsId).subscribe (
+        (data) => {
+          this.users = data;
+        }
+      )
     }
 
     this.assignees = [];
     let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
     if (userIds) {
-      for (let u in userIds ) {
-        this.usersService.getUsersById(userIds[u]).subscribe(
-          (data) => {
-            this.assignees.push(data[0]);
-          }
-        )
-      }
+      // for (let u in userIds ) {
+      //   this.usersService.getUsersById(userIds[u]).subscribe(
+      //     (data) => {
+      //       this.assignees.push(data[0]);
+      //     }
+      //   )
+      // }
     }
   }
 

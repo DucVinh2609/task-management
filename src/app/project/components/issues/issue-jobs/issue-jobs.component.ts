@@ -60,13 +60,13 @@ export class IssueJobsComponent implements OnChanges {
       this.isDisabledButton = false;
     }
     if (userIds) {
-      for (let u in userIds ) {
-        this.usersService.getUsersById(userIds[u]).subscribe(
-          (data) => {
-            this.assignees.push(data[0]);
-          }
-        )
-      }
+      // for (let u in userIds ) {
+      //   this.usersService.getUsersById(userIds[u]).subscribe(
+      //     (data) => {
+      //       this.assignees.push(data[0]);
+      //     }
+      //   )
+      // }
     }
 
     if (this.assignees.length != 0) {

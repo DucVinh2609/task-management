@@ -58,13 +58,13 @@ export class IssueDetailComponent implements OnInit {
       let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
       this.users = [];
       if (userIds) {
-        for (let u in userIds ) {
-          this.usersService.getUsersById(userIds[u]).subscribe(
-            (data) => {
-              this.users.push(data[0]);
-            }
-          )
-        }
+        // for (let u in userIds ) {
+        //   this.usersService.getUsersById(userIds[u]).subscribe(
+        //     (data) => {
+        //       this.users.push(data[0]);
+        //     }
+        //   )
+        // }
       }
     }
   }

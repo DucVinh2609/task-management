@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { JIssueStatus } from '@trungk18/interface/issue';
 import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
@@ -10,7 +9,6 @@ import dummy from 'src/assets/data/project.json';
 import { JUser } from '@trungk18/interface/user';
 import { UsersService } from '@trungk18/project/services/users.service';
 
-@UntilDestroy()
 @Component({
   selector: 'board-dnd',
   templateUrl: './board-dnd.component.html',

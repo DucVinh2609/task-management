@@ -25,7 +25,6 @@ export class IssueCardComponent implements OnChanges {
   @Input() assignees: JUser[];
   issueTypeIcon: string;
   priorityIcon: IssuePriorityIcon;
-  issueTypesName: string = '';
   projectsId: number;
   nameProject: string = '';
   deadline: string = '';
@@ -51,7 +50,6 @@ export class IssueCardComponent implements OnChanges {
         this.currentUser = data[0];
       }
     )
-    this.issueTypesName = this.issueTypesService.getTypesName(this.issue.issueTypeId);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

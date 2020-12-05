@@ -36,4 +36,15 @@ export class ListJobsService {
     const index = dummy.listJobs.findIndex(x => x.id === listJobsId);
     if (index !== undefined) dummy.listJobs.splice(index, 1);
   }
+  
+  getListIdIssue(listJobId: any[]) {
+    let issueId = [];
+    dummy.listJobs.forEach(listJob => {
+      if (listJobId.includes(listJob.id)) {
+        issueId.push(listJob.issueId);
+      }
+    });
+
+    return issueId;
+  }
 }

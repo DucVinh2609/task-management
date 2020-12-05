@@ -10,7 +10,7 @@
                           [className]="'shadow-outline-white -ml-1'"
                           [size]="24"
                           nz-tooltip
-                          [nzMouseEnterDelay]="0.3"
+                          [nzTooltipMouseEnterDelay]="0.3"
                           nzTooltipTitle="Assignee: {{ user.name }}"
                           nzTooltipPlacement="bottom"
                           [avatarUrl]="user.avatarUrl">
@@ -26,7 +26,7 @@
                 <svg-icon class="text-textMedium mr-1"
                           [name]="issueTypeIcon"
                           nz-tooltip
-                          [nzMouseEnterDelay]="0.3"
+                          [nzTooltipMouseEnterDelay]="0.3"
                           [nzTooltipTitle]="issue.issueTypeId"
                           nzTooltipPlacement="bottom"
                           [size]="20">
@@ -34,7 +34,7 @@
 
                 <svg-icon [name]="priorityIcon.icon"
                           nz-tooltip
-                          [nzMouseEnterDelay]="0.3"
+                          [nzTooltipMouseEnterDelay]="0.3"
                           [nzTooltipTitle]="priorityIcon.value"
                           nzTooltipPlacement="bottom"
                           [size]="20"

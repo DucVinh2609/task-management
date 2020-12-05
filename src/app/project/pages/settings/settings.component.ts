@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
   nameProject: string = '';
   projectsId: number;
   project: JProjects;
-  members: JUser[] = [];
+  members: any;
   get breadcrumbs(): string[] {
     return [ProjectConst.Projects, this.nameProject, 'Settings'];
   }
@@ -51,7 +51,11 @@ export class SettingsComponent implements OnInit {
     this.categories = this.projectsCategoriesService.getAllCategory();
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.project = this.projectsService.getProjectsInfo(this.projectsId);
-    this.members = this.usersService.getUsersInProjects(this.projectsId);
+    this.usersService.getUsersInProjects(this.projectsId).subscribe (
+      (data) => {
+        this.members = data;
+      }
+    )
     this.updateForm(this.project);
   }
 

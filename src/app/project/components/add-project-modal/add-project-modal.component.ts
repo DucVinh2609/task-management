@@ -16,6 +16,7 @@ import { DateUtil } from '@trungk18/project/utils/date';
 import dummy from 'src/assets/data/project.json';
 import { ProjectsService} from '@trungk18/project/services/projects.service';
 import { UsersService } from '@trungk18/project/services/users.service';
+import { UserProjectsService } from '@trungk18/project/services/user-projects.service';
 import { Router } from '@angular/router';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 
@@ -45,6 +46,7 @@ export class AddProjectModalComponent implements OnInit {
     public _projectQuery: ProjectQuery,
     private projectsService: ProjectsService,
     private usersService: UsersService,
+    private userProjectsService: UserProjectsService,
     public router: Router,
     public authQuery: AuthQuery
   ) {}
@@ -78,7 +80,15 @@ export class AddProjectModalComponent implements OnInit {
     };
 
     let newProjectId = this.projectsService.createProject(newProject);
-    this.usersService.updateAdminProjects(this.currentUserId, newProjectId);
+    this.usersService.updateAdminProjects(this.currentUser, newProjectId).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+    this.userProjectsService.addUserProjects(this.currentUser.email, newProjectId);
     this.closeModal();
     // window.location.href = '/project/board/' + newProject.name;
     this.router.navigate(['/project/board/' + newProject.name]);

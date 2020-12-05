@@ -28,37 +28,32 @@ export class UsersService {
     // }
   }
 
-  updateAdminProjects(userId: string, projectId: number) {
-    let user = dummy.users.filter(u => u.id == userId)[0];
-    if(user) {
-      user.projectAdmin = projectId.toString();
+  updateAdminProjects(user: JUser, projectId: number) {
+    let projectAdmin = '';
+    if (!user.projectAdmin) {
+      projectAdmin = projectId.toString();
+    } else {
+      projectAdmin = user.projectAdmin + ',' + projectId.toString();
     }
+
+    const body = {
+      projectAdmins: projectAdmin
+    }
+    return this.http.put(environment.apiUrl + 'api/v1/user/update_admin_projects/' + user.id, body);
   }
 
   getUsersInProjects(projectId: number) {
-    this.listUsers = [];
-    this.listUserProjects = dummy.userProjects.filter(u => u.projectId == projectId);
-    this.listUserProjects.forEach(users => {
-      this.listUsers.push(dummy.users.filter(u => u.id == users.userId)[0])
-    });
-    return this.listUsers
+    return this.http.get(environment.apiUrl + 'api/v1/user-project/' + projectId);
   }
 
   getIdUserByEmail(email: string) {
-    if (dummy.users.filter(u => u.email == email).length !== 0) {
-      return dummy.users.filter(u => u.email == email)[0].id;
-    } else {
-      return null;
-    }
+    return this.http.get(environment.apiUrl + 'api/v1/user/email/' + email);
   }
 
   registerNewUser(user: JUser) {
-    // let body = user;
-    // const body = {
-    //   newState: "running"
-    // }
-    dummy.users.push(user);
-    console.log(dummy.users);
-    // return this.http.post(environment.apiUrl + 'api/v1/user/' + user.id, body);
+    const body = user;
+    // dummy.users.push(user);
+    // console.log(dummy.users);
+    return this.http.post(environment.apiUrl + 'api/v1/user/', body);
   }
 }

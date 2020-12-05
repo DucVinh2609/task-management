@@ -1,9 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { JIssueStatus, JIssue } from '@trungk18/interface/issue';
 import { FilterState } from '@trungk18/project/state/filter/filter.store';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
-import { Observable, combineLatest, from } from 'rxjs';
+import { Observable, combineLatest, forkJoin, from } from 'rxjs';
 import { untilDestroyed, UntilDestroy } from '@ngneat/until-destroy';
 import { FilterQuery } from '@trungk18/project/state/filter/filter.query';
 import * as dateFns from 'date-fns';
@@ -25,7 +25,7 @@ import { FormControl } from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 @UntilDestroy()
-export class BoardDndListComponent implements OnChanges {
+export class BoardDndListComponent implements OnInit {
   @Input() status: JIssueStatus;
   @Input() currentUserId: string;
   @Input() issues$: Observable<JIssue[]>;
@@ -62,20 +62,21 @@ export class BoardDndListComponent implements OnChanges {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
-  ngOnInit(): void {
-    this.usersService.getUsersById(this.currentUsersId).subscribe(
+  async ngOnInit() {
+    let getUsersById = this.usersService.getUsersById(this.currentUsersId).toPromise().then(
       (data) => {
         this.currentUser = data[0];
-        this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
-        this.statusName = this.issueStatusName;
-        this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-        this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
       }
-    )
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
+    );
+    await Promise.all([getUsersById]);
     this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+    this.statusName = this.issueStatusName;
+    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+    this.filter();
+}
+
+  filter() {
     const issuesConst = this.issues;
     combineLatest([this.issues$, this._filterQuery.all$])
       .pipe(untilDestroyed(this))
@@ -106,13 +107,14 @@ export class BoardDndListComponent implements OnChanges {
 
   getAssigneesOfIssues(issue: JIssue) {
     let assignees: JUser[] = [];
+    let forkJoinArray: any[] = [];
+    console.log("AAA");
     issue.userIds.forEach(users => {
-      this.usersService.getUsersById(users).subscribe(
-        (data) => {
-          assignees.push(data[0])
-        }
-      )
+      // console.log(this.status.id);
+      // console.log(users);
+      // forkJoinArray.push(this.usersService.getUsersById(users));
     });
+    // console.log(forkJoinArray);
     return assignees;
   }
 

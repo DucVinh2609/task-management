@@ -10,7 +10,12 @@ export class UserProjectsService {
   constructor(private usersService: UsersService) { }
 
   addUserProjects(email: string, projectId: number) {
-    let userId = this.usersService.getIdUserByEmail(email);
+    let userId = '';
+    this.usersService.getIdUserByEmail(email).subscribe(
+      (data) => {
+        userId = data[0].id;
+      }
+    )
     if (userId) {
       let newUserProjects = {
         "userId": userId,

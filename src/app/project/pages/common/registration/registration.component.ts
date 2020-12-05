@@ -128,7 +128,11 @@ export class RegistrationComponent implements OnInit {
             updatedAt: null,
             projectAdmin: ''
           };
-          this.usersService.registerNewUser(newUser);
+          this.usersService.registerNewUser(newUser).subscribe(
+            () => {
+              window.location.href = '/login';
+            }
+          )
         })
       })
     ).subscribe();

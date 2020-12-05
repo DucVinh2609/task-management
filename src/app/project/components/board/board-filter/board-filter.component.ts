@@ -21,7 +21,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class BoardFilterComponent implements OnInit {
   searchControl: FormControl = new FormControl("");
   userIds: string[];
-  listUsersInProjects: JUser[] = [];
+  listUsersInProjects: any;
   nameProject: string = '';
   projectsId: number;
 
@@ -50,7 +50,11 @@ export class BoardFilterComponent implements OnInit {
     });
 
     this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+    this.usersService.getUsersInProjects(this.projectsId).subscribe (
+      (data) => {
+        this.listUsersInProjects = data;
+      }
+    )
   }
 
   isUserSelected(user: JUser) {
@@ -85,7 +89,11 @@ export class BoardFilterComponent implements OnInit {
       }
     });
     modalRef.afterClose.subscribe(() => {
-      this.listUsersInProjects = this.usersService.getUsersInProjects(this.projectsId);
+      this.usersService.getUsersInProjects(this.projectsId).subscribe (
+      (data) => {
+        this.listUsersInProjects = data;
+      }
+    )
       // if (result.result == 'error') {
 
       // } else if (result.result == 'success') {
