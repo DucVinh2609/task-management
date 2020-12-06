@@ -5,6 +5,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Validators } from '@angular/forms';
 import { UserProjectsService } from '@trungk18/project/services/user-projects.service';
 import { emit } from 'process';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'invite-member-modal',
@@ -23,6 +24,7 @@ export class InviteMemberModalComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _modalRef: NzModalRef,
+    private usersService: UsersService,
     private userProjectsService: UserProjectsService
   ) {}
 
@@ -36,11 +38,36 @@ export class InviteMemberModalComponent implements OnInit {
     });
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.inviteMemberForm.invalid) {
       return;
     }
-    let result = this.userProjectsService.addUserProjects(this.inviteMemberForm.get('email').value, this.projectsId);
+    let result = '';
+    let getIdUserByEmail = this.usersService.getIdUserByEmail(this.inviteMemberForm.get('email').value).toPromise().then(
+      async (data: any) => {
+        if (data.length !== 0) {
+          let body = {
+            userId: data[0].id,
+            projectId: this.projectsId
+          }
+          let postProjectOfUsers = this.userProjectsService.postProjectOfUsers(body).toPromise().then(
+            () => {
+              result = 'success';
+            },
+            () => {
+              result = 'error';
+            }
+          )
+          await Promise.all([postProjectOfUsers]);
+        } else {
+          result = 'error';
+        }
+      },
+      () => {
+        result = 'error';
+      }
+    )
+    await Promise.all([getIdUserByEmail]);
     if (result == 'error') {
       this.error = true;
     } else if (result == 'success') {

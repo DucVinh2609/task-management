@@ -38,7 +38,7 @@ export class BoardFilterComponent implements OnInit {
     this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.searchControl.valueChanges
       .pipe(debounceTime(100), distinctUntilChanged(), untilDestroyed(this))
       .subscribe((term) => {
@@ -49,7 +49,14 @@ export class BoardFilterComponent implements OnInit {
       this.userIds = userIds;
     });
 
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+
+    await Promise.all([getProjectsId]);
+
     this.usersService.getUsersInProjects(this.projectsId).subscribe (
       (data) => {
         this.listUsersInProjects = data;

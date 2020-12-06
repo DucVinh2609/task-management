@@ -3,32 +3,40 @@ import { JProjects } from '@trungk18/interface/project';
 import { IssueStatusDisplay } from '@trungk18/interface/issue';
 import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
 import dummy from 'src/assets/data/project.json';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
 
-  constructor(private issueStatusService: IssueStatusService) { }
+  constructor(private issueStatusService: IssueStatusService,
+    private http: HttpClient) { }
 
   getProjectsId(projectsName: string) {
-    return dummy.projects.filter(u => u.name == projectsName)[0].id;
+    return this.http.get(environment.apiUrl + 'api/v1/project/name/' + projectsName).pipe(map(
+      projectId => {
+        return projectId;
+      }
+    ));
   }
 
-  getProjectsInfo(projectCategoriesId: number) {
-    return dummy.projects.filter(u => u.id == projectCategoriesId)[0];
+  getProjectsInfo(projectId: string) {
+    return this.http.get(environment.apiUrl + 'api/v1/project/' + projectId);
+    // return dummy.projects.filter(u => u.id == projectId)[0];
+  }
+
+  getAllIdOfProjects() {
+    return this.http.get(environment.apiUrl + 'api/v1/project/');
   }
 
   createProject(newProjects: JProjects) {
-    newProjects.id = dummy.projects.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
-    dummy.projects.push(newProjects);
     IssueStatusDisplay.forEach(issue => {
       this.issueStatusService.createIssueStatus(issue.status, newProjects.id);
     });
-    return newProjects.id;
+    return this.http.post(environment.apiUrl + 'api/v1/project/', newProjects);
   }
 
-  getProjectsInforById(projectId: any[]) {
-    return dummy.projects.filter(u => projectId.includes(u.id.toString()));
-  }
 }

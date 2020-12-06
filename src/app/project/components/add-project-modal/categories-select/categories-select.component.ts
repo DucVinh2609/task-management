@@ -15,10 +15,14 @@ export class CategoriesSelectComponent implements OnInit {
   constructor(private projectsCategoriesService: ProjectsCategoriesService) {}
 
   ngOnInit(): void {
-    this.categories = this.projectsCategoriesService.getAllCategory();
+    this.projectsCategoriesService.getAllCategory().subscribe(
+      (data: any) => {
+        this.categories = data;
+      }
+    )
   }
 
   getCategory(id) {
-    return this.projectsCategoriesService.getCategoryName(id);
+    return this.categories.filter(c => c.id === id)[0].category;
   }
 }

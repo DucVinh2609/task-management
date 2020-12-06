@@ -24,14 +24,15 @@ export class NavbarLeftComponent implements OnInit {
     private usersService: UsersService,
     private _modalService: NzModalService,
     private _router: Router
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
         this.currentUser = data[0];
       }
     )
+  }
+
+  ngOnInit(): void {
     this.items = [
       new NavItem('search', 'Search issues', this.openSearchDrawler.bind(this)),
       new NavItem('plus', 'Create issue', this.openCreateIssueModal.bind(this))

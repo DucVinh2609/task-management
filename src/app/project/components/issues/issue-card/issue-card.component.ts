@@ -44,16 +44,21 @@ export class IssueCardComponent implements OnChanges {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
-  ngOnInit(): void {
-    this.usersService.getUsersById(this.currentUserId).subscribe(
+  async ngOnInit() {
+    let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
         this.currentUser = data[0];
       }
     )
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+    await Promise.all([getUsersById, getProjectsId]);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     let issueChange = changes.issue;
     // if (issueChange?.currentValue !== issueChange.previousValue) {
     //   this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);

@@ -34,17 +34,44 @@ export class IndexComponent implements OnInit {
     this.projectAdmins = [];
     this.projectClients = [];
     let getUsersById = this.usersService.getUsersById(this.currentUserId).subscribe(
-      (data) => {
+      async (data) => {
         this.currentUser = data[0];
-        this.projectAdmins = this.currentUser.projectAdmin.split(',');
+        let projectAdmin = this.currentUser.projectAdmin.split(',');
+        let projectClient = [];
 
-        if (this.projectAdmins) {
-          this.projectAdmins = this.projectsService.getProjectsInforById(this.projectAdmins);
+        if (projectAdmin.length > 0) {
+          for (let i = 0; i < projectAdmin.length; i++) {
+            let getProjectsInfo = this.projectsService.getProjectsInfo(projectAdmin[i]).toPromise().then(
+              (data) => {
+                this.projectAdmins.push(data[0]);
+              }
+            )
+            await Promise.all([getProjectsInfo]);
+          }
         }
-        if (this.currentUser.id && this.currentUser.projectAdmin) {
-          let userProjectClient = this.userProjectsService.getProjectOfUsers(this.currentUser.id, this.currentUser.projectAdmin.split(','));
-          this.projectClients = this.projectsService.getProjectsInforById(userProjectClient);
+
+        let getProjectOfUsers = this.userProjectsService.getProjectOfUsers(this.currentUser.id).toPromise().then(
+          (data: any) => {
+            data.forEach(project => {
+              if (!projectAdmin.includes(project.projectId.toString())) {
+                projectClient.push(project.projectId);
+              }
+            });
+          }
+        )
+        await Promise.all([getProjectOfUsers]);
+
+        if (projectClient.length > 0) {
+          for (let i = 0; i < projectClient.length; i++) {
+            let getProjectsInfo = this.projectsService.getProjectsInfo(projectClient[i]).toPromise().then(
+              (data) => {
+                this.projectClients.push(data[0]);
+              }
+            )
+            await Promise.all([getProjectsInfo]);
+          }
         }
+
       }
     );
     await Promise.all([getUsersById]);

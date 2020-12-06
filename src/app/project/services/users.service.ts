@@ -28,12 +28,12 @@ export class UsersService {
     // }
   }
 
-  updateAdminProjects(user: JUser, projectId: number) {
+  updateAdminProjects(user: JUser, projectId: string) {
     let projectAdmin = '';
     if (!user.projectAdmin) {
-      projectAdmin = projectId.toString();
+      projectAdmin = projectId;
     } else {
-      projectAdmin = user.projectAdmin + ',' + projectId.toString();
+      projectAdmin = user.projectAdmin + ',' + projectId;
     }
 
     const body = {

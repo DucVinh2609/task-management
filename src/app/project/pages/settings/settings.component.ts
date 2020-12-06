@@ -46,11 +46,29 @@ export class SettingsComponent implements OnInit {
     this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.initForm();
-    this.categories = this.projectsCategoriesService.getAllCategory();
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.project = this.projectsService.getProjectsInfo(this.projectsId);
+
+    let getAllCategory = this.projectsCategoriesService.getAllCategory().toPromise().then(
+      (data: any) => {
+        this.categories = data;
+      }
+    )
+    await Promise.all([getAllCategory]);
+
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+    await Promise.all([getProjectsId]);
+
+    let getProjectsInfo = this.projectsService.getProjectsInfo(this.projectsId.toString()).toPromise().then(
+      (data) => {
+        this.project = data[0];
+      }
+    )
+    await Promise.all([getProjectsInfo]);
     this.usersService.getUsersInProjects(this.projectsId).subscribe (
       (data) => {
         this.members = data;

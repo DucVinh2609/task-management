@@ -33,15 +33,22 @@ export class BoardDndComponent implements OnInit {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
-  ngOnInit(): void {
-    this.usersService.getUsersById(this.currentUserId).subscribe(
+  async ngOnInit() {
+    let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
         this.currentUser = data[0];
-        this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-        this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
-        this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
       }
     )
+
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+
+    await Promise.all([getUsersById, getProjectsId]);
+    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
   }
 
   getData() {

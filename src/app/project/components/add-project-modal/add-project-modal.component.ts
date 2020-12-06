@@ -67,7 +67,7 @@ export class AddProjectModalComponent implements OnInit {
     });
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.issueForm.invalid) {
       return;
     }
@@ -79,8 +79,23 @@ export class AddProjectModalComponent implements OnInit {
       description: null
     };
 
-    let newProjectId = this.projectsService.createProject(newProject);
-    this.usersService.updateAdminProjects(this.currentUser, newProjectId).subscribe(
+    let getAllIdOfProjects = this.projectsService.getAllIdOfProjects().toPromise().then(
+      (data: any) => {
+        newProject.id = data.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
+      }
+    )
+    await Promise.all([getAllIdOfProjects]);
+
+    let newProjectId: number;
+    let createProject = this.projectsService.createProject(newProject).toPromise().then(
+      (data: any) => {
+        console.log(data.data);
+        newProjectId = data.data;
+      }
+    )
+    await Promise.all([createProject]);
+
+    let updateAdminProjects = this.usersService.updateAdminProjects(this.currentUser, newProjectId.toString()).toPromise().then(
       (data) => {
         console.log(data);
       },
@@ -88,7 +103,24 @@ export class AddProjectModalComponent implements OnInit {
         console.log(error);
       }
     )
-    this.userProjectsService.addUserProjects(this.currentUser.email, newProjectId);
+
+    let getIdUserByEmail = this.usersService.getIdUserByEmail(this.currentUser.email).toPromise().then(
+      async (data: any) => {
+        if (data.length !== 0) {
+          let body = {
+            userId: data[0].id,
+            projectId: newProjectId
+          }
+          let postProjectOfUsers = this.userProjectsService.postProjectOfUsers(body).toPromise().then(
+            () => {},
+            () => {}
+          )
+          await Promise.all([postProjectOfUsers]);
+        }
+      },
+      () => {}
+    )
+    await Promise.all([updateAdminProjects, getIdUserByEmail]);
     this.closeModal();
     // window.location.href = '/project/board/' + newProject.name;
     this.router.navigate(['/project/board/' + newProject.name]);

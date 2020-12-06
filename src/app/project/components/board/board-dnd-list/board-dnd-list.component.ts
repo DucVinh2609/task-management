@@ -68,10 +68,15 @@ export class BoardDndListComponent implements OnInit {
         this.currentUser = data[0];
       }
     );
-    await Promise.all([getUsersById]);
+
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+    await Promise.all([getUsersById, getProjectsId]);
     this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
     this.statusName = this.issueStatusName;
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
     this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
     this.filter();
 }

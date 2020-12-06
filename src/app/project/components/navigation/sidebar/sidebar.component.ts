@@ -40,10 +40,25 @@ export class SidebarComponent implements OnInit {
     this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
   }
 
-  ngOnInit(): void {
-    this.projectsId = this.projectsService.getProjectsId(this.nameProject);
-    this.project = this.projectsService.getProjectsInfo(this.projectsId);
-    this.projectCategory = this.projectsCategoriesService.getCategoryName(this.project.projectCategoriesId);
+  async ngOnInit() {
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+    await Promise.all([getProjectsId]);
+    let getProjectsInfo = this.projectsService.getProjectsInfo(this.projectsId.toString()).toPromise().then(
+      (data) => {
+        this.project = data[0];
+      }
+    )
+    await Promise.all([getProjectsInfo]);
+    let getCategoryName = this.projectsCategoriesService.getCategoryName(this.project.projectCategoriesId).toPromise().then(
+      (data) => {
+        this.projectCategory = data[0].category;
+      }
+    )
+    await Promise.all([getCategoryName]);
     this.sideBarLinks = [
       new SideBarLink('Board', 'board', '/project/board/' + this.nameProject),
       new SideBarLink('Project Settings', 'cog', 'settings')
