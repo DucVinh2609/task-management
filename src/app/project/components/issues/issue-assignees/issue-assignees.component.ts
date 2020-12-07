@@ -49,7 +49,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     if (this.users && issueChange.currentValue !== issueChange.previousValue) { }
   }
 
-  getData() {
+  async getData() {
     let projectId = this.issueStatusService.getProjectIdByStatusId(this.issue.issueStatusId);
     if (projectId) {
       this.usersService.getUsersInProjects(this.projectsId).subscribe (
@@ -62,13 +62,14 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     this.assignees = [];
     let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
     if (userIds) {
-      // for (let u in userIds ) {
-      //   this.usersService.getUsersById(userIds[u]).subscribe(
-      //     (data) => {
-      //       this.assignees.push(data[0]);
-      //     }
-      //   )
-      // }
+      for (let i = 0; i < userIds.length; i++) {
+        let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
+          (data) => {
+            this.assignees.push(data[0]);
+          }
+        )
+        await Promise.all([getUsersById]);
+      }
     }
   }
 

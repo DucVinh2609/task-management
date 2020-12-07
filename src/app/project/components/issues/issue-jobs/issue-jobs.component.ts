@@ -72,7 +72,15 @@ export class IssueJobsComponent implements OnChanges {
     if (userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledButton = false;
     }
-    if (userIds) {
+    if (this.users) {
+      for (let i = 0; i < this.users.length; i++) {
+        let getUsersById = this.usersService.getUsersById(this.users[i].id).toPromise().then(
+          (data) => {
+            this.assignees.push(data[0]);
+          }
+        )
+        await Promise.all([getUsersById]);
+      }
       // for (let u in userIds ) {
       //   this.usersService.getUsersById(userIds[u]).subscribe(
       //     (data) => {

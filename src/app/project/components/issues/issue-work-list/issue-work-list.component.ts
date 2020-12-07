@@ -90,7 +90,7 @@ export class IssueWorkListComponent implements OnChanges {
       let job = {
         name: this.titleJobs.trim(),
         finish: false,
-        userIds: null,
+        userIds: '',
         deadlineAt: null,
         listJobId: this.listJobsId,
         description: null

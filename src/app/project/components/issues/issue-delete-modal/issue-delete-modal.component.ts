@@ -23,13 +23,33 @@ export class IssueDeleteModalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  deleteIssue() {
+  async deleteIssue() {
     if (this.delete === "issue") {
       this.issuesService.deleteIssue(this.data);
       this.onDelete.emit(new DeleteIssueModel(this.data, this._modalRef));
     } else if (this.delete === "worklist") {
-      this.listJobsService.deleteListJobs(this.data);
-      this._modalRef.close();
+      let jobs = [];
+      let getJobsInWorkList = this.jobsService.getJobsInWorkList(this.data).toPromise().then(
+        (data: any) => {
+          console.log(data);
+          jobs = data;
+        }
+      )
+      await Promise.all([getJobsInWorkList]);
+      console.log(jobs);
+      for (let i = 0; i < jobs.length; i++) {
+        console.log(jobs[i]);
+        let getIssueIdByListJobsId = this.jobsService.deleteJobs(jobs[i].id).toPromise().then(
+          () => { }
+        )
+        await Promise.all([getIssueIdByListJobsId]);
+      }
+
+      this.listJobsService.deleteListJobs(this.data).subscribe(
+        () => {
+          this._modalRef.close();
+        }
+      )
     } else if (this.delete === "jobs") {
       this.jobsService.deleteJobs(this.data).subscribe(
         () => {

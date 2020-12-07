@@ -36,11 +36,6 @@ export class ListJobsService {
   }
 
   deleteListJobs(listJobsId: number) {
-    // this.jobs = this.jobsService.getJobsInWorkList(listJobsId);
-    // this.jobs.forEach(j => {
-    //   this.jobsService.deleteJobs(j.id);
-    // });
-    // const index = dummy.listJobs.findIndex(x => x.id === listJobsId);
-    // if (index !== undefined) dummy.listJobs.splice(index, 1);
+    return this.http.delete(environment.apiUrl + 'api/v1/list-job/' + listJobsId);
   }
 }

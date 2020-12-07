@@ -36,7 +36,11 @@ export class IssueAddWorkListModalComponent implements OnInit {
     }
     let getAllId = this.listJobsService.getAllId().toPromise().then(
       (data: any) => {
-        newWorkList.id = data.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
+        if (data.length > 0) {
+          newWorkList.id = data.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
+        } else {
+          newWorkList.id = 1;
+        }
       }
     )
     await Promise.all([getAllId]);

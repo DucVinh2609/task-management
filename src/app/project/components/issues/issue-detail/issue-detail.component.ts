@@ -44,7 +44,7 @@ export class IssueDetailComponent implements OnInit {
     public authQuery: AuthQuery) {
     }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
         if (data[0]) {
@@ -65,12 +65,13 @@ export class IssueDetailComponent implements OnInit {
       let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
       this.users = [];
       if (userIds) {
-        // for (let u in userIds ) {
-        //   this.usersService.getUsersById(userIds[u]).subscribe(
+        // for (let i = 0; i < userIds.length; i++) {
+        //   let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
         //     (data) => {
         //       this.users.push(data[0]);
         //     }
         //   )
+        //   await Promise.all([getUsersById]);
         // }
       }
     }
