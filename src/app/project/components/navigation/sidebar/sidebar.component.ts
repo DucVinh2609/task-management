@@ -61,7 +61,7 @@ export class SidebarComponent implements OnInit {
     await Promise.all([getCategoryName]);
     this.sideBarLinks = [
       new SideBarLink('Board', 'board', '/project/board/' + this.nameProject),
-      new SideBarLink('Project Settings', 'cog', 'settings')
+      new SideBarLink('Project Settings', 'cog', '/project/board/' + this.nameProject + '/settings')
     ];
   }
 
