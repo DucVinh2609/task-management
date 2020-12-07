@@ -15,10 +15,10 @@ const routes: Routes = [
       //   path: 'board/:nameProject',
       //   component: BoardComponent
       // },
-      {
-        path: 'board/:nameProject/settings',
-        component: SettingsComponent
-      },
+      // {
+      //   path: 'board/:nameProject/settings',
+      //   component: SettingsComponent
+      // },
       {
         path: `issue/:${ProjectConst.IssueId}`,
         component: FullIssueDetailComponent

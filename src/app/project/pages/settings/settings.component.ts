@@ -5,7 +5,7 @@ import { ProjectQuery } from '@trungk18/project/state/project/project.query';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
+// import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NoWhitespaceValidator } from '@trungk18/core/validators/no-whitespace.validator';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
@@ -27,6 +27,7 @@ export class SettingsComponent implements OnInit {
   projectsId: number;
   project: JProjects;
   members: JUser[] = [];
+  expanded: boolean;
   get breadcrumbs(): string[] {
     return [ProjectConst.Projects, this.nameProject, 'Settings'];
   }
@@ -34,7 +35,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private _projectQuery: ProjectQuery,
     private _projectService: ProjectService,
-    private _notification: NzNotificationService,
+    // private _notification: NzNotificationService,
     private _fb: FormBuilder,
     private _router: Router,
     private activatedRoute: ActivatedRoute,
@@ -75,11 +76,11 @@ export class SettingsComponent implements OnInit {
     let formValue: Partial<JProject> = this.projectForm.getRawValue();
     console.log(formValue);
     this._projectService.updateProject(formValue);
-    this._notification.create(
-      "success",
-      'Changes have been saved successfully.',
-      ""      
-    );
+    // this._notification.create(
+    //   "success",
+    //   'Changes have been saved successfully.',
+    //   ""      
+    // );
   }
 
   removeMember(userId: string, name: string) {
@@ -101,5 +102,9 @@ export class SettingsComponent implements OnInit {
 
   cancel() {
     this._router.navigate(['/']);
+  }
+
+  manualToggle() {
+    this.expanded = !this.expanded;
   }
 }
