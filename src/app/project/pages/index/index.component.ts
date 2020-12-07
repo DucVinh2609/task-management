@@ -35,43 +35,45 @@ export class IndexComponent implements OnInit {
     this.projectClients = [];
     let getUsersById = this.usersService.getUsersById(this.currentUserId).subscribe(
       async (data) => {
-        this.currentUser = data[0];
-        let projectAdmin = this.currentUser.projectAdmin.split(',');
-        let projectClient = [];
+        if (data[0]) {
+          console.log(data);
+          this.currentUser = data[0];
+          let projectAdmin = this.currentUser.projectAdmin.split(',');
+          let projectClient = [];
 
-        if (projectAdmin.length > 0) {
-          for (let i = 0; i < projectAdmin.length; i++) {
-            let getProjectsInfo = this.projectsService.getProjectsInfo(projectAdmin[i]).toPromise().then(
-              (data) => {
-                this.projectAdmins.push(data[0]);
-              }
-            )
-            await Promise.all([getProjectsInfo]);
+          if (projectAdmin.length > 0) {
+            for (let i = 0; i < projectAdmin.length; i++) {
+              let getProjectsInfo = this.projectsService.getProjectsInfo(projectAdmin[i]).toPromise().then(
+                (data) => {
+                  this.projectAdmins.push(data[0]);
+                }
+              )
+              await Promise.all([getProjectsInfo]);
+            }
+          }
+
+          let getProjectOfUsers = this.userProjectsService.getProjectOfUsers(this.currentUser.id).toPromise().then(
+            (data: any) => {
+              data.forEach(project => {
+                if (!projectAdmin.includes(project.projectId.toString())) {
+                  projectClient.push(project.projectId);
+                }
+              });
+            }
+          )
+          await Promise.all([getProjectOfUsers]);
+
+          if (projectClient.length > 0) {
+            for (let i = 0; i < projectClient.length; i++) {
+              let getProjectsInfo = this.projectsService.getProjectsInfo(projectClient[i]).toPromise().then(
+                (data) => {
+                  this.projectClients.push(data[0]);
+                }
+              )
+              await Promise.all([getProjectsInfo]);
+            }
           }
         }
-
-        let getProjectOfUsers = this.userProjectsService.getProjectOfUsers(this.currentUser.id).toPromise().then(
-          (data: any) => {
-            data.forEach(project => {
-              if (!projectAdmin.includes(project.projectId.toString())) {
-                projectClient.push(project.projectId);
-              }
-            });
-          }
-        )
-        await Promise.all([getProjectOfUsers]);
-
-        if (projectClient.length > 0) {
-          for (let i = 0; i < projectClient.length; i++) {
-            let getProjectsInfo = this.projectsService.getProjectsInfo(projectClient[i]).toPromise().then(
-              (data) => {
-                this.projectClients.push(data[0]);
-              }
-            )
-            await Promise.all([getProjectsInfo]);
-          }
-        }
-
       }
     );
     await Promise.all([getUsersById]);

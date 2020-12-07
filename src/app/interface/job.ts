@@ -2,8 +2,8 @@ export interface JJobs {
   id: number;
   name: string;
   finish: boolean;
-  userIds: string[];
+  userIds: string;
   deadlineAt: string;
-  listJobsId: number;
+  listJobId: number;
   description: string;
 }

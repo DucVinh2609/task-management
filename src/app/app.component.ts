@@ -22,7 +22,7 @@ export class AppComponent implements AfterViewInit {
     private _authService: AuthService
   ) {
     this._projectService.setLoading(true);
-    this._authService.login(new LoginPayload());
+    // this._authService.login(new LoginPayload());
     if (environment.production) {
       this.handleGoogleAnalytics();
     }

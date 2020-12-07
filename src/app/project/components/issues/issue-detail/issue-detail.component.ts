@@ -32,6 +32,7 @@ export class IssueDetailComponent implements OnInit {
   workLists: JListJobs[] = [];
   users: JUser[] = [];
   nameProject: string = '';
+  checkAdmin = false;
 
   constructor(public projectQuery: ProjectQuery,
     private _modalService: NzModalService,
@@ -46,15 +47,21 @@ export class IssueDetailComponent implements OnInit {
   ngOnInit(): void {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+        }
       }
     )
-  }
 
-  ngAfterContentChecked() {
     if (this.issue) {
       this.issue = this.issuesService.getInfoIssue(this.issue.id);
-      this.workLists = this.listJobsService.getWorkListsInIssue(this.issue.id);
+      this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.workLists = data;
+        }
+      )
       let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
       this.users = [];
       if (userIds) {

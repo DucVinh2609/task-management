@@ -20,7 +20,11 @@ export class IssueCommentComponent implements OnInit {
   constructor(private _authQuery: AuthQuery, private jobsService: JobsService) {}
 
   ngOnInit(): void {
-    this.description = this.jobsService.getJobsInfo(this.job.id).description;
+    this.jobsService.getJobsInfo(this.job.id).subscribe(
+      (data) => {
+        this.description = data[0].description;
+      }
+    )
   }
 
   setCommentEdit(mode: boolean) {
@@ -28,16 +32,23 @@ export class IssueCommentComponent implements OnInit {
   }
 
   addComment() {
-    console.log(this.description);
+    console.log(this.job);
     this.jobsService.updateJobs({
       ...this.job,
       description: this.description
-    });
-    this.cancelAddComment();
+    }).subscribe(
+      () => {
+        this.cancelAddComment();
+      }
+    )
   }
 
   cancelAddComment() {
-    this.description = this.jobsService.getJobsInfo(this.job.id).description;
+    this.jobsService.getJobsInfo(this.job.id).subscribe(
+      (data) => {
+        this.description = data[0].description;
+      }
+    )
     this.setCommentEdit(false);
   }
 }

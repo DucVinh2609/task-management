@@ -27,9 +27,11 @@ export class IssueDeadlineComponent implements OnInit {
   ngOnInit(): void {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
-        if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
-          this.isDisabledDeadline = false;
+        if (data[0]) {
+          this.currentUser = data[0];
+          if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
+            this.isDisabledDeadline = false;
+          }
         }
       }
     )

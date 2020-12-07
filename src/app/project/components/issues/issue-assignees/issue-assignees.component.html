@@ -3,7 +3,7 @@
 </div>
 
 
-<ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
+<ng-container *ngIf="checkAdmin">
     <j-button *ngFor="let assignee of assignees"
         [className]="'btn-secondary mr-1-5 mb-2'">
         <div class="flex items-center">
@@ -42,7 +42,7 @@
         </ul>
     </nz-dropdown-menu>
 </ng-container>
-<ng-container *ngIf="!currentUser.projectAdmin.split(',').includes(projectsId.toString())">
+<ng-container *ngIf="!checkAdmin">
     <j-button *ngFor="let assignee of assignees"
         [className]="'btn-secondary mr-1-5 mb-2'">
         <div class="flex items-center">

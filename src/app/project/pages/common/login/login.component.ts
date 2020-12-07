@@ -34,12 +34,18 @@ export class LoginComponent implements OnInit {
       email: this.validateForm.get('email').value,
       password: this.validateForm.get('password').value
     }
-    let checkLogin = this._authService.login(loginPayload);
-    if (checkLogin === 'success') {
-      this.router.navigateByUrl('index');
-    } else if (checkLogin === 'failed') {
-      this.error = true;
-    }
+
+    this._authService.getToken(loginPayload).subscribe(
+      (data) => {
+        localStorage.setItem('isLoggedIn', "true");
+        localStorage.setItem('token', data[0].id);
+        console.log(data[0].id);
+        this.router.navigateByUrl('index');
+      },
+      () => {
+        this.error = true;
+      }
+    )
   }
 
   register() {

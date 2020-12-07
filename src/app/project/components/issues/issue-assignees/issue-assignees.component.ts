@@ -23,6 +23,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   users: any;
   assignees: JUser[] = [];
   nameProject: string = '';
+  checkAdmin = false;
 
   constructor(private issuesService: IssuesService,
     private usersService: UsersService,
@@ -34,7 +35,10 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+        }
       }
     )
     this.getData();

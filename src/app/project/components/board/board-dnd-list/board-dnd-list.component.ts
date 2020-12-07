@@ -65,7 +65,9 @@ export class BoardDndListComponent implements OnInit {
   async ngOnInit() {
     let getUsersById = this.usersService.getUsersById(this.currentUsersId).toPromise().then(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+        }
       }
     );
 

@@ -17,6 +17,7 @@ export class IssueTitleComponent implements OnChanges {
   titleControl: FormControl;
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
+  checkAdmin = false;
 
   constructor(private issuesService: IssuesService,
     private usersService: UsersService,
@@ -25,7 +26,10 @@ export class IssueTitleComponent implements OnChanges {
   ngOnInit(): void {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+        }
       }
     )
   }

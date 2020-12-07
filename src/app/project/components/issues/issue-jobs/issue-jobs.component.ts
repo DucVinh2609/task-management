@@ -28,6 +28,8 @@ export class IssueJobsComponent implements OnChanges {
   checkDeadline: boolean = false;
   isDisabledButton: boolean = true;
   isDisabledDeadline: boolean = true;
+  checkAdmin = false;
+  checkUsuer = false;
 
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
@@ -38,7 +40,11 @@ export class IssueJobsComponent implements OnChanges {
   async ngOnInit() {
     let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          this.checkUsuer = this.job.userIds.split(',').includes(this.currentUserId);
+        }
       }
     )
     await Promise.all([getUsersById])
@@ -49,10 +55,17 @@ export class IssueJobsComponent implements OnChanges {
     // this.getData()
   }
 
-  getData() {
+  async getData() {
     this.titleJobs = this.job.name;
     this.assignees = [];
-    let userIds = this.jobsService.getListUsersInJob(this.job.id);
+    let userIds = [];
+    let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
+      (data) => {
+        console.log(data[0].userIds);
+        userIds = data[0].userIds.split(',');
+      }
+    )
+    await Promise.all([getJobsInfo]);
     if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledDeadline = false;
     }
@@ -84,46 +97,91 @@ export class IssueJobsComponent implements OnChanges {
   addDeadlineToJobs(deadlineAt: Date): void {
     if (deadlineAt) {
       this.job.deadlineAt = deadlineAt.toLocaleString();
-      this.jobsService.updateJobs(this.job);
+      this.jobsService.updateJobs(this.job).subscribe(
+        () => {
+          this.getData();
+        }
+      )
     }
   }
 
-  isUserSelected(user: JUser): boolean {
-    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
+  async isUserSelected(user: JUser) {
+    let userIdsInJobs = '';
+    let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
+      (data) => {
+        userIdsInJobs = data[0].userIds;
+      }
+    )
+    await Promise.all([getJobsInfo]);
     if (!userIdsInJobs) {
-      userIdsInJobs = [];
+      userIdsInJobs = '';
     }
     return userIdsInJobs.includes(user.id);
   }
 
-  addUserToJobs(user: JUser) {
-    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
+  async addUserToJobs(user: JUser) {
+    let userIdsInJobs = '';
+    let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
+      (data) => {
+        userIdsInJobs = data[0].userIds;
+      }
+    )
+    await Promise.all([getJobsInfo]);
+    let newUserIds = '';
     if (!userIdsInJobs) {
-      userIdsInJobs = [];
+      userIdsInJobs = '';
+      newUserIds = user.id;
+    } else {
+      newUserIds = userIdsInJobs + ',' + user.id;
     }
-    this.jobsService.updateJobs({
-      ...this.job,
-      userIds: [...userIdsInJobs, user.id]
-    });
-    this.getData();
-  }
 
-  removeUser(userId: string) {
-    let userIdsInJobs = this.jobsService.getListUsersInJob(this.job.id);
-    let newUserIds = userIdsInJobs.filter((x) => x !== userId);
     this.jobsService.updateJobs({
       ...this.job,
       userIds: newUserIds
-    });
-    this.getData();
+    }).subscribe(
+      () => {
+        this.getData();
+      }
+    )
+  }
+
+  async removeUser(userId: string) {
+    let userIdsInJobs = [];
+    let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
+      (data) => {
+        userIdsInJobs = data[0].userIds.split(',');
+      }
+    )
+    await Promise.all([getJobsInfo]);
+
+    let newUserId = userIdsInJobs.filter((x) => x !== userId);
+    let newUserIds = '';
+    for (let i = 0; i < newUserId.length; i++) {
+      if (i !== newUserId.length - 1) {
+        newUserIds = newUserIds + newUserId[i] + ',';
+      } else {
+        newUserIds = newUserIds + newUserId[i];
+      }
+    }
+    this.jobsService.updateJobs({
+      ...this.job,
+      userIds: newUserIds
+    }).subscribe(
+      () => {
+        this.getData();
+      }
+    )
   }
 
   checkFinish() {
     this.jobsService.updateJobs({
       ...this.job,
       finish: this.checked
-    });
-    this.getData();
+    }).subscribe(
+      () => {
+        this.getData();
+      }
+    )
   }
 
   openDatePicker() {

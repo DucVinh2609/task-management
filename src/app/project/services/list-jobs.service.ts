@@ -3,48 +3,44 @@ import { JJobs } from '@trungk18/interface/job';
 import { JListJobs } from '@trungk18/interface/list-job';
 import dummy from 'src/assets/data/project.json';
 import { JobsService } from '@trungk18/project/services/jobs.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListJobsService {
   jobs: JJobs[] = [];
-  constructor(private jobsService: JobsService) { }
+  constructor(private jobsService: JobsService,
+    private http: HttpClient) { }
 
   getWorkListsInIssue(issueId) {
-    return dummy.listJobs.filter(l => l.issueId == issueId);
+    return this.http.get(environment.apiUrl + 'api/v1/list-job/issue/' + issueId).pipe(map(
+      listJob => {
+        return listJob;
+      }
+    ));
   }
 
-  addListJobs(name, issueId) {
-    let listJobs: JListJobs = {
-      "id": dummy.listJobs.sort((a, b) => (a.id > b.id) ? 1 : -1)[dummy.listJobs.length - 1].id + 1,
-      "name": name,
-      "issueId": issueId
-    }
-    dummy.listJobs.push(listJobs)
+  getAllId() {
+    return this.http.get(environment.apiUrl + 'api/v1/list-job/id');
+  }
+
+  addListJobs(body: JListJobs) {
+    return this.http.post(environment.apiUrl + 'api/v1/list-job/', body);
   }
 
   getIssueIdByListJobsId(listJobSId: number) {
-    return dummy.listJobs.filter(j => j.id == listJobSId)[0].issueId;
+    return this.http.get(environment.apiUrl + 'api/v1/list-job/' + listJobSId);
   }
 
   deleteListJobs(listJobsId: number) {
-    this.jobs = this.jobsService.getJobsInWorkList(listJobsId);
-    this.jobs.forEach(j => {
-      this.jobsService.deleteJobs(j.id);
-    });
-    const index = dummy.listJobs.findIndex(x => x.id === listJobsId);
-    if (index !== undefined) dummy.listJobs.splice(index, 1);
-  }
-  
-  getListIdIssue(listJobId: any[]) {
-    let issueId = [];
-    dummy.listJobs.forEach(listJob => {
-      if (listJobId.includes(listJob.id)) {
-        issueId.push(listJob.issueId);
-      }
-    });
-
-    return issueId;
+    // this.jobs = this.jobsService.getJobsInWorkList(listJobsId);
+    // this.jobs.forEach(j => {
+    //   this.jobsService.deleteJobs(j.id);
+    // });
+    // const index = dummy.listJobs.findIndex(x => x.id === listJobsId);
+    // if (index !== undefined) dummy.listJobs.splice(index, 1);
   }
 }

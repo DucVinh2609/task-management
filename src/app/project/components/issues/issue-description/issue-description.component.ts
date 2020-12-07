@@ -30,7 +30,9 @@ export class IssueDescriptionComponent implements OnChanges {
     private issuesService: IssuesService) {
       this.usersService.getUsersById(this.currentUserId).subscribe(
         (data) => {
-          this.currentUser = data[0];
+          if (data[0]) {
+            this.currentUser = data[0];
+          }
         }
       )
     }

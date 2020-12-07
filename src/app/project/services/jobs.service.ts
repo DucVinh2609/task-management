@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JJobs } from '@trungk18/interface/job';
 import dummy from 'src/assets/data/project.json';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,37 +10,31 @@ import dummy from 'src/assets/data/project.json';
 export class JobsService {
   jobs: JJobs;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getLastIdJobInListJobs() {
-    if (dummy.jobs) {
-      this.jobs = dummy.jobs.sort((a, b) => (a.id > b.id) ? 1 : -1)[dummy.jobs.length - 1];
-      if (this.jobs) {
-        return this.jobs.id
-      }
-    } else return null
-  }
+  // getLastIdJobInListJobs() {
+  //   if (dummy.jobs) {
+  //     this.jobs = dummy.jobs.sort((a, b) => (a.id > b.id) ? 1 : -1)[dummy.jobs.length - 1];
+  //     if (this.jobs) {
+  //       return this.jobs.id
+  //     }
+  //   } else return null
+  // }
 
   getJobsInWorkList(listJobsId: number) {
-    return dummy.jobs.filter(j => j.listJobsId == listJobsId);
+    return this.http.get(environment.apiUrl + 'api/v1/job/list-job/' + listJobsId);
   }
 
-  addJobs(jobs: JJobs) {
-    dummy.jobs.push(jobs)
+  getJobsInWorkListFinish(listJobsId: number) {
+    return this.http.get(environment.apiUrl + 'api/v1/job/finish/' + listJobsId);
   }
 
-  getPercentOfWorkList(listJobsId: number) {
-    let countJobs = dummy.jobs.filter(j => j.listJobsId == listJobsId).length;
-    if (countJobs == 0) {
-      return 0;
-    } else {
-      let countJobsFinish =  dummy.jobs.filter(j => j.listJobsId == listJobsId && j.finish == true).length;
-      return Math.round((countJobsFinish/countJobs) * 100);
-    }
+  addJobs(jobs) {
+    return this.http.post(environment.apiUrl + 'api/v1/job/', jobs);
   }
 
   getJobsInfo(jobId: number) {
-    return dummy.jobs.filter(j => j.id == jobId)[0];
+    return this.http.get(environment.apiUrl + 'api/v1/job/' + jobId);
   }
 
   getListUsersInJob(jobId: number) {
@@ -46,20 +42,19 @@ export class JobsService {
   }
 
   updateJobs(jobs: JJobs) {
-    let job = dummy.jobs.filter(j => j.id == jobs.id)[0];
-    if(job) {
-      job.name = jobs.name;
-      job.userIds = jobs.userIds;
-      job.finish = jobs.finish;
-      job.deadlineAt = jobs.deadlineAt;
-      job.userIds = jobs.userIds;
-      job.description = jobs.description;
+    let body = {
+      name: jobs.name,
+      finish: jobs.finish,
+      deadlineAt: jobs.deadlineAt,
+      listJobId: jobs.listJobId,
+      userIds: jobs.userIds,
+      description: jobs.description
     }
+    return this.http.put(environment.apiUrl + 'api/v1/job/' + jobs.id, body);
   }
 
   deleteJobs(jobId: number) {
-    const index = dummy.jobs.findIndex(x => x.id === jobId);
-    if (index !== undefined) dummy.jobs.splice(index, 1);
+    return this.http.delete(environment.apiUrl + 'api/v1/job/' + jobId);
   }
 
   getListJobIsDeadlineOfUser(userId: string) {

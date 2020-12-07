@@ -31,8 +31,11 @@ export class IssueDeleteModalComponent implements OnInit {
       this.listJobsService.deleteListJobs(this.data);
       this._modalRef.close();
     } else if (this.delete === "jobs") {
-      this.jobsService.deleteJobs(this.data);
-      this._modalRef.close();
+      this.jobsService.deleteJobs(this.data).subscribe(
+        () => {
+          this._modalRef.close();
+        }
+      )
     }
   }
 

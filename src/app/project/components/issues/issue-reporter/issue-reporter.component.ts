@@ -22,7 +22,9 @@ export class IssueReporterComponent implements OnInit, OnChanges {
     let reporterId = this.issuesService.getInfoIssue(this.issue.id).reporterId;
     this.usersService.getUsersById(reporterId).subscribe(
       (data) => {
-        this.reporter = data[0];
+        if (data[0]) {
+          this.reporter = data[0];
+        }
       }
     )
   }

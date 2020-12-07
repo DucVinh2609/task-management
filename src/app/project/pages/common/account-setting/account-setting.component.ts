@@ -60,7 +60,9 @@ export class AccountSettingComponent implements OnInit {
   async ngOnInit() {
     let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+        }
       }
     )
     await Promise.all([getUsersById]);
@@ -86,10 +88,13 @@ export class AccountSettingComponent implements OnInit {
     });
   }
 
-  getDataIssue(jobOfUsers) {
+  async getDataIssue(jobOfUsers) {
     let jobIsDeadline = [];
     let jobIsOrver = [];
     let jobIsComing = [];
+    let jobIsDeadlines = [];
+    let jobIsOrvers = [];
+    let jobIsComings = [];
     jobOfUsers.forEach(jobOfUser => {
       console.log(jobOfUser)
       if (this.checkDate(new Date(jobOfUser.deadlineAt), '=')) {
@@ -102,9 +107,36 @@ export class AccountSettingComponent implements OnInit {
         jobIsComing.push(jobOfUser.listJobsId);
       }
     });
-    this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsDeadline));
-    this.taskIsOvers = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsOrver));
-    this.taskIsComings = this.issuesService.getListIssuesOfJob(this.listJobsService.getListIdIssue(jobIsComing));
+    for (let i = 0; i < jobIsDeadline.length; i++) {
+      let getIssueIdByListJobsId = this.listJobsService.getIssueIdByListJobsId(jobIsDeadline[i]).toPromise().then(
+        (data) => {
+          jobIsDeadlines.push(data[0].issueId);
+        }
+      )
+      await Promise.all([getIssueIdByListJobsId]);
+    }
+
+    for (let i = 0; i < jobIsOrver.length; i++) {
+      let getIssueIdByListJobsId = this.listJobsService.getIssueIdByListJobsId(jobIsOrver[i]).toPromise().then(
+        (data) => {
+          jobIsOrvers.push(data[0].issueId);
+        }
+      )
+      await Promise.all([getIssueIdByListJobsId]);
+    }
+
+    for (let i = 0; i < jobIsComing.length; i++) {
+      let getIssueIdByListJobsId = this.listJobsService.getIssueIdByListJobsId(jobIsComing[i]).toPromise().then(
+        (data) => {
+          jobIsComings.push(data[0].issueId);
+        }
+      )
+      await Promise.all([getIssueIdByListJobsId]);
+    }
+
+    this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(jobIsDeadlines);
+    this.taskIsOvers = this.issuesService.getListIssuesOfJob(jobIsOrvers);
+    this.taskIsComings = this.issuesService.getListIssuesOfJob(jobIsComings);
   }
 
   checkDate(date, operator) {

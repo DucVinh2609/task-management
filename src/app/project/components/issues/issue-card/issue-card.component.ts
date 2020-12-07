@@ -47,7 +47,9 @@ export class IssueCardComponent implements OnChanges {
   async ngOnInit() {
     let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+        }
       }
     )
     let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(

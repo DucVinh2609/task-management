@@ -28,9 +28,24 @@ export class IssueAddWorkListModalComponent implements OnInit {
     });
   }
 
-  addWorkList() {
-    this.listJobsService.addListJobs(this.addWorkListForm.get('titleWorkList').value, this.issueId)
-    this._modalRef.close();
+  async addWorkList() {
+    let newWorkList = {
+      id: 0,
+      name: this.addWorkListForm.get('titleWorkList').value,
+      issueId: this.issueId
+    }
+    let getAllId = this.listJobsService.getAllId().toPromise().then(
+      (data: any) => {
+        newWorkList.id = data.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
+      }
+    )
+    await Promise.all([getAllId]);
+
+    this.listJobsService.addListJobs(newWorkList).subscribe(
+      () => {
+        this._modalRef.close();
+      }
+    )
   }
 
   closeModal() {

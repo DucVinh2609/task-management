@@ -27,7 +27,9 @@ export class NavbarLeftComponent implements OnInit {
   ) {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+        }
       }
     )
   }

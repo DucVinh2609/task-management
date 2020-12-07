@@ -15,7 +15,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<JUser>
   public currentUser: Observable<JUser>;
 
-  constructor(private _http: HttpClient,
+  constructor(private http: HttpClient,
     private router: Router,
     private _store: AuthStore) {
     this.baseUrl = environment.apiUrl;
@@ -26,34 +26,62 @@ export class AuthService {
   // public get currentUserValue(): JUser {
   //   return this.currentUserSubject.value;
   // }
-
-  login({ email, password }: LoginPayload) {
-    if (dummy.users.filter(u => u.email == email).length !== 0) {
-      if (dummy.users.filter(u => u.email == email)[0].password === password) {
-        localStorage.setItem('isLoggedIn', "true");  
-        localStorage.setItem('token', dummy.users.filter(u => u.email == email)[0].id); 
-        // this._store.setLoading(true);
-        // dummy.users.filter(u => u.email == email).map((user) => {
-        //   this._store.update((state) => ({
-        //     ...state,
-        //     ...user
-        //   }));
-        // }),
-        finalize(() => {
-          this._store.setLoading(false);
-        }),
-        catchError((err) => {
-          this._store.setError(err);
-          return of(err);
-        });
-        return "success";
-      } else {
-        return "failed";
-      }
-    } else {
-      return "failed";
-    }
+  getToken({ email, password }: LoginPayload) {
+    return this.http.get(environment.apiUrl + 'api/v1/user/' + email + '/' + password);
   }
+
+  // login({ email, password }: LoginPayload) {
+  //   this.getToken(email, password).subscribe(
+  //     (data) => {
+  //       localStorage.setItem('isLoggedIn', "true");  
+  //       localStorage.setItem('token', data[0].id);
+  //       console.log(data[0].id);
+  //       // this._store.setLoading(true);
+  //       // dummy.users.filter(u => u.email == email).map((user) => {
+  //       //   this._store.update((state) => ({
+  //       //     ...state,
+  //       //     ...user
+  //       //   }));
+  //       // }),
+  //       finalize(() => {
+  //         this._store.setLoading(false);
+  //       }),
+  //       catchError((err) => {
+  //         this._store.setError(err);
+  //         return of(err);
+  //       });
+  //       return "success";
+  //     },
+  //     () => {
+  //       return "failed";
+  //     }
+  //   )
+    // if (dummy.users.filter(u => u.email == email).length !== 0) {
+    //   if (dummy.users.filter(u => u.email == email)[0].password === password) {
+    //     localStorage.setItem('isLoggedIn', "true");  
+    //     localStorage.setItem('token', dummy.users.filter(u => u.email == email)[0].id); 
+    //     // this._store.setLoading(true);
+    //     // dummy.users.filter(u => u.email == email).map((user) => {
+    //     //   this._store.update((state) => ({
+    //     //     ...state,
+    //     //     ...user
+    //     //   }));
+    //     // }),
+    //     finalize(() => {
+    //       this._store.setLoading(false);
+    //     }),
+    //     catchError((err) => {
+    //       this._store.setError(err);
+    //       return of(err);
+    //     });
+    //     return "success";
+    //   } else {
+    //     return "failed";
+    //   }
+    // } else {
+    //   return "failed";
+    // }
+  // }
 
   logout() :void {    
     localStorage.setItem('isLoggedIn','false');

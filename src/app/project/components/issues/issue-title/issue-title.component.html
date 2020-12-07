@@ -1,4 +1,4 @@
-<ng-container *ngIf="!currentUser.projectAdmin.split(',').includes(projectsId.toString())">
+<ng-container *ngIf="!checkAdmin">
   <textarea class="textarea-inline-control aaa"
             cdkTextareaAutosize
             [formControl]="titleControl"
@@ -7,7 +7,7 @@
             disabled>
   </textarea>
 </ng-container>
-<ng-container *ngIf="currentUser.projectAdmin.split(',').includes(projectsId.toString())">
+<ng-container *ngIf="checkAdmin">
   <textarea class="textarea-inline-control aaa"
             cdkTextareaAutosize
             [formControl]="titleControl"

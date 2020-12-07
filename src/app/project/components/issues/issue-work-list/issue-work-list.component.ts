@@ -28,6 +28,7 @@ export class IssueWorkListComponent implements OnChanges {
   jobs: JJobs[] = [];
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
+  checkAdmin = false;
 
   constructor(private jobsService: JobsService,
     public authQuery: AuthQuery,
@@ -37,9 +38,37 @@ export class IssueWorkListComponent implements OnChanges {
   ngOnInit(): void {
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
-        this.currentUser = data[0];
+        if (data[0]) {
+          this.currentUser = data[0];
+          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+        }
       }
     )
+    this.getData();
+  }
+
+  async getData() {
+    if (this.listJobsId) {
+      let jobsFinish = [];
+      let getJobsInWorkList = this.jobsService.getJobsInWorkList(this.listJobsId).toPromise().then(
+        (data: any) => {
+          this.jobs = data;
+        }
+      )
+      let getJobsInWorkListFinish = this.jobsService.getJobsInWorkListFinish(this.listJobsId).toPromise().then(
+        (data: any) => {
+          jobsFinish = data;
+        }
+      )
+      await Promise.all([getJobsInWorkList, getJobsInWorkListFinish]);
+      let countAll = this.jobs.length;
+      let countFinish = jobsFinish.length;
+      if (countAll == 0) {
+        this.percent = 0;
+      } else {
+        this.percent =  Math.round((countFinish/countAll) * 100);
+      }
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,10 +78,7 @@ export class IssueWorkListComponent implements OnChanges {
   }
 
   ngAfterContentChecked() {
-    if (this.listJobsId) {
-      this.jobs = this.jobsService.getJobsInWorkList(this.listJobsId);
-      this.percent = this.jobsService.getPercentOfWorkList(this.listJobsId);
-    }
+    // this.getData();
   }
 
   addJob() {
@@ -61,30 +87,33 @@ export class IssueWorkListComponent implements OnChanges {
 
   addJobs() {
     if (this.titleJobs.trim()) {
-      let job: JJobs = {
-        id: this.randomIdJob(),
+      let job = {
         name: this.titleJobs.trim(),
         finish: false,
         userIds: null,
         deadlineAt: null,
-        listJobsId: this.listJobsId,
+        listJobId: this.listJobsId,
         description: null
       };
 
-      this.jobsService.addJobs(job);
-      this.checkAddJob = false;
-      this.titleJobs = '';
+      this.jobsService.addJobs(job).subscribe(
+        () => {
+          this.checkAddJob = false;
+          this.titleJobs = '';
+          this.getData();
+        }
+      )
     }
   }
 
-  randomIdJob() {
-    let lastId = this.jobsService.getLastIdJobInListJobs()
-    if(lastId) {
-      return lastId + 1;
-    } else {
-      return +(this.listJobsId + "0001");
-    }
-  }
+  // randomIdJob() {
+  //   let lastId = this.jobsService.getLastIdJobInListJobs()
+  //   if(lastId) {
+  //     return lastId + 1;
+  //   } else {
+  //     return +(this.listJobsId + "0001");
+  //   }
+  // }
 
   cancelAddJob() {
     this.checkAddJob = false;
