@@ -49,12 +49,16 @@ export class BoardDndComponent implements OnInit {
     )
 
     await Promise.all([getUsersById, getProjectsId]);
-    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.getData();
     this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
   }
 
   getData() {
-    this.issueStatuses = this.issueStatusService.getStatusByProjectId(this.projectsId).sort((a, b) => (a.position > b.position) ? 1 : -1);
+    this.issueStatusService.getStatusByProjectId(this.projectsId).subscribe(
+      (data: any) => {
+        this.issueStatuses = data.sort((a, b) => (a.position > b.position) ? 1 : -1);
+      }
+    )
   }
 
   addDndList() {
@@ -62,10 +66,13 @@ export class BoardDndComponent implements OnInit {
   }
 
   addListTask() {
-    this.issueStatusService.createIssueStatus(this.titleListTask, this.projectsId);
-    this.checkAddDndList = false;
-    this.titleListTask = '';
-    this.getData();
+    this.issueStatusService.createIssueStatus(this.titleListTask, this.projectsId, this.issueStatuses.length).subscribe(
+      () => {
+        this.checkAddDndList = false;
+        this.titleListTask = '';
+        this.getData();
+      }
+    )
   }
 
   cancelAddListTask() {

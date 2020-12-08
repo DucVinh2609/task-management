@@ -50,7 +50,14 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   }
 
   async getData() {
-    let projectId = this.issueStatusService.getProjectIdByStatusId(this.issue.issueStatusId);
+    let projectId = '';
+    let getProjectIdByStatusId = this.issueStatusService.getProjectIdByStatusId(this.issue.issueStatusId).toPromise().then(
+      (data) => {
+        projectId = data[0].projectId;
+      }
+    )
+    await Promise.all([getProjectIdByStatusId]);
+
     if (projectId) {
       this.usersService.getUsersInProjects(this.projectsId).subscribe (
         (data) => {
@@ -60,7 +67,13 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     }
 
     this.assignees = [];
-    let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
+    let userIds = '';
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
+      (data) => {
+        userIds = data[0].userIds;
+      }
+    )
+    await Promise.all([getInfoIssue]);
     if (userIds) {
       for (let i = 0; i < userIds.length; i++) {
         let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
@@ -73,27 +86,47 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     }
   }
 
-  removeUser(userId: string) {
-    let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
-    let newUserIds = userIds.filter((x) => x !== userId);
+  async removeUser(userId: string) {
+    let userIds = '';
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
+      (data) => {
+        userIds = data[0].userIds;
+      }
+    )
+    await Promise.all([getInfoIssue]);
+    let listUserIds = userIds.split(',');
+    let listNewUserIds = listUserIds.filter((x) => x !== userId);
+    let newUserIds = listNewUserIds.join(',');
     this.issuesService.updateIssue({
       ...this.issue,
       userIds: newUserIds
-    });
+    }).subscribe(
+      () => {}
+    );
     this.getData();
   }
 
-  addUserToIssue(user: JUser) {
-    let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
+  async addUserToIssue(user: JUser) {
+    let userIds = '';
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
+      (data) => {
+        userIds = data[0].userIds;
+      }
+    )
+    await Promise.all([getInfoIssue]);
+    let listUserIds = userIds.split(',');
+    let listNewUserIds = listUserIds.concat(user.id);
+    let newUserIds = listNewUserIds.join(',');
     this.issuesService.updateIssue({
       ...this.issue,
-      userIds: [...userIds, user.id]
-    });
+      userIds: newUserIds
+    }).subscribe(
+      () => {}
+    );
     this.getData();
   }
 
   isUserSelected(user: JUser): boolean {
-    let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
-    return userIds.includes(user.id);
+    return this.issue.userIds.includes(user.id);
   }
 }

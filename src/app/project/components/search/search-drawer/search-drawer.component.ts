@@ -60,7 +60,7 @@ export class SearchDrawerComponent implements OnInit {
       nzClosable: false,
       nzFooter: null,
       nzComponentParams: {
-        issue: this.issuesService.getInfoIssue(issue.id)
+        issue: issue
       }
     });
     this.closeDrawer();

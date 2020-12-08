@@ -17,6 +17,7 @@ export class NavbarLeftComponent implements OnInit {
   items: NavItem[];
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
+  load: boolean = false;
 
   constructor(
     public authQuery: AuthQuery,
@@ -29,6 +30,7 @@ export class NavbarLeftComponent implements OnInit {
       (data) => {
         if (data[0]) {
           this.currentUser = data[0];
+          this.load = true;
         }
       }
     )

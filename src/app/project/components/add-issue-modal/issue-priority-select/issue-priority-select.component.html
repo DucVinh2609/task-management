@@ -9,7 +9,9 @@
                       [size]="20"
                       [style.color]="priority.color">
             </svg-icon>
-            <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ priority.value }}</span>
+            <ng-container *ngIf="load">
+                <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ getIssuePriorities(priority.value) }}</span>
+            </ng-container>
         </div>
     </nz-option>
 </nz-select>
@@ -20,6 +22,8 @@
                   [style.color]="getPriorityIcon(selected.nzValue)?.color"
                   [size]="20">
         </svg-icon>
-        <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ selected.nzValue }}</span>
+        <ng-container *ngIf="load">
+            <span class="ml-3 font-semibold uppercase text-textMedium text-13">{{ getIssuePriorities(selected.nzValue) }}</span>
+        </ng-container>
     </div>
 </ng-template>

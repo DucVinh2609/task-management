@@ -6,7 +6,9 @@
         <div class="flex items-center">
             <svg-icon [name]="selectedPriorityIcon.icon" [size]="20" [style.color]="selectedPriorityIcon.color">
             </svg-icon>
-            <span class="ml-3 priority-label">{{ getIssuePriorities(selectedPriorityIcon.value) }}</span>
+            <ng-container *ngIf="load">
+                <span class="ml-3 priority-label">{{ getIssuePriorities(selectedPriorityIcon.value) }}</span>
+            </ng-container>
         </div>
     </j-button>
 </ng-container>
@@ -15,7 +17,9 @@
         <div class="flex items-center">
             <svg-icon [name]="selectedPriorityIcon.icon" [size]="20" [style.color]="selectedPriorityIcon.color">
             </svg-icon>
-            <span class="ml-3 priority-label">{{ getIssuePriorities(selectedPriorityIcon.value) }}</span>
+            <ng-container *ngIf="load">
+                <span class="ml-3 priority-label">{{ getIssuePriorities(selectedPriorityIcon.value) }}</span>
+            </ng-container>
         </div>
     </j-button>
 </ng-container>
@@ -33,7 +37,9 @@
                               [size]="20"
                               [style.color]="option.color">
                     </svg-icon>
-                    <span class="ml-3 priority-label font-semibold uppercase text-textMedium text-13">{{ getIssuePriorities(option.value) }}</span>
+                    <ng-container *ngIf="load">
+                        <span class="ml-3 priority-label font-semibold uppercase text-textMedium text-13">{{ getIssuePriorities(option.value) }}</span>
+                    </ng-container>
                 </div>
             </li>
         </ng-container>

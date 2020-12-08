@@ -6,10 +6,13 @@
           <mat-icon style="color: white; margin-left: 15px; font-size: 35px; cursor: pointer;" (click)="home()">home</mat-icon>
           <div class="flex-auto"></div>
           <div class="item">
-            <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
-              <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft">
-              </j-avatar>
-            </div>
+            <ng-container *ngIf="load">
+              <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
+                <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu"
+                  nzPlacement="topLeft">
+                </j-avatar>
+              </div>
+            </ng-container>
           </div>
         </div>
       </aside>

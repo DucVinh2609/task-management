@@ -28,8 +28,8 @@ import { FormControl } from '@angular/forms';
 export class BoardDndListComponent implements OnInit {
   @Input() status: JIssueStatus;
   @Input() currentUserId: string;
-  @Input() issues$: Observable<JIssue[]>;
   issues: JIssue[] = [];
+  issuesConst: JIssue[] = [];
   checkAddTask: boolean = false;
   titleTask: string = '';
   projectsId: number;
@@ -38,10 +38,8 @@ export class BoardDndListComponent implements OnInit {
   statusName: string = '';
   currentUsersId: string = localStorage.getItem('token');
   currentUser: JUser;
-
-  get issuesCount(): number {
-    return this.issues.length;
-  }
+  countIssues: number = 0;
+  load: boolean = false;
 
   get issueStatus(): number {
     return this.status.id;
@@ -77,17 +75,27 @@ export class BoardDndListComponent implements OnInit {
       }
     )
     await Promise.all([getUsersById, getProjectsId]);
-    this.issues = this.issuesService.getAllIssueInStatus(this.issueStatus);
+    let getAllIssueInStatus = this.issuesService.getAllIssueInStatus(this.issueStatus).toPromise().then(
+      (data: any) => {
+        // this.issues = data.sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+        this.issuesConst = data.sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+      }
+    )
+    await Promise.all([getAllIssueInStatus]);
+    this.countIssues = this.issues.length;
+    this.load = true;
     this.statusName = this.issueStatusName;
     this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
     this.filter();
+    console.log(this.issues);
 }
 
   filter() {
     const issuesConst = this.issues;
-    combineLatest([this.issues$, this._filterQuery.all$])
+    combineLatest([this._filterQuery.all$])
       .pipe(untilDestroyed(this))
-      .subscribe(([issues, filter]) => {
+      .subscribe(([filter]) => {
+        console.log(filter);
         this.issues = this.filterIssues(issuesConst, filter);
       }
     );
@@ -108,15 +116,17 @@ export class BoardDndListComponent implements OnInit {
       );
       this.updateListPosition(newIssues);
       newIssue.issueStatusId = event.container.id['id'];
-      this.issuesService.updateIssue(newIssue);
+      this.issuesService.updateIssue(newIssue).subscribe(
+        () => {}
+      );
     }
   }
 
   getAssigneesOfIssues(issue: JIssue) {
     let assignees: JUser[] = [];
     let forkJoinArray: any[] = [];
-    console.log("AAA");
-    issue.userIds.forEach(users => {
+    console.log("VVVVV");
+    issue.userIds.split(',').forEach(users => {
       // console.log(this.status.id);
       // console.log(users);
       // forkJoinArray.push(this.usersService.getUsersById(users));
@@ -128,7 +138,9 @@ export class BoardDndListComponent implements OnInit {
   private updateListPosition(newList: JIssue[]) {
     newList.forEach((issue, idx) => {
       let newIssueWithNewPosition = { ...issue, listPosition: idx + 1 };
-      this.issuesService.updateIssue(newIssueWithNewPosition);
+      this.issuesService.updateIssue(newIssueWithNewPosition).subscribe(
+        () => {}
+      );
     });
   }
 
@@ -140,42 +152,44 @@ export class BoardDndListComponent implements OnInit {
     let listIssues4: JIssue[] = [];
     if (userIds.length) {
       listIssues1 = this.issuesService.getIssuesOfUserInStatus(issues, userIds, this.issueStatus);
-      issues = listIssues1;
+      return [...new Set(listIssues1)];
     }
-    if (searchTerm) {
-      listIssues2 = this.issuesService.searchIssuesInStatus(issues, searchTerm, this.issueStatus);
-      issues = listIssues2;
+    // if (searchTerm) {
+    //   listIssues2 = this.issuesService.searchIssuesInStatus(issues, searchTerm, this.issueStatus);
+    //   issues = listIssues2;
+    // }
+    // if (onlyMyIssue) {
+    //   listIssues3 = this.issuesService.getIssuesOfCurrentUserInStatus(issues, this.currentUserId, this.issueStatus);
+    //   issues = listIssues3;
+    // }
+    // if (ignoreResolved) {
+    //   listIssues4 = this.issuesService.getIssuesDoneInStatus(issues, this.projectsId, this.issueStatus);
+    //   issues = listIssues4;
+    // }
+    // if (userIds.length || searchTerm || onlyMyIssue || ignoreResolved) {
+    //   let listIssuesFilter: JIssue[] = [];
+    //   let listIssuesFilterResult: JIssue[] = [];
+    //   if (userIds.length && !searchTerm && !onlyMyIssue && !ignoreResolved) {
+    //     return listIssues1;
+    //   } else if (!userIds.length && searchTerm && !onlyMyIssue && !ignoreResolved) {
+    //     return listIssues2;
+    //   } else if (!userIds.length && !searchTerm && onlyMyIssue && !ignoreResolved) {
+    //     return listIssues3;
+    //   } else if (!userIds.length && !searchTerm && !onlyMyIssue && ignoreResolved) {
+    //     return listIssues4;
+    //   } else {
+    //     listIssuesFilter = listIssues1.concat(listIssues2, listIssues3, listIssues4).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
+    //     listIssuesFilter.filter((item, index) => {
+    //       if (listIssuesFilter.indexOf(item) !== index) {
+    //         listIssuesFilterResult.push(item);
+    //       }
+    //     });
+    //     return [...new Set(listIssuesFilterResult)];
+    //   }
+    // }
+    else {
+      return this.issuesConst;
     }
-    if (onlyMyIssue) {
-      listIssues3 = this.issuesService.getIssuesOfCurrentUserInStatus(issues, this.currentUserId, this.issueStatus);
-      issues = listIssues3;
-    }
-    if (ignoreResolved) {
-      listIssues4 = this.issuesService.getIssuesDoneInStatus(issues, this.projectsId, this.issueStatus);
-      issues = listIssues4;
-    }
-    if (userIds.length || searchTerm || onlyMyIssue || ignoreResolved) {
-      let listIssuesFilter: JIssue[] = [];
-      let listIssuesFilterResult: JIssue[] = [];
-      if (userIds.length && !searchTerm && !onlyMyIssue && !ignoreResolved) {
-        return listIssues1;
-      } else if (!userIds.length && searchTerm && !onlyMyIssue && !ignoreResolved) {
-        return listIssues2;
-      } else if (!userIds.length && !searchTerm && onlyMyIssue && !ignoreResolved) {
-        return listIssues3;
-      } else if (!userIds.length && !searchTerm && !onlyMyIssue && ignoreResolved) {
-        return listIssues4;
-      } else {
-        listIssuesFilter = listIssues1.concat(listIssues2, listIssues3, listIssues4).sort((a, b) => (a.listPosition > b.listPosition) ? 1 : -1);
-        listIssuesFilter.filter((item, index) => {
-          if (listIssuesFilter.indexOf(item) !== index) {
-            listIssuesFilterResult.push(item);
-          }
-        });
-        return [...new Set(listIssuesFilterResult)];
-      }
-    }
-    else return this.issuesService.getAllIssueInStatus(this.issueStatus);
   }
 
   isDateWithinThreeDaysFromNow(date: string) {
@@ -196,19 +210,22 @@ export class BoardDndListComponent implements OnInit {
         id: IssueUtil.getRandomId(),
         issueStatusId: this.issueStatus,
         createdAt: now,
-        updatedAt: now,
+        updatedAt: null,
         deadlineAt: null,
         issuePriorityId: 3,
         issueTypeId: 1,
-        listPosition: this.issuesCount + 1,
+        listPosition: this.countIssues + 1,
         description: '',
         reporterId: this.currentUserId,
-        userIds: []
+        userIds: ''
       };
 
-      this.issuesService.addIssue(issue);
-      this.checkAddTask = false;
-      this.titleTask = '';
+      this.issuesService.addIssue(issue).subscribe(
+        () => {
+          this.checkAddTask = false;
+          this.titleTask = '';
+        }
+      )
     }
   }
 
@@ -225,6 +242,8 @@ export class BoardDndListComponent implements OnInit {
     this.issueStatusService.updateIssueStatus({
       ...this.status,
       status: this.statusName
-    });
+    }).subscribe(
+      () => {}
+    )
   }
 }

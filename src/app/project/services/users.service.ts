@@ -14,18 +14,8 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsersById(userId: string) {
-    // let params = new HttpParams();
-    // params = params.append('userId', userId);
+    console.log(userId);
     return this.http.get(environment.apiUrl + 'api/v1/user/' + userId);
-    // let getUsersById = this.http.get(environment.apiUrl + 'api/v1/user/' + userId, { params: params });
-    // getUsersById.subscribe(data => {
-    //   this.users = data[0];
-    // });
-    // return this.users;
-    // this.users = dummy.users.filter(u => u.id == userId)[0];
-    // if (this.users) {
-    //   return this.users
-    // }
   }
 
   updateAdminProjects(user: JUser, projectId: string) {

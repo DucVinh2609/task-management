@@ -20,6 +20,8 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
   checkAdmin = false;
+  listIssuePriorities: any[] = [];
+  load: boolean = false;
 
   get selectedPriorityIcon() {
     return IssueUtil.getIssuePriorityIcon(this.selectedPriority);
@@ -46,6 +48,13 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
       }
     )
     this.priorities = ProjectConst.PrioritiesWithIcon;
+
+    this.issuePrioritiesService.getAllIssuePriorities().subscribe(
+      (data: any) => {
+        this.listIssuePriorities = data;
+        this.load = true;
+      }
+    )
   }
 
   ngOnChanges(): void {
@@ -60,10 +69,12 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
     this.selectedPriority = priority;
     let newIssue: JIssue = { ...this.issue };
     newIssue.issuePriorityId = priority;
-    this.issuesService.updateIssue(newIssue);
+    this.issuesService.updateIssue(newIssue).subscribe(
+      () => {}
+    );
   }
 
   getIssuePriorities(issuePrioritiesId) {
-    return this.issuePrioritiesService.getIssuePriorities(issuePrioritiesId);
+    return this.listIssuePriorities.filter(p => p.id == issuePrioritiesId)[0].priority;
   }
 }

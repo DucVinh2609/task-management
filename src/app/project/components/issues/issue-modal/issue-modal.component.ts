@@ -5,6 +5,7 @@ import { ProjectService } from '@trungk18/project/state/project/project.service'
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-model';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'issue-modal',
@@ -17,6 +18,7 @@ export class IssueModalComponent implements OnInit {
 
   constructor(
     private _modal: NzModalRef,
+    private issuesService: IssuesService,
     private _router: Router,
     private _projectService: ProjectService
   ) {}
@@ -34,8 +36,11 @@ export class IssueModalComponent implements OnInit {
   }
 
   deleteIssue({ issueId, deleteModalRef }: DeleteIssueModel) {
-    this._projectService.deleteIssue(issueId);
-    deleteModalRef.close();
-    this.closeModal();
+    this.issuesService.deleteIssue(issueId).subscribe(
+      () => {
+        deleteModalRef.close();
+        this.closeModal();
+      }
+    )
   }
 }

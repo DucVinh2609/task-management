@@ -7,11 +7,13 @@
           </mat-icon>
           <div class="flex-auto"></div>
           <div class="item">
-            <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
-              <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu"
-                nzPlacement="topLeft">
-              </j-avatar>
-            </div>
+            <ng-container *ngIf="load">
+              <div nz-tooltip [nzTooltipTitle]="currentUser.name" nzTooltipPlacement="right" class="itemIcon">
+                <j-avatar class="flex" [avatarUrl]="currentUser.avatarUrl" [size]="26" nz-dropdown [nzDropdownMenu]="menu"
+                  nzPlacement="topLeft">
+                </j-avatar>
+              </div>
+            </ng-container>
           </div>
         </div>
       </aside>
@@ -21,11 +23,13 @@
     <div style="height: 100px;">
       <div class="aaa">
         <div class="bbb">
-          <j-avatar [avatarUrl]="currentUser.avatarUrl" [size]="60">
-          </j-avatar>
-          <span style="margin-left: 10px; font-size: 30px;">
-            {{ currentUser.name }}
-          </span>
+          <ng-container *ngIf="load">
+            <j-avatar [avatarUrl]="currentUser.avatarUrl" [size]="60">
+            </j-avatar>
+            <span style="margin-left: 10px; font-size: 30px;">
+              {{ currentUser.name }}
+            </span>
+          </ng-container>
         </div>
       </div>
     </div>

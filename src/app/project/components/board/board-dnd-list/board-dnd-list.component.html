@@ -10,7 +10,9 @@
                 (blur)="onBlur()">
             </textarea>
         </ng-container>
-        <span style="width: 10%; vertical-align: super; margin-left: 5px;" class="lowercase text-13">{{ issuesCount }}</span>
+        <ng-container *ngIf="load">
+            <span style="width: 10%; vertical-align: super; margin-left: 5px;" class="lowercase text-13">{{ countIssues }}</span>
+        </ng-container>
     </div>
     <ng-container *ngIf="checkAdmin">
         <div class="h-full pl-2"
@@ -20,7 +22,6 @@
             (cdkDropListDropped)="drop($event)">
             <issue-card *ngFor="let issue of issues"
                 [issue]="issue"
-                [assignees]="getAssigneesOfIssues(issue)"
                 cdkDrag
                 [cdkDragData]="issue">
             </issue-card>
@@ -51,7 +52,6 @@
         <div class="h-full pl-2">
             <issue-card *ngFor="let issue of issues"
                 [issue]="issue"
-                [assignees]="getAssigneesOfIssues(issue)"
             >
             </issue-card>
         </div>

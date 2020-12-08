@@ -19,6 +19,9 @@ import { UsersService } from '@trungk18/project/services/users.service';
 import { UserProjectsService } from '@trungk18/project/services/user-projects.service';
 import { Router } from '@angular/router';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
+import { ProjectsCategoriesService } from '@trungk18/project/services/projects-categories.service';
+import { IssueStatusDisplay } from '@trungk18/interface/issue';
+import { IssueStatusService } from '@trungk18/project/services/issue-status.service';
 
 @Component({
   selector: 'add-project-modal',
@@ -31,7 +34,7 @@ export class AddProjectModalComponent implements OnInit {
   assignees$: Observable<JUser[]>;
   issueForm: FormGroup;
   editorOptions = quillConfiguration;
-  priorities: JProjectCategories[] = dummy.categories;
+  priorities: JProjectCategories[] = [];
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
 
@@ -47,6 +50,8 @@ export class AddProjectModalComponent implements OnInit {
     private projectsService: ProjectsService,
     private usersService: UsersService,
     private userProjectsService: UserProjectsService,
+    private projectsCategoriesService: ProjectsCategoriesService,
+    private issueStatusService: IssueStatusService,
     public router: Router,
     public authQuery: AuthQuery
   ) {}
@@ -59,6 +64,13 @@ export class AddProjectModalComponent implements OnInit {
         }
       }
     )
+
+    this.projectsCategoriesService.getAllCategory().subscribe(
+      (data: any) => {
+        this.priorities = data;
+      }
+    )
+
     this.initForm();
   }
 
@@ -91,11 +103,17 @@ export class AddProjectModalComponent implements OnInit {
     let newProjectId: number;
     let createProject = this.projectsService.createProject(newProject).toPromise().then(
       (data: any) => {
-        console.log(data.data);
         newProjectId = data.data;
       }
     )
     await Promise.all([createProject]);
+
+    IssueStatusDisplay.forEach(async issue => {
+      let createIssueStatus = this.issueStatusService.createIssueStatus(issue.status, newProjectId, issue.position).subscribe(
+        () => { }
+      )
+      await Promise.all([createIssueStatus]);
+    });
 
     let updateAdminProjects = this.usersService.updateAdminProjects(this.currentUser, newProjectId.toString()).toPromise().then(
       (data) => {

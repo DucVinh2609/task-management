@@ -19,6 +19,7 @@ export class IndexComponent implements OnInit {
   currentUser: JUser;
   projectAdmins: any = [];
   projectClients: any = [];
+  load: boolean = false;
 
   constructor(public authQuery: AuthQuery,
     private _authService: AuthService,
@@ -36,8 +37,8 @@ export class IndexComponent implements OnInit {
     let getUsersById = this.usersService.getUsersById(this.currentUserId).subscribe(
       async (data) => {
         if (data[0]) {
-          console.log(data);
           this.currentUser = data[0];
+          this.load = true;
           let projectAdmin = this.currentUser.projectAdmin.split(',');
           let projectClient = [];
 

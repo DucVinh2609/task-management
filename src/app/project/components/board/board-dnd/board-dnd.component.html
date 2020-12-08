@@ -4,8 +4,7 @@
       board-dnd-list
       *ngFor="let status of issueStatuses"
       [status]="status"
-      [currentUserId]="currentUser.id"
-      [issues$]="projectQuery.issueByStatusSorted$(status.id)">
+      [currentUserId]="currentUser.id">
     </div>
 
     <ng-container *ngIf="checkAdmin">

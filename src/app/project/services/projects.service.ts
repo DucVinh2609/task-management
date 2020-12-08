@@ -6,6 +6,7 @@ import dummy from 'src/assets/data/project.json';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import { async } from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,6 @@ export class ProjectsService {
   }
 
   createProject(newProjects: JProjects) {
-    IssueStatusDisplay.forEach(issue => {
-      this.issueStatusService.createIssueStatus(issue.status, newProjects.id);
-    });
     return this.http.post(environment.apiUrl + 'api/v1/project/', newProjects);
   }
 

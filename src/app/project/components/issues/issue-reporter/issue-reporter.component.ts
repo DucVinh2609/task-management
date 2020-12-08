@@ -18,8 +18,14 @@ export class IssueReporterComponent implements OnInit, OnChanges {
   constructor(private issuesService: IssuesService,
     private usersService: UsersService) {}
 
-  ngOnInit(): void {
-    let reporterId = this.issuesService.getInfoIssue(this.issue.id).reporterId;
+  async ngOnInit() {
+    let reporterId = '';
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
+      (data) => {
+        reporterId = data[0].reporterId;
+      }
+    )
+    await Promise.all([getInfoIssue]);
     this.usersService.getUsersById(reporterId).subscribe(
       (data) => {
         if (data[0]) {

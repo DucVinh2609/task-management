@@ -25,8 +25,11 @@ export class IssueDeleteModalComponent implements OnInit {
 
   async deleteIssue() {
     if (this.delete === "issue") {
-      this.issuesService.deleteIssue(this.data);
-      this.onDelete.emit(new DeleteIssueModel(this.data, this._modalRef));
+      this.issuesService.deleteIssue(this.data).subscribe(
+        () => {
+          this.onDelete.emit(new DeleteIssueModel(this.data, this._modalRef));
+        }
+      )
     } else if (this.delete === "worklist") {
       let jobs = [];
       let getJobsInWorkList = this.jobsService.getJobsInWorkList(this.data).toPromise().then(

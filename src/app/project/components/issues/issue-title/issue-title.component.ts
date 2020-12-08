@@ -45,6 +45,8 @@ export class IssueTitleComponent implements OnChanges {
     this.issuesService.updateIssue({
       ...this.issue,
       title: this.titleControl.value
-    });
+    }).subscribe(
+      () => {}
+    );
   }
 }

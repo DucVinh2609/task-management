@@ -14,10 +14,10 @@ export enum IssueType {
 // }
 
 export const IssueStatusDisplay = [
-  {"status": "Backlog"},
-  { "status": "Selected"},
-  { "status": "InProgress"},
-  { "status": "Done"}
+  { status: "Backlog", position: 0},
+  { status: "Selected", position: 1},
+  { status: "InProgress", position: 2},
+  { status: "Done", position: 3}
 ];
 
 // export enum IssuePriority {
@@ -48,7 +48,7 @@ export interface JIssue {
   updatedAt: string;
   deadlineAt: string;
   reporterId: string;
-  userIds: string[];
+  userIds: string;
 }
 
 export interface JIssueStatus {

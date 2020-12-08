@@ -35,13 +35,17 @@ export class IssueDeadlineComponent implements OnInit {
         }
       }
     )
-    if(this.issuesService.getInfoIssue(this.issue.id).deadlineAt) {
-      this.deadline = new Date(this.issuesService.getInfoIssue(this.issue.id).deadlineAt);
-      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
-    } else {
-      this.deadline = new Date();
-      this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
-    }
+    this.issuesService.getInfoIssue(this.issue.id).subscribe(
+      (data) => {
+        if(data[0].deadlineAt) {
+          this.deadline = new Date(data[0].deadlineAt);
+          this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+        } else {
+          this.deadline = new Date();
+          this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
+        }
+      }
+    )
   }
 
   handleDeadlineOpenChange(open: boolean) {
@@ -49,7 +53,9 @@ export class IssueDeadlineComponent implements OnInit {
       let newIssue: JIssue = { ...this.issue };
       if(this.deadline) {
         newIssue.deadlineAt = this.deadline.toLocaleString();
-        this.issuesService.updateIssue(newIssue);
+        this.issuesService.updateIssue(newIssue).subscribe(
+          () => {}
+        );
         this.deadlineLimit = (this.deadline.getTime() - this.now) / 86400000;
       }
     }

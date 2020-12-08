@@ -37,9 +37,9 @@ export class JobsService {
     return this.http.get(environment.apiUrl + 'api/v1/job/' + jobId);
   }
 
-  getListUsersInJob(jobId: number) {
-    return dummy.jobs.filter(j => j.id == jobId)[0].userIds;
-  }
+  // getListUsersInJob(jobId: number) {
+  //   return dummy.jobs.filter(j => j.id == jobId)[0].userIds;
+  // }
 
   updateJobs(jobs: JJobs) {
     let body = {

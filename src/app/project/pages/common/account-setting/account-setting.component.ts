@@ -42,6 +42,7 @@ export class AccountSettingComponent implements OnInit {
   taskIsDeadlines: any = [];
   taskIsOvers: any = [];
   taskIsComings: any = [];
+  load: boolean = false;
 
   constructor(public authQuery: AuthQuery,
     private _router: Router,
@@ -62,6 +63,7 @@ export class AccountSettingComponent implements OnInit {
       (data) => {
         if (data[0]) {
           this.currentUser = data[0];
+          this.load = true;
         }
       }
     )
@@ -74,7 +76,13 @@ export class AccountSettingComponent implements OnInit {
     this.accountSettingForm.controls['email'].disable();
     // let jobOfUsers = this.jobsService.getListJobIsDeadlineOfUser(this.currentUser.id);
     // this.getDataIssue(jobOfUsers);
-    let ListIssuesByUserIdS = this.issuesService.getListIssuesByUserId(this.currentUser.id);
+    let ListIssuesByUserIdS = [];
+    let getListIssuesByUserId = this.issuesService.getListIssuesByUserId(this.currentUser.id).toPromise().then(
+      (data: any) => {
+        ListIssuesByUserIdS = data;
+      }
+    )
+    await Promise.all([getListIssuesByUserId]);
     ListIssuesByUserIdS.forEach(jobOfUser => {
       if (this.checkDate(new Date(jobOfUser.deadlineAt), '=')) {
         this.taskIsDeadlines.push(jobOfUser);
@@ -134,9 +142,32 @@ export class AccountSettingComponent implements OnInit {
       await Promise.all([getIssueIdByListJobsId]);
     }
 
-    this.taskIsDeadlines = this.issuesService.getListIssuesOfJob(jobIsDeadlines);
-    this.taskIsOvers = this.issuesService.getListIssuesOfJob(jobIsOrvers);
-    this.taskIsComings = this.issuesService.getListIssuesOfJob(jobIsComings);
+    for (let i = 0; i < jobIsDeadlines.length; i++) {
+      let getInfoIssue = this.issuesService.getInfoIssue(jobIsDeadlines[i]).toPromise().then(
+        (data) => {
+          this.taskIsDeadlines.push(data[0]);
+        }
+      )
+      await Promise.all([getInfoIssue]);
+    }
+
+    for (let i = 0; i < jobIsOrvers.length; i++) {
+      let getInfoIssue = this.issuesService.getInfoIssue(jobIsOrvers[i]).toPromise().then(
+        (data) => {
+          this.taskIsOvers.push(data[0]);
+        }
+      )
+      await Promise.all([getInfoIssue]);
+    }
+
+    for (let i = 0; i < jobIsComings.length; i++) {
+      let getInfoIssue = this.issuesService.getInfoIssue(jobIsComings[i]).toPromise().then(
+        (data) => {
+          this.taskIsComings.push(data[0]);
+        }
+      )
+      await Promise.all([getInfoIssue]);
+    }
   }
 
   checkDate(date, operator) {

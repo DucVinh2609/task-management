@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { JIssue } from '@trungk18/interface/issue';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-model';
+import { IssuesService } from '@trungk18/project/services/issues.service';
 
 @Component({
   selector: 'full-issue-detail',
@@ -26,6 +27,7 @@ export class FullIssueDetailComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
+    private issuesService: IssuesService,
     private _projectQuery: ProjectQuery,
     private _projectService: ProjectService
   ) {}
@@ -47,9 +49,12 @@ export class FullIssueDetailComponent implements OnInit {
   }
 
   deleteIssue({issueId, deleteModalRef}: DeleteIssueModel) {
-    this._projectService.deleteIssue(issueId);
-    deleteModalRef.close();
-    this.backHome();
+    this.issuesService.deleteIssue(issueId).subscribe(
+      () => {
+        deleteModalRef.close();
+        this.backHome();
+      }
+    )
   }
 
   private backHome() {

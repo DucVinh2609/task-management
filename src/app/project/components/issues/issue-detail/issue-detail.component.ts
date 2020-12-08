@@ -55,14 +55,14 @@ export class IssueDetailComponent implements OnInit {
     )
 
     if (this.issue) {
-      this.issue = this.issuesService.getInfoIssue(this.issue.id);
+      // this.issue = this.issuesService.getInfoIssue(this.issue.id);
       this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
         (data: any) => {
           console.log(data);
           this.workLists = data;
         }
       )
-      let userIds = this.issuesService.getListUsersInIssue(this.issue.id);
+      let userIds = this.issue.userIds;
       this.users = [];
       if (userIds) {
         // for (let i = 0; i < userIds.length; i++) {
