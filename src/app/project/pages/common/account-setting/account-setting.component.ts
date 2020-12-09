@@ -112,7 +112,6 @@ export class AccountSettingComponent implements OnInit {
     let jobIsOrvers = [];
     let jobIsComings = [];
     jobOfUsers.forEach(jobOfUser => {
-      console.log(jobOfUser)
       if (this.checkDate(new Date(jobOfUser.deadlineAt), '=')) {
         jobIsDeadline.push(jobOfUser.listJobsId);
       }
@@ -270,7 +269,6 @@ export class AccountSettingComponent implements OnInit {
 
   submitPassword() {
     let formValue = this.changePasswordForm.getRawValue();
-    console.log(formValue);
     if (formValue.passwordCurrent !== this.currentUser.password) {
       this.messageErrorPass = "Password current incorrect";
       this.messageSuccessPass = "";
@@ -302,7 +300,6 @@ export class AccountSettingComponent implements OnInit {
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
     this.selectedImg = file;
-    console.log(this.selectedImg);
     return new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
@@ -328,7 +325,6 @@ export class AccountSettingComponent implements OnInit {
   }
 
   handleChange(info: { file: NzUploadFile }): void {
-    console.log(info.file.status);
     switch (info.file.status) {
       case 'uploading':
         this.loading = true;

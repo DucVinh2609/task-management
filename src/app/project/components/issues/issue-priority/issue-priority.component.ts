@@ -43,7 +43,9 @@ export class IssuePriorityComponent implements OnInit, OnChanges {
       (data) => {
         if (data[0]) {
           this.currentUser = data[0];
-          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          if (this.currentUser.projectAdmin) {
+            this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          }
         }
       }
     )

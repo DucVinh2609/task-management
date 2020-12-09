@@ -51,14 +51,12 @@
     </ng-container>
   </div>
   <div style="display: block; flex: 50%;">
-    <ng-container *ngIf="checkDeadline">
-      <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
-        Deadline
-      </div>
-      <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="openDatePicker()"
-        nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" [nzDisabled]="isDisabledDeadline" (ngModelChange)="addDeadlineToJobs($event)">
-      </nz-date-picker>
-    </ng-container>
+    <div class="mt-6 mb-1 uppercase text-textMedium text-13 font-bold" style="margin-top: -5px;">
+      Deadline
+    </div>
+    <nz-date-picker [nzOpen]="editMode" nzShowTime (nzOnOpenChange)="editMode=false" (click)="openDatePicker()"
+      nzFormat="yyyy-MM-dd HH:mm:ss" [(ngModel)]="date" [nzDisabled]="isDisabledDeadline" (ngModelChange)="addDeadlineToJobs($event)">
+    </nz-date-picker>
   </div>
 </div>
 <ng-container *ngIf="checkAdmin || checkUsuer">

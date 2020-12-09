@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { JListJobs } from '@trungk18/interface/list-job';
 import { IssueDeleteModalComponent } from '../issue-delete-modal/issue-delete-modal.component';
@@ -8,6 +8,7 @@ import { JUser } from '@trungk18/interface/user';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { UsersService } from '@trungk18/project/services/users.service';
+import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
 
 @Component({
   selector: 'issue-work-list',
@@ -15,10 +16,10 @@ import { UsersService } from '@trungk18/project/services/users.service';
   styleUrls: ['./issue-work-list.component.scss']
 })
 @UntilDestroy()
-export class IssueWorkListComponent implements OnChanges {
+export class IssueWorkListComponent implements OnInit {
   @Input() workList: JListJobs;
-  @Input() users: JUser[];
   @Input() projectsId: number;
+  @Output() onDelete = new EventEmitter<boolean>();
   title: string = '';
   listJobsId: number;
   issueId: string = '';
@@ -33,6 +34,7 @@ export class IssueWorkListComponent implements OnChanges {
   constructor(private jobsService: JobsService,
     public authQuery: AuthQuery,
     private usersService: UsersService,
+    private listJobsService: ListJobsService,
     private _modalService: NzModalService) { }
 
   ngOnInit(): void {
@@ -48,6 +50,10 @@ export class IssueWorkListComponent implements OnChanges {
   }
 
   async getData() {
+    this.title = this.workList.name;
+    this.listJobsId = this.workList.id;
+    this.issueId = this.workList.issueId;
+
     if (this.listJobsId) {
       let jobsFinish = [];
       let getJobsInWorkList = this.jobsService.getJobsInWorkList(this.listJobsId).toPromise().then(
@@ -69,16 +75,6 @@ export class IssueWorkListComponent implements OnChanges {
         this.percent =  Math.round((countFinish/countAll) * 100);
       }
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.title = this.workList.name;
-    this.listJobsId = this.workList.id;
-    this.issueId = this.workList.issueId;
-  }
-
-  ngAfterContentChecked() {
-    // this.getData();
   }
 
   addJob() {
@@ -106,22 +102,13 @@ export class IssueWorkListComponent implements OnChanges {
     }
   }
 
-  // randomIdJob() {
-  //   let lastId = this.jobsService.getLastIdJobInListJobs()
-  //   if(lastId) {
-  //     return lastId + 1;
-  //   } else {
-  //     return +(this.listJobsId + "0001");
-  //   }
-  // }
-
   cancelAddJob() {
     this.checkAddJob = false;
     this.titleJobs = '';
   }
 
   deleteWorkList() {
-    this._modalService.create({
+    const modalRef = this._modalService.create({
       nzContent: IssueDeleteModalComponent,
       nzClosable: false,
       nzFooter: null,
@@ -135,5 +122,23 @@ export class IssueWorkListComponent implements OnChanges {
         delete: "worklist"
       }      
     });
+    modalRef.afterClose.subscribe(
+      () => {
+        this.onDelete.emit(true);
+      }
+    );
   }
+
+  deleteJob(value) {
+    if (value) {
+      this.getData();
+    }
+  }
+
+  checkFinish(value) {
+    if (value) {
+      this.getData();
+    }
+  }
+
 }

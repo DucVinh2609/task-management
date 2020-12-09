@@ -45,21 +45,20 @@ export class IssueDetailComponent implements OnInit {
     }
 
   async ngOnInit() {
-    console.log(this.projectsId);
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
         if (data[0]) {
           this.currentUser = data[0];
-          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          if (this.currentUser.projectAdmin) {
+            this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          }
         }
       }
     )
 
     if (this.issue) {
-      // this.issue = this.issuesService.getInfoIssue(this.issue.id);
       this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
         (data: any) => {
-          console.log(data);
           this.workLists = data;
         }
       )
@@ -79,7 +78,7 @@ export class IssueDetailComponent implements OnInit {
   }
 
   openAddWorkListModal() {
-    this._modalService.create({
+    const modalRef = this._modalService.create({
       nzContent: IssueAddWorkListModalComponent,
       nzClosable: false,
       nzFooter: null,
@@ -90,6 +89,15 @@ export class IssueDetailComponent implements OnInit {
         issueId: this.issue.id,
       }
     });
+    modalRef.afterClose.subscribe(
+      () => {
+        this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
+          (data: any) => {
+            this.workLists = data;
+          }
+        )
+      }
+    );
   }
 
   openDeleteIssueModal() {
@@ -115,5 +123,25 @@ export class IssueDetailComponent implements OnInit {
 
   openIssuePage() {
     this.onOpenIssue.emit(this.issue.id);
+  }
+
+  deleteWorklist(value) {
+    if (value) {
+      this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
+        (data: any) => {
+          this.workLists = data;
+        }
+      )
+    }
+  }
+
+  changeAssigness(value) {
+    if (value) {
+      this.listJobsService.getWorkListsInIssue(this.issue.id).subscribe(
+        (data: any) => {
+          this.workLists = data;
+        }
+      )
+    }
   }
 }

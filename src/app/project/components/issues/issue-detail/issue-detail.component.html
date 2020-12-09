@@ -30,10 +30,10 @@
 
             <issue-work-list *ngFor="let workList of workLists"
                 [workList]="workList"
-                [users]="users"
                 [projectsId]="projectsId"
                 cdkDrag
-                [cdkDragData]="workList">
+                [cdkDragData]="workList"
+                (onDelete)="deleteWorklist($event)">
             </issue-work-list>
 
         </div>
@@ -52,7 +52,7 @@
             <issue-deadline [issue]="issue" [projectsId]="projectsId"></issue-deadline>
             <issue-reporter [issue]="issue">
             </issue-reporter>
-            <issue-assignees [issue]="issue" [projectsId]="projectsId">
+            <issue-assignees [issue]="issue" [projectsId]="projectsId" (onChange)=changeAssigness($event) >
             </issue-assignees>
             <issue-priority [issue]="issue" [projectsId]="projectsId"></issue-priority>
 

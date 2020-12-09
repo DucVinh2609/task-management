@@ -18,7 +18,6 @@ export class IssueStatusService {
     let getStatusName = this.http.get(environment.apiUrl + 'api/v1/issue-status/' + statusId);
     // let getUsersById = this.http.get(environment.apiUrl + 'api/v1/user/' + userId, { params: params });
     getStatusName.subscribe(data => {
-      console.log(data[0].status);
     });
     this.status = dummy.status.filter(u => u.id == statusId)[0];
     if (this.status) {

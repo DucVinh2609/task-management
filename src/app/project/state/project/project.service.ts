@@ -71,7 +71,6 @@ export class ProjectService {
         issues
       };
     });
-    console.log(this._store);
   }
 
   createIssue(issue: JIssue) {

@@ -32,7 +32,6 @@ export class IssueCommentComponent implements OnInit {
   }
 
   addComment() {
-    console.log(this.job);
     this.jobsService.updateJobs({
       ...this.job,
       description: this.description

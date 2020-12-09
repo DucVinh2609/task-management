@@ -122,7 +122,6 @@ export class BoardDndListComponent implements OnInit {
       );
       this.updateListPosition(newIssues);
       newIssue.issueStatusId = event.container.id['id'];
-      console.log(newIssue);
       this.issuesService.updateIssue(newIssue).subscribe(
         () => {
           this.issuesService.getAllIssueInStatus(this.issueStatus).subscribe(
@@ -138,7 +137,6 @@ export class BoardDndListComponent implements OnInit {
   private updateListPosition(newList: JIssue[]) {
     newList.forEach((issue, idx) => {
       let newIssueWithNewPosition = { ...issue, listPosition: idx + 1 };
-      console.log(newIssueWithNewPosition);
       this.issuesService.updateIssue(newIssueWithNewPosition).subscribe(
         () => {
           // this.issuesService.getAllIssueInStatus(this.issueStatus).subscribe(

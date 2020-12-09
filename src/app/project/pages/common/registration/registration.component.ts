@@ -63,7 +63,6 @@ export class RegistrationComponent implements OnInit {
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]) => {
     this.selectedImg = file;
-    console.log(this.selectedImg);
     return new Observable((observer: Observer<boolean>) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
@@ -89,7 +88,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   handleChange(info: { file: NzUploadFile }): void {
-    console.log(info.file.status);
     switch (info.file.status) {
       case 'uploading':
         this.loading = true;

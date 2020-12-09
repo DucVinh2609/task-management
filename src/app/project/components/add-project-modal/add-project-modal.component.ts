@@ -116,12 +116,8 @@ export class AddProjectModalComponent implements OnInit {
     });
 
     let updateAdminProjects = this.usersService.updateAdminProjects(this.currentUser, newProjectId.toString()).toPromise().then(
-      (data) => {
-        console.log(data);
-      },
-      (error) => {
-        console.log(error);
-      }
+      () => {},
+      () => {}
     )
 
     let getIdUserByEmail = this.usersService.getIdUserByEmail(this.currentUser.email).toPromise().then(

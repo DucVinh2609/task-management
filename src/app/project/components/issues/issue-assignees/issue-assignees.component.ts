@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { JIssue } from '@trungk18/interface/issue';
 import { JUser } from '@trungk18/interface/user';
@@ -15,9 +15,10 @@ import { ProjectsService } from '@trungk18/project/services/projects.service';
   styleUrls: ['./issue-assignees.component.scss']
 })
 @UntilDestroy()
-export class IssueAssigneesComponent implements OnInit, OnChanges {
+export class IssueAssigneesComponent implements OnInit {
   @Input() issue: JIssue;
   @Input() projectsId: number;
+  @Output() onChange = new EventEmitter<boolean>();
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
   users: any;
@@ -44,11 +45,6 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
       }
     )
     this.getData();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    let issueChange = changes.issue;
-    if (this.users && issueChange.currentValue !== issueChange.previousValue) { }
   }
 
   async getData() {
@@ -79,12 +75,16 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     await Promise.all([getInfoIssue]);
     if (userIds.split(',').length > 0) {
       for (let i = 0; i < userIds.split(',').length; i++) {
-        let getUsersById = this.usersService.getUsersById(userIds.split(',')[i]).toPromise().then(
-          (data) => {
-            this.assignees.push(data[0]);
-          }
-        )
-        await Promise.all([getUsersById]);
+        if (userIds.split(',')[i]) {
+          let getUsersById = this.usersService.getUsersById(userIds.split(',')[i]).toPromise().then(
+            (data) => {
+              this.assignees.push(data[0]);
+            }
+          )
+          await Promise.all([getUsersById]);
+        } else {
+          this.assignees = [];
+        }
       }
     }
     this.load = true;
@@ -105,7 +105,9 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
       ...this.issue,
       userIds: newUserIds
     }).subscribe(
-      () => {}
+      () => {
+        this.onChange.emit(true);
+      }
     );
     this.getData();
   }
@@ -127,6 +129,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     }).subscribe(
       () => {
         this.getData();
+        this.onChange.emit(true);
       }
     );
   }

@@ -40,9 +40,7 @@ export class IssueDeleteModalComponent implements OnInit {
         }
       )
       await Promise.all([getJobsInWorkList]);
-      console.log(jobs);
       for (let i = 0; i < jobs.length; i++) {
-        console.log(jobs[i]);
         let getIssueIdByListJobsId = this.jobsService.deleteJobs(jobs[i].id).toPromise().then(
           () => { }
         )

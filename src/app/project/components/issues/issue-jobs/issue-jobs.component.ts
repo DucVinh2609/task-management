@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { JJobs } from '@trungk18/interface/job';
 import { JUser } from '@trungk18/interface/user';
 import { JobsService } from '@trungk18/project/services/jobs.service';
@@ -7,29 +7,33 @@ import { UsersService } from '@trungk18/project/services/users.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { IssueDeleteModalComponent } from '../issue-delete-modal/issue-delete-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import moment from 'moment';
 
 @Component({
   selector: 'issue-jobs',
   templateUrl: './issue-jobs.component.html',
   styleUrls: ['./issue-jobs.component.scss']
 })
-export class IssueJobsComponent implements OnChanges {
+export class IssueJobsComponent implements OnInit {
   @Input() job: JJobs;
-  @Input() users: JUser[];
+  @Input() issueId: string;
   @Input() projectsId: number;
+  @Output() onDelete = new EventEmitter<boolean>();
+  @Output() onCheckFinish = new EventEmitter<boolean>();
+  users: JUser[] = [];
   currentUserId: string = localStorage.getItem('token');
   currentUser: JUser;
   titleJobs: string = '';
   checked = false;
   assignees: JUser[] = [];
   editMode = false;
-  date = '2019-08-18T08:38:22.329Z';
+  date: Date | null = null;
   checkAssignees: boolean = false;
-  checkDeadline: boolean = false;
   isDisabledButton: boolean = true;
   isDisabledDeadline: boolean = true;
   checkAdmin = false;
   checkUsuer = false;
+  userIds = [];
 
   constructor(private jobsService: JobsService,
     private issuesService: IssuesService,
@@ -42,7 +46,9 @@ export class IssueJobsComponent implements OnChanges {
       (data) => {
         if (data[0]) {
           this.currentUser = data[0];
-          this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          if (this.currentUser.projectAdmin) {
+            this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+          }
           this.checkUsuer = this.job.userIds.split(',').includes(this.currentUserId);
         }
       }
@@ -51,50 +57,75 @@ export class IssueJobsComponent implements OnChanges {
     this.getData()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.getData()
-  }
-
   async getData() {
+    if (this.job.deadlineAt) {
+      this.date = new Date(this.job.deadlineAt);
+    } else {
+      this.date = new Date();
+    }
+
+    if (this.job.finish) {
+      this.checked = true;
+    } else {
+      this.checked = false;
+    }
     this.titleJobs = this.job.name;
     this.assignees = [];
-    let userIds = [];
+    this.users = [];
+    this.userIds = [];
+    let userIdsOfIssue = '';
+
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issueId).toPromise().then(
+      (data) => {
+        userIdsOfIssue = data[0].userIds;
+      }
+    )
+    await Promise.all([getInfoIssue]);
+
+    if (userIdsOfIssue.split(',').length > 0) {
+      for (let i = 0; i < userIdsOfIssue.split(',').length; i++) {
+        if (userIdsOfIssue.split(',')[i]) {
+          let getUsersById = this.usersService.getUsersById(userIdsOfIssue.split(',')[i]).toPromise().then(
+            (data) => {
+              this.users.push(data[0]);
+            }
+          )
+          await Promise.all([getUsersById]);
+        } else {
+          this.users = [];
+        }
+      }
+    }
+
     let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
       (data) => {
-        console.log(data[0].userIds);
-        userIds = data[0].userIds.split(',');
+        this.userIds = data[0].userIds.split(',');
       }
     )
     await Promise.all([getJobsInfo]);
     if (this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledDeadline = false;
     }
-    if (userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
+    if (this.userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
       this.isDisabledButton = false;
     }
-    if (this.users) {
-      for (let i = 0; i < this.users.length; i++) {
-        let getUsersById = this.usersService.getUsersById(this.users[i].id).toPromise().then(
-          (data) => {
-            this.assignees.push(data[0]);
-          }
-        )
-        await Promise.all([getUsersById]);
+    if (this.userIds.length > 0) {
+      for (let i = 0; i < this.userIds.length; i++) {
+        if (this.userIds[i]) {
+          let getUsersById = this.usersService.getUsersById(this.userIds[i]).toPromise().then(
+            (data) => {
+              this.assignees.push(data[0]);
+            }
+          )
+          await Promise.all([getUsersById]);
+        } else {
+          this.assignees = [];
+        }
       }
-      // for (let u in userIds ) {
-      //   this.usersService.getUsersById(userIds[u]).subscribe(
-      //     (data) => {
-      //       this.assignees.push(data[0]);
-      //     }
-      //   )
-      // }
     }
 
     if (this.assignees.length != 0) {
       this.checkAssignees = true;
-    }
-    if (this.editMode || this.job.deadlineAt) {
-      this.checkDeadline = true;
     }
   }
 
@@ -104,7 +135,7 @@ export class IssueJobsComponent implements OnChanges {
 
   addDeadlineToJobs(deadlineAt: Date): void {
     if (deadlineAt) {
-      this.job.deadlineAt = deadlineAt.toLocaleString();
+      this.job.deadlineAt = moment(deadlineAt).format("YYYY-MM-DD HH:mm:ss");
       this.jobsService.updateJobs(this.job).subscribe(
         () => {
           this.getData();
@@ -113,18 +144,8 @@ export class IssueJobsComponent implements OnChanges {
     }
   }
 
-  async isUserSelected(user: JUser) {
-    let userIdsInJobs = '';
-    let getJobsInfo = this.jobsService.getJobsInfo(this.job.id).toPromise().then(
-      (data) => {
-        userIdsInJobs = data[0].userIds;
-      }
-    )
-    await Promise.all([getJobsInfo]);
-    if (!userIdsInJobs) {
-      userIdsInJobs = '';
-    }
-    return userIdsInJobs.includes(user.id);
+  isUserSelected(user: JUser) {
+    return this.userIds.includes(user.id);
   }
 
   async addUserToJobs(user: JUser) {
@@ -187,7 +208,7 @@ export class IssueJobsComponent implements OnChanges {
       finish: this.checked
     }).subscribe(
       () => {
-        this.getData();
+        this.onCheckFinish.emit(true);
       }
     )
   }
@@ -199,7 +220,7 @@ export class IssueJobsComponent implements OnChanges {
   }
 
   deleteJobs() {
-    this._modalService.create({
+    const modalRef = this._modalService.create({
       nzContent: IssueDeleteModalComponent,
       nzClosable: false,
       nzFooter: null,
@@ -213,5 +234,10 @@ export class IssueJobsComponent implements OnChanges {
         delete: "jobs"
       }      
     });
+    modalRef.afterClose.subscribe(
+      () => {
+        this.onDelete.emit(true);
+      }
+    );
   }
 }

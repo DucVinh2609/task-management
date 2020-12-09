@@ -14,7 +14,14 @@
     <nz-progress class="ant-progress-inner" [nzPercent]="percent" [nzShowInfo]="false" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"></nz-progress>
   </section>
 
-  <issue-jobs *ngFor="let job of jobs" [job]="job" [users]="users" [projectsId]="projectsId" cdkDrag [cdkDragData]="job">
+  <issue-jobs *ngFor="let job of jobs"
+              [job]="job"
+              [issueId]="issueId"
+              [projectsId]="projectsId"
+              cdkDrag
+              [cdkDragData]="job"
+              (onDelete)="deleteJob($event)"
+              (onCheckFinish)="checkFinish($event)">
   </issue-jobs>
 
   <ng-container *ngIf="checkAdmin">
