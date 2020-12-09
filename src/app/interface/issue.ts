@@ -14,10 +14,10 @@ export enum IssueType {
 // }
 
 export const IssueStatusDisplay = [
-  { status: "Backlog", position: 0},
-  { status: "Selected", position: 1},
-  { status: "InProgress", position: 2},
-  { status: "Done", position: 3}
+  { status: "Giai doan 1", position: 0},
+  { status: "Giai doan 2", position: 1},
+  { status: "Giai doan 3", position: 2},
+  { status: "Giai doan 4", position: 3}
 ];
 
 // export enum IssuePriority {

@@ -81,6 +81,7 @@ export class AddProjectModalComponent implements OnInit {
     });
   }
 
+  // add pj
   async submitForm() {
     if (this.issueForm.invalid) {
       return;
@@ -93,6 +94,7 @@ export class AddProjectModalComponent implements OnInit {
       description: null
     };
 
+    // khoi tao 1 id pj tu id lớn nhất +1
     let getAllIdOfProjects = this.projectsService.getAllIdOfProjects().toPromise().then(
       (data: any) => {
         newProject.id = data.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1;
@@ -100,6 +102,7 @@ export class AddProjectModalComponent implements OnInit {
     )
     await Promise.all([getAllIdOfProjects]);
 
+    // create new pj
     let newProjectId: number;
     let createProject = this.projectsService.createProject(newProject).toPromise().then(
       (data: any) => {
@@ -108,6 +111,7 @@ export class AddProjectModalComponent implements OnInit {
     )
     await Promise.all([createProject]);
 
+    // tao ra 4 status mac dinh trong pj vừa tao
     IssueStatusDisplay.forEach(async issue => {
       let createIssueStatus = this.issueStatusService.createIssueStatus(issue.status, newProjectId, issue.position).subscribe(
         () => { }
@@ -115,6 +119,7 @@ export class AddProjectModalComponent implements OnInit {
       await Promise.all([createIssueStatus]);
     });
 
+    // nguoi tao ra pj se la admin dau tien cua pj do
     let updateAdminProjects = this.usersService.updateAdminProjects(this.currentUser, newProjectId.toString()).toPromise().then(
       (data) => {
         console.log(data);
@@ -124,6 +129,7 @@ export class AddProjectModalComponent implements OnInit {
       }
     )
 
+    // nguoi tao ra pj se đứng trong pj do
     let getIdUserByEmail = this.usersService.getIdUserByEmail(this.currentUser.email).toPromise().then(
       async (data: any) => {
         if (data.length !== 0) {
