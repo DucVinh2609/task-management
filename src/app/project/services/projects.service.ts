@@ -37,4 +37,8 @@ export class ProjectsService {
     return this.http.post(environment.apiUrl + 'api/v1/project/', newProjects);
   }
 
+  updateProject(projects: any) {
+    return this.http.put(environment.apiUrl + 'api/v1/project/' + projects.id, projects);
+  }
+
 }

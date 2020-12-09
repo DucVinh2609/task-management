@@ -4,6 +4,7 @@ import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-mode
 import { IssuesService } from '@trungk18/project/services/issues.service';
 import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
 import { JobsService } from '@trungk18/project/services/jobs.service';
+import { UserProjectsService } from '@trungk18/project/services/user-projects.service';
 
 @Component({
   selector: 'issue-delete-modal',
@@ -19,6 +20,7 @@ export class IssueDeleteModalComponent implements OnInit {
   constructor(private _modalRef: NzModalRef,
     private issuesService: IssuesService,
     private listJobsService: ListJobsService,
+    private userProjectsService: UserProjectsService,
     private jobsService: JobsService) {}
 
   ngOnInit(): void {}
@@ -34,7 +36,6 @@ export class IssueDeleteModalComponent implements OnInit {
       let jobs = [];
       let getJobsInWorkList = this.jobsService.getJobsInWorkList(this.data).toPromise().then(
         (data: any) => {
-          console.log(data);
           jobs = data;
         }
       )
@@ -55,6 +56,12 @@ export class IssueDeleteModalComponent implements OnInit {
       )
     } else if (this.delete === "jobs") {
       this.jobsService.deleteJobs(this.data).subscribe(
+        () => {
+          this._modalRef.close();
+        }
+      )
+    } else if (this.delete === "member") {
+      this.userProjectsService.removeMemberInProject(this.data).subscribe(
         () => {
           this._modalRef.close();
         }

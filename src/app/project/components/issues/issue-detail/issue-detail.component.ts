@@ -45,6 +45,7 @@ export class IssueDetailComponent implements OnInit {
     }
 
   async ngOnInit() {
+    console.log(this.projectsId);
     this.usersService.getUsersById(this.currentUserId).subscribe(
       (data) => {
         if (data[0]) {
@@ -65,14 +66,14 @@ export class IssueDetailComponent implements OnInit {
       let userIds = this.issue.userIds;
       this.users = [];
       if (userIds) {
-        // for (let i = 0; i < userIds.length; i++) {
-        //   let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
-        //     (data) => {
-        //       this.users.push(data[0]);
-        //     }
-        //   )
-        //   await Promise.all([getUsersById]);
-        // }
+        for (let i = 0; i < userIds.length; i++) {
+          let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
+            (data) => {
+              this.users.push(data[0]);
+            }
+          )
+          await Promise.all([getUsersById]);
+        }
       }
     }
   }

@@ -142,8 +142,8 @@ export class AddProjectModalComponent implements OnInit {
     )
     await Promise.all([updateAdminProjects, getIdUserByEmail]);
     this.closeModal();
-    // window.location.href = '/project/board/' + newProject.name;
-    this.router.navigate(['/project/board/' + newProject.name]);
+    window.location.href = '/project/board/' + newProject.name;
+    // this.router.navigate(['/project/board/' + newProject.name]);
   }
 
   cancel() {

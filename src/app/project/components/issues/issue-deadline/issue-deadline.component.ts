@@ -4,6 +4,7 @@ import { IssuesService } from '@trungk18/project/services/issues.service';
 import { AuthQuery } from '@trungk18/project/auth/auth.query';
 import { UsersService } from '@trungk18/project/services/users.service';
 import { JUser } from '@trungk18/interface/user';
+import moment from 'moment';
 
 @Component({
   selector: 'issue-deadline',
@@ -52,7 +53,7 @@ export class IssueDeadlineComponent implements OnInit {
     if(!open) {
       let newIssue: JIssue = { ...this.issue };
       if(this.deadline) {
-        newIssue.deadlineAt = this.deadline.toLocaleString();
+        newIssue.deadlineAt = moment(this.deadline).format("YYYY-MM-DD HH:mm:ss");
         this.issuesService.updateIssue(newIssue).subscribe(
           () => {}
         );

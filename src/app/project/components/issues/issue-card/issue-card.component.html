@@ -24,25 +24,27 @@
                     </span>
                 </ng-container>
             </div>
-            <div class="flex items-center">
-                <svg-icon class="text-textMedium mr-1"
-                          [name]="issueTypeIcon"
-                          nz-tooltip
-                          [nzTooltipMouseEnterDelay]="0.3"
-                          [nzTooltipTitle]="issue.issueTypeId"
-                          nzTooltipPlacement="bottom"
-                          [size]="20">
-                </svg-icon>
+            <ng-container *ngIf="load">
+                <div class="flex items-center">
+                    <svg-icon class="text-textMedium mr-1"
+                            [name]="issueTypeIcon"
+                            nz-tooltip
+                            [nzTooltipMouseEnterDelay]="0.3"
+                            [nzTooltipTitle]="issue.issueTypeId"
+                            nzTooltipPlacement="bottom"
+                            [size]="20">
+                    </svg-icon>
 
-                <svg-icon [name]="priorityIcon.icon"
-                          nz-tooltip
-                          [nzTooltipMouseEnterDelay]="0.3"
-                          [nzTooltipTitle]="priorityIcon.value"
-                          nzTooltipPlacement="bottom"
-                          [size]="20"
-                          [style.color]="priorityIcon.color">
-                </svg-icon>
-            </div>
+                    <svg-icon [name]="priorityIcon.icon"
+                            nz-tooltip
+                            [nzTooltipMouseEnterDelay]="0.3"
+                            [nzTooltipTitle]="priorityIcon.value"
+                            nzTooltipPlacement="bottom"
+                            [size]="20"
+                            [style.color]="priorityIcon.color">
+                    </svg-icon>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

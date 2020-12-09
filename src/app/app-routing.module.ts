@@ -9,6 +9,8 @@ import { RegistrationComponent } from '@trungk18/project/pages/common/registrati
 import { BoardComponent } from '@trungk18/project/pages/board/board.component';
 import { SettingsComponent } from '@trungk18/project/pages/settings/settings.component';
 import { AccountSettingComponent } from '@trungk18/project/pages/common/account-setting/account-setting.component';
+import { ProjectConst } from '@trungk18/project/config/const';
+import { FullIssueDetailComponent } from '@trungk18/project/pages/full-issue-detail/full-issue-detail.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,10 @@ const routes: Routes = [
     path: 'project/board/:nameProject/settings',
     component: SettingsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: `project/issue/:nameProject/:${ProjectConst.IssueId}`,
+    component: FullIssueDetailComponent
   },
   {
     path: 'wip',

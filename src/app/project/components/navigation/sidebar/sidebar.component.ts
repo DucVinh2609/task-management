@@ -9,6 +9,8 @@ import { AddProjectModalComponent } from '@trungk18/project/components/add-proje
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectsService } from '@trungk18/project/services/projects.service';
 import { ProjectsCategoriesService } from '@trungk18/project/services/projects-categories.service';
+import { JUser } from '@trungk18/interface/user';
+import { UsersService } from '@trungk18/project/services/users.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,6 +24,9 @@ export class SidebarComponent implements OnInit {
   projectsId: number;
   project: JProjects;
   projectCategory: string = '';
+  currentUsersId: string = localStorage.getItem('token');
+  currentUser: JUser;
+  checkAdmin: boolean = false;
 
   get sidebarWidth(): number {
     return this.expanded ? 240 : 15;
@@ -32,6 +37,7 @@ export class SidebarComponent implements OnInit {
   constructor(private _projectQuery: ProjectQuery,
     private _modalService: NzModalService,
     private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
     private projectsService: ProjectsService,
     private projectsCategoriesService: ProjectsCategoriesService) {
     // this._projectQuery.all$.pipe(untilDestroyed(this)).subscribe((project) => {
@@ -59,10 +65,34 @@ export class SidebarComponent implements OnInit {
       }
     )
     await Promise.all([getCategoryName]);
-    this.sideBarLinks = [
-      new SideBarLink('Board', 'board', '/project/board/' + this.nameProject),
-      new SideBarLink('Project Settings', 'cog', '/project/board/' + this.nameProject + '/settings')
-    ];
+
+    let getUsersById = this.usersService.getUsersById(this.currentUsersId).toPromise().then(
+      (data) => {
+        if (data[0]) {
+          this.currentUser = data[0];
+        }
+      }
+    );
+    await Promise.all([getUsersById]);
+
+    let projectAdmin = [];
+    if (this.currentUser.projectAdmin) {
+      projectAdmin = this.currentUser.projectAdmin.split(',');
+      this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+    } else {
+      this.checkAdmin = false;
+    }
+    if (this.checkAdmin) {
+      this.sideBarLinks = [
+        new SideBarLink('Board', 'board', '/project/board/' + this.nameProject),
+        new SideBarLink('Project Settings', 'cog', '/project/board/' + this.nameProject + '/settings')
+      ];
+    } else {
+      this.sideBarLinks = [
+        new SideBarLink('Board', 'board', '/project/board/' + this.nameProject)
+      ];
+    }
+    
   }
 
   openCreateProjectModal() {

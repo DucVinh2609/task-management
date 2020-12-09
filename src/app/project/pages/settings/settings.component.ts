@@ -14,6 +14,7 @@ import { UsersService } from '@trungk18/project/services/users.service';
 import { JUser } from '@trungk18/interface/user';
 import { IssueDeleteModalComponent } from '@trungk18/project/components/issues/issue-delete-modal/issue-delete-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { DateUtil } from '@trungk18/project/utils/date';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -95,9 +96,19 @@ export class SettingsComponent implements OnInit {
   }
 
   submitForm() {
-    let formValue: Partial<JProject> = this.projectForm.getRawValue();
-    console.log(formValue);
-    this._projectService.updateProject(formValue);
+    let formValue = this.projectForm.getRawValue();
+    let body = {
+      id: this.projectsId,
+      name: formValue.name,
+      description: formValue.description,
+      projectCategoriesId: formValue.category,
+      updatedAt: DateUtil.getNow()
+    }
+    this.projectsService.updateProject(body).subscribe(
+      () => {
+        this._router.navigate(['/project/board/'+ formValue.name +'/settings']);
+      }
+    )
     // this._notification.create(
     //   "success",
     //   'Changes have been saved successfully.',
@@ -115,10 +126,10 @@ export class SettingsComponent implements OnInit {
       },
       nzComponentParams: {
         title: "Are you sure you want to remove " + name +" from the projject?",
-        data: userId + "," + this.projectsId,
+        data: {userId: userId, projectId: this.projectsId},
         onDelete: null,
-        delete: "jobs"
-      }      
+        delete: "member"
+      }
     });
   }
 

@@ -25,12 +25,12 @@
         <ul style="display: inline-block;">
           <li *ngFor="let projectAdmin of projectAdmins" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button className="btn-add-taskss" (click)="projectBoard(projectAdmin.name)">
-              <span style="vertical-align: middle; padding: 75px; font-size: 30px;"> {{ projectAdmin.name }} </span>
+              <span style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word; white-space: pre-wrap; padding: 10px 0; font-size: 30px;"> {{ projectAdmin.name }} </span>
             </j-button>
           </li>
           <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button (click)="openCreateProjectModal()" className="btn-add-taskss">
-              <mat-icon style="margin-left: 80px; font-size: 50px;">add</mat-icon>
+              <mat-icon style="width: 100%; margin: 0 auto; font-size: 50px;">add</mat-icon>
             </j-button>
           </li>
         </ul>
@@ -42,12 +42,12 @@
         <ul style="display: inline-block;">
           <li *ngFor="let projectClient of projectClients" style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button className="btn-add-taskss" (click)="projectBoard(projectClient.name)">
-              <span style="vertical-align: middle; padding: 75px; font-size: 30px;"> {{ projectClient.name }} </span>
+              <span style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word; white-space: pre-wrap; padding: 10px 0; font-size: 30px;"> {{ projectClient.name }} </span>
             </j-button>
           </li>
           <li style="display: inline-block;margin: 40px;width: 250px;height: 150px;">
             <j-button (click)="openCreateProjectModal()" className="btn-add-taskss">
-              <mat-icon style="margin-left: 80px; font-size: 50px;">add</mat-icon>
+              <mat-icon style="width: 100%; margin: 0 auto; font-size: 50px;">add</mat-icon>
             </j-button>
           </li>
         </ul>

@@ -9,6 +9,7 @@ import { JIssue } from '@trungk18/interface/issue';
 import { ProjectService } from '@trungk18/project/state/project/project.service';
 import { DeleteIssueModel } from '@trungk18/interface/ui-model/delete-issue-model';
 import { IssuesService } from '@trungk18/project/services/issues.service';
+import { ProjectsService } from '@trungk18/project/services/projects.service';
 
 @Component({
   selector: 'full-issue-detail',
@@ -18,10 +19,15 @@ import { IssuesService } from '@trungk18/project/services/issues.service';
 @UntilDestroy()
 export class FullIssueDetailComponent implements OnInit {
   project: JProject;
+  issue: JIssue;
   issueById$: Observable<JIssue>;
   issueId: string;
+  expanded: boolean;
+  nameProject: string = '';
+  projectsId: number;
+
   get breadcrumbs(): string[] {
-    return [ProjectConst.Projects, this.project?.name, 'Issues', this.issueId];
+    return [ProjectConst.Projects, this.nameProject, 'Issues', this.issueId];
   }
 
   constructor(
@@ -29,23 +35,30 @@ export class FullIssueDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private issuesService: IssuesService,
     private _projectQuery: ProjectQuery,
-    private _projectService: ProjectService
-  ) {}
+    private _projectService: ProjectService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService
+  ) {
+    this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
+    this.issueId = this.activatedRoute.snapshot.paramMap.get("issueId");
+  }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    let getProjectsId = this.projectsService.getProjectsId(this.nameProject).toPromise().then(
+      (data) => {
+        this.projectsId = data[0].id;
+      }
+    )
+    await Promise.all([getProjectsId]);
     this.getIssue();
-    this._projectQuery.all$.pipe(untilDestroyed(this)).subscribe((project) => {
-      this.project = project;
-    });
   }
 
   private getIssue() {
-    this.issueId = this._route.snapshot.paramMap.get(ProjectConst.IssueId);
-    if (!this.issueId) {
-      this.backHome();
-      return;
-    }
-    this.issueById$ = this._projectQuery.issueById$(this.issueId);
+    this.issuesService.getInfoIssue(this.issueId).subscribe(
+      (data) => {
+        this.issue = data[0];
+      }
+    )
   }
 
   deleteIssue({issueId, deleteModalRef}: DeleteIssueModel) {
@@ -58,6 +71,10 @@ export class FullIssueDetailComponent implements OnInit {
   }
 
   private backHome() {
-    this._router.navigate(['/']);
+    this._router.navigate(['/project/board/' + this.nameProject]);
+  }
+
+  manualToggle() {
+    this.expanded = !this.expanded;
   }
 }

@@ -20,6 +20,10 @@ import { Observable, Observer } from 'rxjs';
 import { JobsService } from '@trungk18/project/services/jobs.service';
 import { ListJobsService } from '@trungk18/project/services/list-jobs.service';
 import { IssuesService } from '@trungk18/project/services/issues.service';
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { DateUtil } from '@trungk18/project/utils/date';
+import moment, { localeData } from 'moment';
 
 @Component({
   selector: 'account-setting',
@@ -43,6 +47,9 @@ export class AccountSettingComponent implements OnInit {
   taskIsOvers: any = [];
   taskIsComings: any = [];
   load: boolean = false;
+  messageErrorPass: string = '';
+  messageSuccessPass: string = '';
+  messageSuccessInfo: string = '';
 
   constructor(public authQuery: AuthQuery,
     private _router: Router,
@@ -55,6 +62,7 @@ export class AccountSettingComponent implements OnInit {
     private usersService: UsersService,
     private jobsService: JobsService,
     private listJobsService: ListJobsService,
+    private storage: AngularFireStorage,
     private issuesService: IssuesService,
     private _modalService: NzModalService) { }
 
@@ -217,10 +225,71 @@ export class AccountSettingComponent implements OnInit {
     this.avatarUrl = this.currentUser.avatarUrl;
   }
 
-  submitForm() {
-    let formValue: Partial<JProject> = this.accountSettingForm.getRawValue();
+  submitInfo() {
+    let formValue = this.accountSettingForm.getRawValue();
+    let updatedAt = new Date();
+    if (this.selectedImg) {
+      let filePath = `images/${this.selectedImg.name.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      const fileRef = this.storage.ref(filePath);
+      let upload = this.storage.upload(filePath, this.selectedImg).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            this.avatarUrl = url;
+            let body = {
+              id: this.currentUserId,
+              email: formValue.email,
+              name: formValue.name,
+              description: formValue.description,
+              updatedAt: moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+              avatarUrl: this.avatarUrl,
+            }
+            this.usersService.updateUser(body).subscribe(
+              () => {
+                this.messageSuccessInfo = "Update Account Success";
+              }
+            )
+          })
+        })
+      ).subscribe();
+    } else {
+      let body = {
+        id: this.currentUserId,
+        email: formValue.email,
+        name: formValue.name,
+        description: formValue.description,
+        updatedAt: moment(updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+        avatarUrl: this.currentUser.avatarUrl
+      }
+      this.usersService.updateUser(body).subscribe(
+        () => {
+          this.messageSuccessInfo = "Update Account Success";
+        }
+      )
+    }
+  }
+
+  submitPassword() {
+    let formValue = this.changePasswordForm.getRawValue();
     console.log(formValue);
-    this._projectService.updateProject(formValue);
+    if (formValue.passwordCurrent !== this.currentUser.password) {
+      this.messageErrorPass = "Password current incorrect";
+      this.messageSuccessPass = "";
+    } else {
+        let body = {
+        id: this.currentUserId,
+        password: formValue.newPassword
+      }
+      this.usersService.changeNewPassword(body).subscribe(
+        () => {
+          this.messageSuccessPass = "Change password success";
+          this.messageErrorPass = "";
+        },
+        () => {
+          this.messageErrorPass = "Change password faild";
+          this.messageSuccessPass = "";
+        }
+      )
+    }
   }
 
   cancel() {

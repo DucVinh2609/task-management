@@ -24,6 +24,8 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
   assignees: JUser[] = [];
   nameProject: string = '';
   checkAdmin = false;
+  userIds: string;
+  load: boolean = false;
 
   constructor(private issuesService: IssuesService,
     private usersService: UsersService,
@@ -59,24 +61,25 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
     await Promise.all([getProjectIdByStatusId]);
 
     if (projectId) {
-      this.usersService.getUsersInProjects(this.projectsId).subscribe (
+      let getUsersInProjects = this.usersService.getUsersInProjects(this.projectsId).toPromise().then(
         (data) => {
           this.users = data;
         }
       )
+      await Promise.all([getUsersInProjects]);
     }
 
     this.assignees = [];
     let userIds = '';
     let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
       (data) => {
-        userIds = data[0].userIds;
+        this.userIds = userIds = data[0].userIds;
       }
     )
     await Promise.all([getInfoIssue]);
-    if (userIds) {
-      for (let i = 0; i < userIds.length; i++) {
-        let getUsersById = this.usersService.getUsersById(userIds[i]).toPromise().then(
+    if (userIds.split(',').length > 0) {
+      for (let i = 0; i < userIds.split(',').length; i++) {
+        let getUsersById = this.usersService.getUsersById(userIds.split(',')[i]).toPromise().then(
           (data) => {
             this.assignees.push(data[0]);
           }
@@ -84,6 +87,7 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
         await Promise.all([getUsersById]);
       }
     }
+    this.load = true;
   }
 
   async removeUser(userId: string) {
@@ -121,12 +125,17 @@ export class IssueAssigneesComponent implements OnInit, OnChanges {
       ...this.issue,
       userIds: newUserIds
     }).subscribe(
-      () => {}
+      () => {
+        this.getData();
+      }
     );
-    this.getData();
   }
 
   isUserSelected(user: JUser): boolean {
-    return this.issue.userIds.includes(user.id);
+    if (this.userIds) {
+      return this.userIds.split(',').includes(user.id);
+    } else {
+      return false;
+    }
   }
 }

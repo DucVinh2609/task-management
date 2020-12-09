@@ -54,11 +54,10 @@ export class IssuesService {
     return listIssues;
   }
 
-  getIssuesDoneInStatus (issues: JIssue[], projectId: number, statusId: number) {
+  getIssuesDoneInStatus (issues: JIssue[], lastStatus: number) {
     let listIssues: JIssue[] = [];
-    // let statusIdLastOfProject = this.issueStatusService.getStatusByProjectId(projectId).sort((a, b) => (a.position < b.position) ? 1 : -1)[0].id;
     issues.forEach(issue => {
-      if (issue.issueStatusId !== 3) {
+      if (issue.issueStatusId !== lastStatus) {
         listIssues.push(issue);
       }
     });
@@ -76,9 +75,14 @@ export class IssuesService {
   updateIssue(issue: JIssue) {
     let updatedAt = DateUtil.getNow();
     let body = {
+      id: issue.id,
       updatedAt: updatedAt,
       issueStatusId: issue.issueStatusId,
       title: issue.title,
+      listPosition: issue.listPosition,
+      reporterId: issue.reporterId,
+      createdAt: issue.createdAt,
+      issueTypeId: issue.issueTypeId,
       deadlineAt: issue.deadlineAt,
       userIds: issue.userIds,
       issuePriorityId: issue.issuePriorityId,

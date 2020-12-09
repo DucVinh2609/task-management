@@ -46,12 +46,25 @@ export class IssueCardComponent implements OnChanges {
       this.nameProject = this.activatedRoute.snapshot.paramMap.get("nameProject");
     }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.getData();
+  }
+
+  async getData() {
+    this.assignees = [];
+    let getInfoIssue = this.issuesService.getInfoIssue(this.issue.id).toPromise().then(
+      (data) => {
+        this.issue = data[0];
+        this.deadline = data[0].deadlineAt;
+        this.deadlineAt = new Date(this.deadline);
+        this.month = this.deadlineAt.getMonth() + 1;
+      }
+    )
+    await Promise.all([getInfoIssue]);
     this.issue.userIds.split(',').forEach(async users => {
       if (users) {
         let getUsersById = this.usersService.getUsersById(users).toPromise().then(
           (data) => {
-            console.log(data[0]);
             this.assignees.push(data[0])
           }
         )
@@ -60,7 +73,7 @@ export class IssueCardComponent implements OnChanges {
         this.assignees = [];
       }
     })
-    this.load = true;
+
     let getUsersById = this.usersService.getUsersById(this.currentUserId).toPromise().then(
       (data) => {
         if (data[0]) {
@@ -74,23 +87,21 @@ export class IssueCardComponent implements OnChanges {
       }
     )
     await Promise.all([getUsersById, getProjectsId]);
+
+    this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
+    this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
+    // this.issuesService.getInfoIssue(this.issue.id).subscribe(
+    //   (data) => {
+    //     this.deadline = data[0].deadlineAt;
+    //     this.deadlineAt = new Date(this.deadline);
+    //     this.month = this.deadlineAt.getMonth() + 1;
+    //   }
+    // )
+    this.load = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let issueChange = changes.issue;
-    // if (issueChange?.currentValue !== issueChange.previousValue) {
-    //   this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
-    //   this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
-    // }
-    this.issueTypeIcon = IssueUtil.getIssueTypeIcon(this.issue.issueTypeId);
-    this.priorityIcon = IssueUtil.getIssuePriorityIcon(this.issue.issuePriorityId);
-    this.issuesService.getInfoIssue(this.issue.id).subscribe(
-      (data) => {
-        this.deadline = data[0].deadlineAt;
-        this.deadlineAt = new Date(this.deadline);
-        this.month = this.deadlineAt.getMonth() + 1;
-      }
-    )
+    
   }
 
   async openIssueModal(issueId: string) {
@@ -103,16 +114,21 @@ export class IssueCardComponent implements OnChanges {
     await Promise.all([getInfoIssue]);
 
     if (this.issue.userIds.includes(this.currentUser.id) || this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString())) {
-      this._modalService.create({
+      const modalRef = this._modalService.create({
         nzContent: IssueModalComponent,
         nzWidth: 1040,
         nzClosable: false,
         nzFooter: null,
         nzComponentParams: {
           issue: issue,
-          projectsId: this.projectsId
+          nameProject: this.nameProject
         }
       });
+      modalRef.afterClose.subscribe(
+        () => {
+          this.getData();
+        }
+      );
     }
   }
 }

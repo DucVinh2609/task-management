@@ -39,8 +39,13 @@ export class IndexComponent implements OnInit {
         if (data[0]) {
           this.currentUser = data[0];
           this.load = true;
-          let projectAdmin = this.currentUser.projectAdmin.split(',');
+          let projectAdmin = [];
           let projectClient = [];
+          if (this.currentUser.projectAdmin) {
+            projectAdmin = this.currentUser.projectAdmin.split(',');
+          } else {
+            projectAdmin = [];
+          }
 
           if (projectAdmin.length > 0) {
             for (let i = 0; i < projectAdmin.length; i++) {

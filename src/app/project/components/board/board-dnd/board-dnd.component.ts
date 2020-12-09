@@ -23,6 +23,7 @@ export class BoardDndComponent implements OnInit {
   nameProject: string = '';
   projectsId: number;
   checkAdmin: boolean = false;
+  lastStatus: number = 0;
 
   constructor(public projectQuery: ProjectQuery,
     public authQuery: AuthQuery,
@@ -50,13 +51,20 @@ export class BoardDndComponent implements OnInit {
 
     await Promise.all([getUsersById, getProjectsId]);
     this.getData();
-    this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+    let projectAdmin = [];
+    if (this.currentUser.projectAdmin) {
+      projectAdmin = this.currentUser.projectAdmin.split(',');
+      this.checkAdmin = this.currentUser.projectAdmin.split(',').includes(this.projectsId.toString());
+    } else {
+      this.checkAdmin = false;
+    }
   }
 
   getData() {
     this.issueStatusService.getStatusByProjectId(this.projectsId).subscribe(
       (data: any) => {
         this.issueStatuses = data.sort((a, b) => (a.position > b.position) ? 1 : -1);
+        this.lastStatus = this.issueStatuses[this.issueStatuses.length - 1].id;
       }
     )
   }

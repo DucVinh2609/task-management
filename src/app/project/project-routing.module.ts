@@ -19,10 +19,10 @@ const routes: Routes = [
       //   path: 'board/:nameProject/settings',
       //   component: SettingsComponent
       // },
-      {
-        path: `issue/:${ProjectConst.IssueId}`,
-        component: FullIssueDetailComponent
-      },
+      // {
+      //   path: `issue/:${ProjectConst.IssueId}`,
+      //   component: FullIssueDetailComponent
+      // },
       {
         path: '',
         redirectTo: 'board/:nameProject',

@@ -1,10 +1,12 @@
 <div class="px-3">
-    <issue-detail [issue]="issue"
-                  [projectsId]="projectsId"
-                  [isShowFullScreenButton]="true"
-                  [isShowCloseButton]="true"
-                  (onClosed)="closeModal()"
-                  (onOpenIssue)="openIssuePage($event)"
-                  (onDelete)="deleteIssue($event)">
-    </issue-detail>
+    <ng-container *ngIf="load">
+        <issue-detail [issue]="issue"
+                    [projectsId]="projectsId"
+                    [isShowFullScreenButton]="true"
+                    [isShowCloseButton]="true"
+                    (onClosed)="closeModal()"
+                    (onOpenIssue)="openIssuePage($event)"
+                    (onDelete)="deleteIssue($event)">
+        </issue-detail>
+    </ng-container>
 </div>

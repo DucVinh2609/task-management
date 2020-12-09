@@ -14,7 +14,6 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsersById(userId: string) {
-    console.log(userId);
     return this.http.get(environment.apiUrl + 'api/v1/user/' + userId);
   }
 
@@ -45,5 +44,13 @@ export class UsersService {
     // dummy.users.push(user);
     // console.log(dummy.users);
     return this.http.post(environment.apiUrl + 'api/v1/user/', body);
+  }
+
+  updateUser(user: any) {
+    return this.http.put(environment.apiUrl + 'api/v1/user/' + user.id, user);
+  }
+
+  changeNewPassword(user: any) {
+    return this.http.put(environment.apiUrl + 'api/v1/user/password/' + user.id, user);
   }
 }

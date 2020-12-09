@@ -35,7 +35,7 @@
     </div>
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Accout setting">
-        <form class="accout-setting-form" (ngSubmit)="submitForm()" [formGroup]="accountSettingForm">
+        <form class="accout-setting-form" [formGroup]="accountSettingForm">
           <div class="form-group">
             <label class="label">
               Email
@@ -69,8 +69,15 @@
               <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
             </nz-upload>
           </div>
+          <ng-container *ngIf="messageSuccessInfo">
+            <div class="form-group">
+              <label class="label" style="padding-top: 12px; font-size: 14px; color: green;">
+                {{ messageSuccessInfo }}
+              </label>
+            </div>
+          </ng-container>
           <div class="form-group mt-3">
-            <j-button className="btn-primary mr-2" type="submit" [disabled]="accountSettingForm.invalid">
+            <j-button className="btn-primary mr-2" (click)="submitInfo()" [disabled]="accountSettingForm.invalid">
               Save
             </j-button>
             <j-button className="btn-empty" (click)="cancel()">
@@ -80,7 +87,7 @@
         </form>
       </mat-tab>
       <mat-tab label="Change password">
-        <form class="accout-setting-form" (ngSubmit)="submitForm()" [formGroup]="changePasswordForm">
+        <form class="accout-setting-form" [formGroup]="changePasswordForm">
           <div class="form-group">
             <label class="label">
               Password Current
@@ -99,8 +106,22 @@
             </label>
             <input class="form-input" formControlName="confỉmNewPassword" jAutofocus type="password"/>
           </div>
+          <ng-container *ngIf="messageSuccessPass || messageErrorPass">
+            <div class="form-group">
+              <ng-container *ngIf="messageSuccessPass">
+                <label class="label" style="padding-top: 12px; font-size: 14px; color: green;">
+                  {{ messageSuccessPass }}
+                </label>
+              </ng-container>
+              <ng-container *ngIf="messageErrorPass">
+                <label class="label" style="padding-top: 12px; font-size: 14px; color: red;">
+                  {{ messageErrorPass }}
+                </label>
+              </ng-container>
+            </div>
+          </ng-container>
           <div class="form-group mt-3">
-            <j-button className="btn-primary mr-2" type="submit" [disabled]="changePasswordForm.invalid">
+            <j-button className="btn-primary mr-2" (click)="submitPassword()" [disabled]="changePasswordForm.invalid">
               Save
             </j-button>
             <j-button className="btn-empty" (click)="cancel()">
@@ -117,7 +138,7 @@
               <ul style="display: inline-block; margin-top: 10px;">
                 <li *ngFor="let taskIsDeadline of taskIsDeadlines" style="display: inline-block; margin-left: 40px; width: 150px; margin-bottom: 20px;">
                   <j-button className="btn-add-task-red" (click)="taskDetail(taskIsDeadline)">
-                    <span style="display: block; width: 100%; margin: 0 auto;"> {{ taskIsDeadline.title }} </span>
+                    <span style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word; white-space: pre-wrap; padding: 10px 0;"> {{ taskIsDeadline.title }} </span>
                   </j-button>
                 </li>
               </ul>
@@ -129,7 +150,7 @@
               <ul style="display: inline-block; margin-top: 10px;">
                 <li *ngFor="let taskIsOver of taskIsOvers" style="display: inline-block; margin-left: 40px; width: 150px; margin-bottom: 20px;">
                   <j-button className="btn-add-task-yellow" (click)="taskDetail(taskIsOver)">
-                    <span style="display: block; width: 100%; margin: 0 auto;"> {{ taskIsOver.title }} </span>
+                    <span style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word; white-space: pre-wrap; padding: 10px 0;"> {{ taskIsOver.title }} </span>
                   </j-button>
                 </li>
               </ul>
@@ -140,8 +161,8 @@
             <div>
               <ul style="display: inline-block; margin-top: 10px;">
                 <li *ngFor="let taskIsComing of taskIsComings" style="display: inline-block; margin-left: 40px; width: 150px; margin-bottom: 20px;">
-                  <j-button className="btn-add-task" (click)="taskDetail(taskIsComing)">
-                    <span style="display: block; width: 100%; margin: 0 auto;"> {{ taskIsComing.title }} </span>
+                  <j-button className="btn-add-task-normal" (click)="taskDetail(taskIsComing)">
+                    <span style="display: block; width: 100%; margin: 0 auto; word-wrap: break-word; white-space: pre-wrap; padding: 10px 0;"> {{ taskIsComing.title }} </span>
                   </j-button>
                 </li>
               </ul>

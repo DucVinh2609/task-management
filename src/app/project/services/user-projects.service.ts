@@ -21,4 +21,8 @@ export class UserProjectsService {
     const body = newUserProjects;
     return this.http.post(environment.apiUrl + 'api/v1/user-project/', body);
   }
+
+  removeMemberInProject({userId, projectId}) {
+    return this.http.delete(environment.apiUrl + 'api/v1/user-project/' + userId + '/' + projectId);
+  }
 }

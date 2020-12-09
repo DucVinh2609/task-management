@@ -59,9 +59,15 @@ export class IssueDescriptionComponent implements OnChanges {
       ...this.issue,
       description: this.descriptionControl.value
     }).subscribe(
-      () => {}
+      () => {
+        this.issuesService.getInfoIssue(this.issue.id).subscribe(
+          (data) => {
+            this.issue = data[0];
+          }
+        )
+        this.isEditing = false;
+      }
     );
-    this.isEditing = false;
   }
 
   cancel() {
