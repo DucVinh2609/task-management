@@ -25,6 +25,7 @@ export class FullIssueDetailComponent implements OnInit {
   expanded: boolean;
   nameProject: string = '';
   projectsId: number;
+  load: boolean = false;
 
   get breadcrumbs(): string[] {
     return [ProjectConst.Projects, this.nameProject, 'Issues', this.issueId];
@@ -57,6 +58,7 @@ export class FullIssueDetailComponent implements OnInit {
     this.issuesService.getInfoIssue(this.issueId).subscribe(
       (data) => {
         this.issue = data[0];
+        this.load = true;
       }
     )
   }
